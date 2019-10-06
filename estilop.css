@@ -2,6 +2,25 @@ body{
     text-align: center;
 }
 
+.header a.logo{
+    -webkit-transition: all 0.3s;
+    float: left;
+    object-fit: scale-down;
+    overflow: hidden;
+    display: block;
+    max-height: 95px;
+}
+
+.header{
+    max-height: 100px;
+    background-color: cornflowerblue;
+    overflow: hidden;
+}
+
+.header a:hover {
+    background-color: darkseagreen
+}
+
 .containerForm{
     border-radius: 25px;
     width: 300px;
@@ -18,7 +37,7 @@ body{
     width: 160px;
 }
 
-.botoncito {
+.botoncito, a.botoncito {
     border-radius: 8px;
     height: 50px;
     width: 100px;
@@ -28,7 +47,13 @@ body{
     cursor: pointer;
     border: none;
     -webkit-transition: 0.4s;
+    font: 15px Arial;
+    display: inline-block;
 }
+
+a:-webkit-any-link{
+    text-decoration:none !important;
+    }
 
 .botoncito:hover{
     background-color: aquamarine;
@@ -67,3 +92,13 @@ body{
     width: 150px;
     border-radius: 50%;
   }
+
+.menuHeader, .botonesLogin{
+    align-items: center;
+    display: inline-block;
+    padding-top: 20px;
+}
+
+.botonesLogin{
+    float: right;
+}
