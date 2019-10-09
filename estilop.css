@@ -37,7 +37,7 @@ body{
     width: 160px;
 }
 
-.botoncito, a.botoncito {
+.botoncito {
     border-radius: 8px;
     height: 50px;
     width: 100px;
@@ -49,6 +49,8 @@ body{
     -webkit-transition: 0.4s;
     font: 15px Arial;
     display: inline-block;
+    text-align: center;
+    line-height: 50px;  
 }
 
 a:-webkit-any-link{
@@ -67,6 +69,8 @@ a:-webkit-any-link{
    top: 0;
    overflow-x: hidden;
    padding-top: 20px;
+   margin-top: 120px;
+   margin-bottom: 100px;
  }
 
   /* Control the left side */
@@ -101,4 +105,19 @@ a:-webkit-any-link{
 
 .botonesLogin{
     float: right;
+}
+
+.footer{
+    display: block;
+    margin-top: 30px;
+    height: 80px;
+    background-color: cornflowerblue;
+}
+
+.contactoFooter{
+    float: left;
+}
+
+.linksContacto{
+    list-style-type: none;
 }
