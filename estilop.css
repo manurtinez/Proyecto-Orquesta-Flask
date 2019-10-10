@@ -2,19 +2,38 @@ body{
     text-align: center;
 }
 
-.header a.logo{
+.logo{
     -webkit-transition: all 0.3s;
     float: left;
-    object-fit: scale-down;
-    overflow: hidden;
-    display: block;
     max-height: 95px;
+    left: 0;
+}
+
+.logo{
+    background-image: url("logo.png");
+    background-size: auto;
+    width: 83px;
+    height: 103px;
+    float: left;
 }
 
 .header{
     max-height: 100px;
     background-color: cornflowerblue;
     overflow: hidden;
+    width: 100%;
+    text-align: center;
+}
+
+.menuHeader{
+    width: 400px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.botonesLogin{
+    float: right;
+    padding-top: 20px;
 }
 
 .header a:hover {
@@ -41,8 +60,6 @@ body{
     border-radius: 8px;
     height: 50px;
     width: 100px;
-    margin-left: 15px;
-    margin-right: 15px;
     background-color: darkcyan;
     cursor: pointer;
     border: none;
@@ -97,27 +114,36 @@ a:-webkit-any-link{
     border-radius: 50%;
   }
 
-.menuHeader, .botonesLogin{
-    align-items: center;
-    display: inline-block;
-    padding-top: 20px;
-}
-
-.botonesLogin{
-    float: right;
+.menuAdmin a {
+    display: block;
+    position: relative;
+    width: 500px;
+    top: 100px;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .footer{
-    display: block;
+    text-align: center;
     margin-top: 30px;
     height: 80px;
     background-color: cornflowerblue;
 }
 
 .contactoFooter{
-    float: left;
+    margin: 0 auto;
+    display: inline-block;
 }
 
 .linksContacto{
     list-style-type: none;
+}
+
+.fondito{
+    background-color: burlywood;
+    margin: 0 auto;
+    border-radius: 8px;
+    max-width: 90%;
+    height: 500px;
 }
