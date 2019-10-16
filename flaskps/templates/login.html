@@ -1,25 +1,12 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <link rel="stylesheet" href="..\static\estilop.css">
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
+{%extends "base.html"%}
+{%block title%}Inicio{%endblock title%}
+{%block head%}
+{{super()}}
+{%endblock head%}
+{%block content%}
 
 <body>
-    <header class="header">
-        <a class="logo" href="inicio.html"></a>
-        <div class="menuHeader">
-            <a class="botoncito" href="">Instrumentos</a>
-            <a class="botoncito" href="">Musicos</a>
-            <a class="botoncito" href="administracion.html">Area Admin</a>
-        </div>
-        <div class="botonesLogin">
-            <a class="botoncito" href="login.html">Iniciar sesion</a>
-            <a class="botoncito" href="">Registrarse</a>
-        </div>
-    </header>
+    {%include 'header.html'%}
     <div class="split left">
         <img src="backgroundinicio.jpg" style="align-self: center; width:100%" alt="imagenOrquesta">
     </div>
@@ -39,15 +26,6 @@
             </div>
         </div>
     </div>
-    <footer class="footer">
-        <div class="contactoFooter">
-            <ul class="linksContacto">
-                <li><a href="">Acerca de nosotros</a></li>
-                <li><a href="">Contactanos</a></li>
-                <li><a href="">Ayuda</a></li>
-            </ul>
-        </div>
-    </footer>
+    {%include 'footer.html'%}
 </body>
-
-</html>
+{%endblock content%}
