@@ -7,7 +7,7 @@
 
 <body id="bodyInicio">
 	{%include 'header.html'%}
-	{%if session['logged_in']%}
+	{%if session['username'] != None%}
 		<div>Sesion iniciada</div>
 	{%endif%}
 	<div style="background-color:white; border-radius:5px">

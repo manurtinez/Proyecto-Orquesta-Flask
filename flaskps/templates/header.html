@@ -6,10 +6,9 @@
         <a class="botoncito" href="administracion.html">Area Admin</a>
     </div>
     <div class="botonesLogin">
-            <a class="botoncito" href="{{url_for('logout')}}">Cerrar Sesion</a>
-        {%if session['logged_in']%}
+        {%if session['username'] == None%}
             <a class="botoncito" href="{{url_for('login')}}">Iniciar sesion</a>
-        {%elif not session['logged_in']%}
+        {%elif session['username'] != None%}
             <a class="botoncito" href="{{url_for('logout')}}">Cerrar Sesion</a>
         {%endif%}
             <a class="botoncito" href="">Registrarse</a>
