@@ -1,12 +1,17 @@
 <header class="header">
-    <a class="logo" href="inicio.html"></a>
+    <a class="logo" href="{{url_for('index')}}"></a>
     <div class="menuHeader">
         <a class="botoncito" href="">Instrumentos</a>
         <a class="botoncito" href="">Musicos</a>
         <a class="botoncito" href="administracion.html">Area Admin</a>
     </div>
     <div class="botonesLogin">
-        <a class="botoncito" href="login.html">Iniciar sesion</a>
-        <a class="botoncito" href="">Registrarse</a>
+            <a class="botoncito" href="{{url_for('logout')}}">Cerrar Sesion</a>
+        {%if session['logged_in']%}
+            <a class="botoncito" href="{{url_for('login')}}">Iniciar sesion</a>
+        {%elif not session['logged_in']%}
+            <a class="botoncito" href="{{url_for('logout')}}">Cerrar Sesion</a>
+        {%endif%}
+            <a class="botoncito" href="">Registrarse</a>
     </div>
 </header>
