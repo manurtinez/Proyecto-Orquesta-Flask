@@ -2,7 +2,7 @@ import pymysql
 
 from flask import current_app, g
 from flask.cli import with_appcontext
-from flaskps.config import Config
+from flaskps.config import production as Config
 
 def get_db():
     if 'db' not in g:
