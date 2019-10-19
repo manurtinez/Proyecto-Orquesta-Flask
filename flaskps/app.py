@@ -1,11 +1,10 @@
 from os import path
 from flask import Flask, url_for, render_template, g, request, session, flash, redirect
-from flaskps.models import usuario
+from flaskps.models.usuario import usuario
 from flaskps.db import get_db
 
 app = Flask(__name__)
 app.config.from_pyfile('config/production.py')
-app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 
 #Autenticacion
 # app.add_url_rule('/login', 'login', login)
@@ -27,9 +26,9 @@ def login():
     params = request.form
     if request.method == 'POST':
         usuario.db = get_db()
-        user = usuario.find_by_email_and_pass(params['email'], params['password'])
+        #user = usuario.find_by_email_and_pass(params['email'], params['password'])
         #if request.form['password'] == '1234' and request.form['user'] == 'admin':
-        if user:
+        if usuarios:
             session['username'] = request.form['email']
             flash('logeo exitoso!')
             return redirect(url_for('index'))
