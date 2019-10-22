@@ -5,7 +5,6 @@ from flaskps.db import get_db
 
 app = Flask(__name__)
 app.config.from_pyfile('config/production.py')
-
 #Autenticacion
 # app.add_url_rule('/login', 'login', login)
 # app.add_url_rule('/logout', 'auth_logout', auth.logout)
@@ -36,11 +35,17 @@ def login():
             error = 'credenciales invalidas'
     return render_template('login.html', error=error)
 
+#administracion: conecta con la ruta area admin
+@app.route('/administracion.html')
+def administracion():
+     return render_template('administracion.html')
+
+
 @app.route('/logout')
 def logout():
     session.clear()
     session['username'] = None
-    return redirect(url_for('index'))
+    return redirect(url_for('administracion.html'))
 
 if __name__ == '__main__': 
   
