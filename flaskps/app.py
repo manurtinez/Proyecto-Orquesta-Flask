@@ -1,11 +1,14 @@
 from os import path
 from flask import Flask, url_for, render_template, g, request, session, flash, redirect
-from flaskps.models.usuario import usuario
-from flaskps.db import get_db
+from flaskps.models.usuario import User
+from flaskps.db import db
 from flaskps.resources import admin
+from flaskps.config import Config
 
 app = Flask(__name__)
-app.config.from_pyfile('config/production.py')
+app.config.from_object(Config)
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://"+Config.DB_USER+":"+Config.DB_PASS+"@"+Config.DB_HOST+"/"+Config.DB_NAME
+db.init_app(app)
 #Autenticacion
 # app.add_url_rule('/login', 'login', login)
 # app.add_url_rule('/logout', 'auth_logout', auth.logout)
@@ -25,10 +28,9 @@ def login():
     error = ''
     params = request.form
     if request.method == 'POST':
-        usuario.db = get_db()
-        #user = usuario.find_by_email_and_pass(params['email'], params['password'])
-        #if request.form['password'] == '1234' and request.form['user'] == 'admin':
-        if usuarios:
+        usuario = User.get_by_email_and_pass(params['email'], params['password'])
+        print(usuario)
+        if usuario:
             session['username'] = request.form['email']
             flash('logeo exitoso!')
             return redirect(url_for('index'))
@@ -62,7 +64,7 @@ def listar():
 def logout():
     session.clear()
     session['username'] = None
-    return redirect(url_for('administracion.html'))
+    return redirect(url_for('index'))
 
 if __name__ == '__main__': 
   
