@@ -2,6 +2,7 @@ from os import path
 from flask import Flask, url_for, render_template, g, request, session, flash, redirect
 from flaskps.models.usuario import usuario
 from flaskps.db import get_db
+from flaskps.resources import admin
 
 app = Flask(__name__)
 app.config.from_pyfile('config/production.py')
@@ -38,7 +39,23 @@ def login():
 #administracion: conecta con la ruta area admin
 @app.route('/administracion.html')
 def administracion():
-     return render_template('administracion.html')
+     informacion = "informacion"
+     return render_template('administracion.html', informacion=informacion)
+
+#desactivar el la pagina web FALTA desactivar los templates y agregar la opcion activar sitio
+@app.route('/desactivar.html')
+def desactivar():
+    return render_template('desactivar.html')
+
+#informacion de la orquesta FALTA agregarle para que el admin modifique la info
+@app.route('/informacion.html')
+def informacion():
+    return render_template('informacion.html')
+
+#listar los elementos de las pag FALTA implementar
+@app.route('/listar.html')
+def listar():
+    return render_template('listar.html')
 
 
 @app.route('/logout')
@@ -53,4 +70,4 @@ if __name__ == '__main__':
     # on the local development server.
     session['username'] = None
     app.secret_key = 'hola'
-    app.run()
+    app.run(debug=True)  #para que se reinicie solo el servidor

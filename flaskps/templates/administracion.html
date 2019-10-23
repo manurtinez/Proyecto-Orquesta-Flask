@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="..\static\estilop.css">
-    <title>Administracion</title>
-</head>
+<html lang="en">
+  <head>
+    {% block head %}
+    <link rel="stylesheet" href="static\estilop.css" />
+    <title>{% block title %}Administracion{% endblock %}</title>
+    {% endblock %}
+  </head>
 
 <body>
     <header class="header">
@@ -23,9 +23,9 @@
     <div class="fondito">
         <h1 style="padding-top: 15px">Menu administrador</h1>
         <nav class="menuAdmin">
-            <a class="botoncito" href="/template/informacion.html">Informacion de la Orquesta Escuela</a>
-            <a class="botoncito" href="">Cantidad de elementos por pagina</a>
-            <a class="botoncito" href="/template/desactivar.html">Habilitar/Deshabilitar sitio</a>
+            <a class="botoncito" href="./informacion.html">{{ informacion }}</a>
+            <a class="botoncito" href="./listar.html">Cantidad de elementos por pagina</a>
+            <a class="botoncito" href="./desactivar.html">Habilitar/Deshabilitar sitio</a>
         </nav>
     </div>
     <footer class="footer">
