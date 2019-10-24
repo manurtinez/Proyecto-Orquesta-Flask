@@ -1,4 +1,5 @@
 from flaskps.db import db
+from sqlalchemy import update
 
 class User(db.Model):
     __tablename__ = 'usuario'
@@ -7,55 +8,31 @@ class User(db.Model):
     password = db.Column(db.String)
     def get_by_id(id):
         return User.query.get(id)
+
     def get_by_email_and_pass(email, password):
         return User.query.filter_by(email=email, password=password).first()
-#     db = None
 
-#     @classmethod
-#     def all(cls):
-#         sql = "SELECT * FROM usuario"
+    def all():
+        return User.query.all()
 
-#         cursor = cls.db.cursor()
-#         cursor.execute(sql)
+    def create(em,us,pa,ac,up,cr,fi,la)
 
-#         return cursor.fetchall()
+        elemento = Usuario (email=em, username=us, password=pa, activo=ac, updated_at=up, 
+        created_at=cr, first_name=fi, last_name=la )
+        return True
+    
+    def select_activos():
+        return User.query.filter_by(activo = 1).all()
 
-#     @classmethod
-#     def create(cls, em, us, pa, ac, up, cr, fi, la): #1° no esten vacios (verificar desde el controlador, resources > usuario.py).
-#         sql = """
-#             INSERT INTO usuario (email, username, password, activo, updated_at, created_at, first_name, last_name )
-#             VALUES (@em, @us, @pa, @ac, @up, @cr, @fi, @la) 
-#         """
-#         cursor = cls.db.cursor()
-#         cursor.execute(sql)
-#         cls.db.commit()
+    def find_by_username(us):
+        return User.query.filter_by(username=us).first()
 
-#         return True
+    def activar_user(us):
+        obj = update(usuario).where(username=us).\
+        values(activo='1')
+        return True
 
-#     @classmethod
-#     def select_activos(cls):
-#         sql = "SELECT * FROM usuario WHERE usuario.activo = 1"
 
-#         cursor = cls.db.cursor()
-#         cursor.execute(sql)
-
-#         return cursor.fetchall()
-
-#     @classmethod
-#     def find_by_email_and_pass(cls,e,p):
-#         sql = "SELECT * FROM usuario WHERE usuario.email = @e AND usuario.password = @p" 
-#         #asegurar que compare con las variables, no con el string
-
-#         cursor = cls.db.cursor()
-#         resultado = cursor.execute(sql) 
-#         return resultado
-
-#     @classmethod
-#     def find_by_username(cls, username):
-#         sql = "SELECT * FROM usuario WHERE usuario.username = @username"
-#         cursor = cls.db.cursor()
-#         resultado = cursor.execute(sql)
-#         return resultado
 
 #     @classmethod
 #     def activar_user(cls,username):
@@ -73,5 +50,6 @@ class User(db.Model):
 #         cursor.execute(sql)
 #         return True
 
+# >>>>HACER ASIGNACIÓN DE ROLES
 
 # #por cada metodo va su equivalente en el controlador, ahi aseguro q no este vacio. redirigir desde el mismo controlador.
