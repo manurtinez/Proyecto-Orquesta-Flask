@@ -41,7 +41,7 @@ def login():
 #administracion: conecta con la ruta area admin
 @app.route('/administracion.html')
 def administracion():
-     informacion = "informacion"
+     informacion = "Informacion de la Orquesta"
      return render_template('administracion.html', informacion=informacion)
 
 #desactivar el la pagina web FALTA desactivar los templates y agregar la opcion activar sitio
@@ -49,15 +49,27 @@ def administracion():
 def desactivar():
     return render_template('desactivar.html')
 
-#informacion de la orquesta FALTA agregarle para que el admin modifique la info
-@app.route('/informacion.html')
+#informacion de la orquesta LISTO!!
+@app.route('/informacion.html', methods=['POST', 'GET'])
 def informacion():
-    return render_template('informacion.html')
+    titulo = "Orquesta de Berisso"
+    descripcion = "La Orquesta Escuela de Berisso comenzó a funcionar en septiembre del 2005"
+    mail = "orquesta@gmail.com"
+    if request.method == 'POST':
+        titulo = request.form['titulo']
+        descripcion = request.form['descripcion']
+        mail = request.form['mail']
+    return render_template('informacion.html', titulo=titulo, descripcion=descripcion, mail=mail)
 
 #listar los elementos de las pag FALTA implementar
 @app.route('/listar.html')
 def listar():
     return render_template('listar.html')
+
+#formulario para editar informacion
+@app.route('/formulario.html')
+def formulario():
+    return render_template('formulario.html')
 
 
 @app.route('/logout')
