@@ -1,16 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    {% block head %}
-    <link rel="stylesheet" href="static\estilop.css" />
-    <title>{% block title %}Informacion{% endblock %}</title>
-    {% endblock %}
-  </head>
+{%extends "base.html"%}
+{%block title%}Inicio{%endblock title%}
+{%block head%}
+{{super()}}
+{%endblock head%}
+{%block content%}
   <body>
+      {%include 'header.html'%}
     <h1>titulo:{{titulo}}</h1>
     <h1>Descripcion:{{descripcion}}</h1>
     <h1>mail de contacto:{{mail}}</h1>
     <a class="botoncito" href="./formulario.html">Editar</a>
     {%include 'footer.html'%}
   </body>
-</html>
+  {%endblock content%}

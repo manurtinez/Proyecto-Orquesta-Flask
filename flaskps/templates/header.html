@@ -11,6 +11,6 @@
         {%elif session['username'] != None%}
             <a class="botoncito" href="{{url_for('logout')}}">Cerrar Sesion</a>
         {%endif%}
-            <a class="botoncito" href="">Registrarse</a>
+            <a class="botoncito" href="{{ url_for('registro') }}">Registrarse</a>
     </div>
 </header>
