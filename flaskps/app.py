@@ -23,6 +23,10 @@ db.init_app(app)
 def index():
     return render_template('inicio.html')
 
+@app.route('/registro.html', methods=['POST', 'GET'])
+def registro():
+    return render_template('registro.html')
+
 @app.route('/login.html', methods=['POST', 'GET'])
 def login():
     error = ''
