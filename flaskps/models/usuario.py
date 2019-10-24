@@ -15,12 +15,15 @@ class User(db.Model):
     def all():
         return User.query.all()
 
-    def create(em,us,pa,ac,up,cr,fi,la)
+    def create(em,us,pa,ac,up,cr,fi,la):
 
         elemento = Usuario (email=em, username=us, password=pa, activo=ac, updated_at=up, 
         created_at=cr, first_name=fi, last_name=la )
+
+        dbsession.add (elemento)
+        dbsession.flush() #probar este modulo T^T   
         return True
-    
+     
     def select_activos():
         return User.query.filter_by(activo = 1).all()
 
@@ -28,7 +31,7 @@ class User(db.Model):
         return User.query.filter_by(username=us).first()
 
     def activar_user(us):
-        obj = update(usuario).where(username=us).\
+        obj = update(usuario).where(usuario_username=us).\
         values(activo='1')
         return True
 
