@@ -29,7 +29,7 @@ class User(db.Model):
         created_at=cr, first_name=fi, last_name=la )
 
         dbsession.add (elemento)
-        dbsession.flush() #probar este modulo T^T   
+        dbsession.commit()
         return True
      
     def select_activos():
@@ -41,11 +41,13 @@ class User(db.Model):
     def activar_user(us):
         obj = update(usuario).where(username=us).\
         values(activo='1')
+        session.commit()
         return True
 
     def desactivar_user(us):
         obj = update(usuario).where(username=us).\
         values (activo= '0')
+        session.commit()
         return True
 
 #por cada metodo va su equivalente en el controlador, ahi aseguro q no este vacio. redirigir desde el mismo controlador.
