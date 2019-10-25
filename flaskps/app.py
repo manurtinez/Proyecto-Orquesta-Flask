@@ -1,23 +1,30 @@
 from os import path
 from flask import Flask, url_for, render_template, g, request, session, flash, redirect
 from flaskps.models.usuario import User
+from flaskps.resources import user
 from flaskps.db import db
-from flaskps.resources import admin
+from flaskps.resources import admin, auth
 from flaskps.config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://"+Config.DB_USER+":"+Config.DB_PASS+"@"+Config.DB_HOST+"/"+Config.DB_NAME
 db.init_app(app)
+
+
 #Autenticacion
-# app.add_url_rule('/login', 'login', login)
-# app.add_url_rule('/logout', 'auth_logout', auth.logout)
-# app.add_url_rule(
-#     '/authenticate',
-#     'auth_authenticate',
-#     auth.authenticate,
-#     methods=['POST']
-# )
+app.add_url_rule('/login', 'login', auth.login)
+app.add_url_rule('/logout', 'logout', auth.logout)
+app.add_url_rule(
+    '/authenticate',
+    'authenticate',
+    auth.authenticate,
+    methods=['POST', 'GET']
+)
+
+#Usuario
+# app.add_url_rule('/user/registro', 'registro', user.registrar)
+app.add_url_rule('/user/crear', 'crear', user.crear, methods=['POST'])
 
 @app.route('/')
 def index():
@@ -25,22 +32,7 @@ def index():
 
 @app.route('/registro.html', methods=['POST', 'GET'])
 def registro():
-    return render_template('registro.html')
-
-@app.route('/login.html', methods=['POST', 'GET'])
-def login():
-    error = ''
-    params = request.form
-    if request.method == 'POST':
-        usuario = User.get_by_email_and_pass(params['email'], params['password'])
-        print(usuario)
-        if usuario:
-            session['username'] = request.form['email']
-            flash('logeo exitoso!')
-            return redirect(url_for('index'))
-        else:
-            error = 'credenciales invalidas'
-    return render_template('login.html', error=error)
+    return render_template('/user/registro.html')
 
 #administracion: conecta con la ruta area admin
 @app.route('/administracion.html')
@@ -74,13 +66,6 @@ def listar():
 @app.route('/formulario.html')
 def formulario():
     return render_template('formulario.html')
-
-
-@app.route('/logout')
-def logout():
-    session.clear()
-    session['username'] = None
-    return redirect(url_for('index'))
 
 if __name__ == '__main__': 
   
