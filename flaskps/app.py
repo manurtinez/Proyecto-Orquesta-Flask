@@ -5,12 +5,22 @@ from flaskps.resources import user
 from flaskps.db import db
 from flaskps.resources import admin, auth
 from flaskps.config import Config
+from flask_mysqldb import MySQL #xampp coneccion bd
 
 app = Flask(__name__)
 app.config.from_object(Config)
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://"+Config.DB_USER+":"+Config.DB_PASS+"@"+Config.DB_HOST+"/"+Config.DB_NAME
 db.init_app(app)
 
+#Conexion a la base de datos para xampp instalar: pip install flask-mysqldb
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'root'
+app.config['MYSQL_DB'] = 'grupo36'
+mysql = MySQL(app)
+
+#settings
+app.secret_key = 'mysecretkey'
 
 #Autenticacion
 app.add_url_rule('/login', 'login', auth.login)
@@ -34,7 +44,7 @@ def index():
 def registro():
     return render_template('/user/registro.html')
 
-#administracion: conecta con la ruta area admin
+#ADMINISTRACION: conecta con la ruta area admin
 @app.route('/administracion.html')
 def administracion():
      informacion = "Informacion de la Orquesta"
@@ -48,14 +58,10 @@ def desactivar():
 #informacion de la orquesta LISTO!!
 @app.route('/informacion.html', methods=['POST', 'GET'])
 def informacion():
-    titulo = "Orquesta de Berisso"
-    descripcion = "La Orquesta Escuela de Berisso comenzó a funcionar en septiembre del 2005"
-    mail = "orquesta@gmail.com"
-    if request.method == 'POST':
-        titulo = request.form['titulo']
-        descripcion = request.form['descripcion']
-        mail = request.form['mail']
-    return render_template('informacion.html', titulo=titulo, descripcion=descripcion, mail=mail)
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM configuracion')
+    data = cur.fetchall()
+    return render_template('informacion.html', contacts = data)
 
 #listar los elementos de las pag FALTA implementar
 @app.route('/listar.html')
@@ -63,9 +69,23 @@ def listar():
     return render_template('listar.html')
 
 #formulario para editar informacion
-@app.route('/formulario.html')
-def formulario():
-    return render_template('formulario.html')
+@app.route('/formulario.html/<id>')
+def formulario(id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM configuracion WHERE id = %s', (id))
+    data = cur.fetchall()
+    return render_template('formulario.html', contact = data[0])
+
+@app.route('/editar/<id>', methods = ['POST'])
+def update_conf(id):
+    if request.method == 'POST':
+        titulo = request.form['titulo']
+        descripcion = request.form['descripcion']
+        mail = request.form['mail']
+        cur = mysql.connection.cursor()
+        cur.execute('UPDATE configuracion SET titulo = %s, descripcion = %s, mail = %s WHERE id = %s', (titulo, descripcion, mail, id))
+        mysql.connection.commit()
+        return redirect(url_for('administracion.html'))
 
 if __name__ == '__main__': 
   
@@ -73,4 +93,4 @@ if __name__ == '__main__':
     # on the local development server.
     session['username'] = None
     app.secret_key = 'hola'
-    app.run(debug=True)  #para que se reinicie solo el servidor
+    app.run(debug = True)  #para que se reinicie solo el servidor

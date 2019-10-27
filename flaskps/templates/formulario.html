@@ -4,20 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="..\static\estilop.css">
-    <title>Formulario</title>
+    <title>Editar</title>
 </head>
 
 <body>
     
-    <form action="/informacion.html" method="POST">
-        <input type="text" name="titulo" placeholder="titulo">
-        <input type="text" name="descripcion" placeholder="descripcion">
-        <input type="text" name="mail" placeholder="mail">
+    <form action="/editar/{{contact.0}}" method="POST">
+        <input type="text" name="titulo" placeholder="titulo" value="{{contact.1}}">
+        <input type="text" name="descripcion" placeholder="descripcion" value="{{contact.2}}">
+        <input type="text" name="mail" placeholder="mail" value="{{contact.3}}">
         <button type="submit">
             Guardar
         </button>
     </form>
-    {%include 'footer.html'%}
+{%include 'footer.html'%}
 </body>
-
 </html>
