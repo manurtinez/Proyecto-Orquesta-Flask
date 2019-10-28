@@ -22,6 +22,8 @@ class User_tiene_rol(db.Model):
         session.commit()
         return True 
 
+    # El siguiente método se usa con los id's, para ello cada clase tiene un método por el cual
+    #   pueden obtenerse.
     def tiene_rol(uid, rid): #ESTE METODO PUEDE USARSE PARA SABER SI EL USUARIO EN CUESTIÓN, 
                              #TIENE UN DETERMINADO ROL, VALIDAR EL RESULTADO CON NULO EN EL CONTROLADOR (comparar con none)
     return User_tiene_rol.query.filter_by(usuario_id=uid, rol_id=rid).first()

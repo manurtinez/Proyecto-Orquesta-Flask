@@ -43,8 +43,9 @@ class User(db.Model):
     def select_inactivos():
         return User.query.filter_by(activo = 0).all()
 
+    #CON ESTE MÉTODO SE PUEDE PEDIR SU ID PARA ASIGNAR ROLES
     def find_by_username(us):
-        return User.query.filter_by(username=us).first()  #CON ESTE MÉTODO SE PUEDE PEDIR SU ID PARA ASIGNAR ROLES
+        return User.query.filter_by(username=us).first() 
 
     def activar_user(us):
         obj = update(usuario).where(username=us).\
