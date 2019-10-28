@@ -13,12 +13,22 @@
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Nombre de usuario</th>
+                <th>Opciones</th>
             </tr>
             {% for user in lista %}
             <tr>
                 <th>{{user.first_name}}</th>
                 <th>{{user.last_name}}</th>
                 <th>{{user.username}}</th>
+                <th>
+                    <nav>
+                        <a href="{{ url_for('showUser')}}">Mostrar</a>
+                        {% if session['username'] == 'mail1@gmail.com' %}
+                        <a href="">Actualizar</a>
+                        <a href="">Eliminar</a>
+                        {% endif %}
+                    </nav>
+                </th>
             </tr>
             {% endfor %}
         </table>
