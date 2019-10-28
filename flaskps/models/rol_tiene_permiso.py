@@ -9,5 +9,5 @@ class rol_tiene_permiso(db.Model):
     
     # Con este método, se sabe si un rol tiene un permiso específico. Se debe utilizar pasándole los id de ambas cosas 
     #   (para ello ambas clases poseen un método para averiguarlo)
-    def rol_tiene_permiso(idrol,idpermiso):
+    def tiene_permiso(idrol,idpermiso):
         return permiso.query.filter_by(id_rol=idrol, id_permiso=idpermiso).first()
