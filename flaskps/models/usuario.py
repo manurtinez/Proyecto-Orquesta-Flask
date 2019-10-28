@@ -28,8 +28,8 @@ class User(db.Model):
         elemento = usuario (email=em, username=us, password=pa, activo=ac, updated_at=up, 
         created_at=cr, first_name=fi, last_name=la )
 
-        dbsession.add (elemento)
-        dbsession.commit()
+        db.session.add (elemento)
+        db.session.commit()
         return True
      
     #Búsqueda por activo/inactivo
@@ -46,13 +46,13 @@ class User(db.Model):
     def activar_user(us):
         obj = update(usuario).where(username=us).\
         values(activo='1')
-        session.commit()
+        db.session.commit()
         return True
 
     def desactivar_user(us):
         obj = update(usuario).where(username=us).\
         values (activo= '0')
-        session.commit()
+        db.session.commit()
         return True
 
     
@@ -60,19 +60,19 @@ class User(db.Model):
     def actualizar_username(usernameviejo,usernamenuevo):
         obj = update(usuario).where(username=usernameviejo).\
         values (username= usernamenuevo)
-        session.commit()
+        db.session.commit()
         return True
 
     def actualizar_password(usern,contraseña):
         obj = update(usuario).where(username=usern).\
         values (password=contraseña)
-        session.commit()
+        db.session.commit()
         return True
 
     #Baja fisica del sistema
     def eliminar_usuario(uname):
         User.query.filter_by(username=uname).delete()
-        session.commit()
+        db.session.commit()
         return True 
 
 #por cada metodo va su equivalente en el controlador, ahi aseguro q no este vacio. redirigir desde el mismo controlador.

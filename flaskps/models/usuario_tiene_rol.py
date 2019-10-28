@@ -12,14 +12,14 @@ class User_tiene_rol(db.Model):
         #agrega tupla a la tabla
         elemento = usuario_tiene_rol (usuario_id = idusuario, rol_id = idrol)
         dbsession.add (elemento)
-        dbsession.commit()   
+        db.session.commit()   
         return True
 
 
     def desasignar_rol(uid, rid):
         #borra tupla de la tabla
         User_tiene_rol.query.filter_by(usuario_id=uid, rol_id=rid).delete()
-        session.commit()
+        db.session.commit()
         return True 
 
     # El siguiente método se usa con los id's, para ello cada clase tiene un método por el cual
