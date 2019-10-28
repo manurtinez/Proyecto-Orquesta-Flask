@@ -1,0 +1,28 @@
+{%extends "base.html"%} 
+{%block title%}Inicio{%endblock title%} 
+{%block head%} 
+{{super()}} 
+{%endblock head%}
+{%block content%}
+
+<body id="bodyListado">
+    {%include 'header.html'%}
+    <div class="fondito">
+        <table class="listadoUsuarios">
+            <tr class="titulosTabla">
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Nombre de usuario</th>
+            </tr>
+            {% for user in lista %}
+            <tr>
+                <th>{{user.first_name}}</th>
+                <th>{{user.last_name}}</th>
+                <th>{{user.username}}</th>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {%include 'footer.html'%}
+</body>
+{%endblock content%}

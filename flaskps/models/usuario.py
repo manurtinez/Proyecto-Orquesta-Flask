@@ -23,6 +23,10 @@ class User(db.Model):
     #agregue esta consulta para chequear si no existe un usuario al registrarse
     def get_by_email(email):
         return User.query.filter_by(email=email).first()
+
+    #esta es para poder buscar por usuario
+    def get_by_username(u):
+        return User.query.filter_by(username=u).first()
     
     def all():
         return User.query.all()

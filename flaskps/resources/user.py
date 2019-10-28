@@ -20,3 +20,7 @@ def crear():
             User.create(p['email'], p['user'], p['password'], 1, date.today(), date.today(), p['nombre'], p['apellido'])
             session['username'] = p['user']
             return redirect('index')
+
+def listadoUsers():
+    lista = User.all()
+    return render_template('user/listado.html', lista=lista)

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     {% block head %}
-    <link rel="stylesheet" href="static\estilop.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilop.css') }}">
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
