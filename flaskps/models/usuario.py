@@ -32,8 +32,12 @@ class User(db.Model):
         dbsession.commit()
         return True
      
+    #Búsqueda por activo/inactivo
     def select_activos():
         return User.query.filter_by(activo = 1).all()
+
+    def select_inactivos():
+        return User.query.filter_by(activo = 0).all()
 
     def find_by_username(us):
         return User.query.filter_by(username=us).first()  #CON ESTE MÉTODO SE PUEDE PEDIR SU ID PARA ASIGNAR ROLES
@@ -49,5 +53,25 @@ class User(db.Model):
         values (activo= '0')
         session.commit()
         return True
+
+    
+    #Consultas relacionadas a actualización
+    def actualizar_username(usernameviejo,usernamenuevo):
+        obj = update(usuario).where(username=usernameviejo).\
+        values (username= usernamenuevo)
+        session.commit()
+        return True
+
+    def actualizar_password(usern,contraseña):
+        obj = update(usuario).where(username=usern).\
+        values (password=contraseña)
+        session.commit()
+        return True
+
+    #Baja fisica del sistema
+    def eliminar_usuario(uname):
+        User.query.filter_by(username=uname).delete()
+        session.commit()
+        return True 
 
 #por cada metodo va su equivalente en el controlador, ahi aseguro q no este vacio. redirigir desde el mismo controlador.
