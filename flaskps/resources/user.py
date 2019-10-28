@@ -1,4 +1,4 @@
-from flask import render_template, abort, url_for, request, redirect, session
+from flask import render_template, abort, url_for, request, redirect, session, flash
 from flaskps.models.usuario import User
 from datetime import date
 
@@ -14,7 +14,8 @@ def crear():
         p = request.form
         user = User.get_by_email(p['email'])
         if user:
-            return redirect(url_for('index'))
+            flash('el mail ya se encuentra registrado!')
+            return redirect(url_for('registro'))
         else:
             User.create(p['email'], p['user'], p['password'], 1, date.today(), date.today(), p['nombre'], p['apellido'])
             session['username'] = p['user']

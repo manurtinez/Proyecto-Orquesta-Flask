@@ -9,6 +9,15 @@
     {%include 'header.html'%}
     <div class="fondito">
         <div class="centered">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                  <ul class=flashes>
+                  {% for message in messages %}
+                    <li>{{ message }}</li>
+                  {% endfor %}
+                  </ul>
+                {% endif %}
+              {% endwith %}
             <form class="formLogin" method="POST" action="{{url_for('crear')}}">
                 <p>Nombre:</p>
                 <input id="nombre" class="areaEscribir" name="nombre" type="text" required>
