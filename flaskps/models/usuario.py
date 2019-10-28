@@ -20,12 +20,16 @@ class User(db.Model):
     def get_by_email_and_pass(email, password):
         return User.query.filter_by(email=email, password=password).first()
 
+    #agregue esta consulta para chequear si no existe un usuario al registrarse
+    def get_by_email(email):
+        return User.query.filter_by(email=email).first()
+    
     def all():
         return User.query.all()
 
     def create(em,us,pa,ac,up,cr,fi,la):
 
-        elemento = usuario (email=em, username=us, password=pa, activo=ac, updated_at=up, 
+        elemento = User (email=em, username=us, password=pa, activo=ac, updated_at=up, 
         created_at=cr, first_name=fi, last_name=la )
 
         db.session.add (elemento)

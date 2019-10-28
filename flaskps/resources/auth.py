@@ -11,8 +11,8 @@ def authenticate():
     usuario = User.get_by_email_and_pass(params['email'], params['password'])
     print(usuario)
     if not usuario:
-        error = 'credenciales invalidas'
-        return render_template('login.html', error=error)
+        flash('credenciales invalidas')
+        return redirect(url_for('login'))
     session['username'] = request.form['email']
     flash('logeo exitoso!')
     return redirect(url_for('index'))
