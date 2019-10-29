@@ -4,7 +4,7 @@ from sqlalchemy import update
 class configuracion(db.Model):
     __tablename__= 'configuracion'
 
-    id = db.Column(db.Integer)
+    id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String)
     descripcion = db.Column(db.String)
     mail = db.Column(db.String)
@@ -48,3 +48,6 @@ class configuracion(db.Model):
 
     def get_config():
         return configuracion.query.filter_by(id=1).first()
+    
+    def get_titulo():
+        return configuracion.query.filter_by(titulo="Orquesta de Berisso").first()

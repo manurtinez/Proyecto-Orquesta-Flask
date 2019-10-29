@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, session, url_for, flash
 from flaskps.db import db
-#from flaskps.models.configuracion import Configuracion
+from flaskps.models.configuracion import configuracion
 
 def administracion():
      return render_template('administracion.html')
@@ -13,15 +13,14 @@ def administracion():
 #informacion de la orquesta LISTO!!
 
 def informacion():
+    tabla = configuracion.get_config()
+    print(tabla)
     #cur = mysql.connection.cursor()
     #cur.execute('SELECT * FROM configuracion')
     #data = cur.fetchall()
     return render_template('informacion.html')
 
-#listar los elementos de las pag FALTA implementar
-#@app.route('/listar.html')
-#def listar():
-#    return render_template('listar.html')
+
 
 #formulario para editar informacion
 
@@ -41,3 +40,8 @@ def formulario():
  #        cur.execute('UPDATE configuracion SET titulo = %s, descripcion = %s, mail = %s WHERE id = %s', (titulo, descripcion, mail, id))
  #        mysql.connection.commit()
  #       return redirect(url_for('administracion.html'))
+
+ #listar los elementos de las pag FALTA implementar
+#@app.route('/listar.html')
+#def listar():
+#    return render_template('listar.html')
