@@ -9,13 +9,15 @@
 
 <body>
     
-    <form action="">
-        <input type="text" name="titulo" placeholder="titulo" ">
-        <input type="text" name="descripcion" placeholder="descripcion" >
-        <input type="text" name="mail" placeholder="mail" >
-        <button type="submit">
-            Guardar
-        </button>
+    <form action="" method="post">
+        <label for="text">Titulo: </label>
+        <input type="text" id="titulo" name="titulo" /><br>
+        <label for="descripcion">Descripcion: </label>
+        <input type="text" id="descripcion" name="descripcion" /><br>
+        <label for="text">Mail: </label>
+        <input type="text" id="mail" name="mail" /><br>
+        <input class="botoncito" type="submit" id="send-signup" name="signup" value="Editar" />
+        <a class="botoncito" href="{{ url_for('informacion')}}">Volver</a>
     </form>
 {%include 'footer.html'%}
 </body>

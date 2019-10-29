@@ -44,10 +44,10 @@ app.add_url_rule('/user/showUser', 'showUser', user.showUser)
 app.add_url_rule('/user/buscar', 'buscarUsuario', user.buscar, methods=['POST'])
 
 #ADMINISTRACION
-# app.add_url_rule('/administracion.html', 'administracion', admin.administracion)
+app.add_url_rule('/administracion.html', 'administracion', admin.administracion)
 app.add_url_rule('/informacion.html', 'informacion', admin.informacion)
- #@app.route('/<id>')
-app.add_url_rule('/formulario.html', 'formulario', admin.formulario)
+app.add_url_rule('/formulario.html', 'formulario', admin.formulario, methods=['GET', 'POST'])
+
 
 @app.route('/')
 def index():
@@ -58,15 +58,15 @@ def index():
 #     return render_template('/user/registro.html')
 
 #ADMINISTRACION: conecta con la ruta area admin
-@app.route('/administracion.html')
-def administracion():
-     informacion = "Informacion de la Orquesta"
-     return render_template('administracion.html', informacion=informacion)
+#@app.route('/administracion.html')
+#def administracion():
+#     informacion = "Informacion de la Orquesta"
+#     return render_template('administracion.html', informacion=informacion)
 
 #desactivar el la pagina web FALTA desactivar los templates y agregar la opcion activar sitio
-@app.route('/desactivar.html')
-def desactivar():
-    return render_template('desactivar.html')
+#@app.route('/desactivar.html')
+#def desactivar():
+#    return render_template('desactivar.html')
 
 #informacion de la orquesta LISTO!!
 # @app.route('/informacion.html', methods=['POST', 'GET'])
@@ -77,9 +77,9 @@ def desactivar():
 #     return render_template('informacion.html', contacts = data)
 
 #listar los elementos de las pag FALTA implementar
-@app.route('/listar.html')
-def listar():
-    return render_template('listar.html')
+#@app.route('/listar.html')
+#def listar():
+#    return render_template('listar.html')
 
 #formulario para editar informacion
 # @app.route('/formulario.html/<id>')
