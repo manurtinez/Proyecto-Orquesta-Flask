@@ -37,19 +37,25 @@ app.add_url_rule(
 )
 
 #Usuario
-#app.add_url_rule('/user/registro', 'registro', user.registrar)
+app.add_url_rule('/user/registro', 'registro', user.registrar)
 app.add_url_rule('/user/crear', 'crear', user.crear, methods=['POST'])
 app.add_url_rule('/user/listado', 'listadoUsers', user.listadoUsers)
 app.add_url_rule('/user/showUser', 'showUser', user.showUser)
 app.add_url_rule('/user/buscar', 'buscarUsuario', user.buscar, methods=['POST'])
 
+#ADMINISTRACION
+# app.add_url_rule('/administracion.html', 'administracion', admin.administracion)
+app.add_url_rule('/informacion.html', 'informacion', admin.informacion)
+ #@app.route('/<id>')
+app.add_url_rule('/formulario.html', 'formulario', admin.formulario)
+
 @app.route('/')
 def index():
     return render_template('inicio.html')
 
-@app.route('/registro.html', methods=['POST', 'GET'])
-def registro():
-    return render_template('/user/registro.html')
+# @app.route('/registro.html', methods=['POST', 'GET'])
+# def registro():
+#     return render_template('/user/registro.html')
 
 #ADMINISTRACION: conecta con la ruta area admin
 @app.route('/administracion.html')

@@ -8,9 +8,9 @@
     <div class="botonesLogin">
         {%if session['username'] == None%}
             <a class="botoncito" href="{{url_for('login')}}">Iniciar sesion</a>
+            <a class="botoncito" href="{{ url_for('registro') }}">Registrarse</a>
         {%elif session['username'] != None%}
             <a class="botoncito" href="{{url_for('logout')}}">Cerrar Sesion</a>
         {%endif%}
-            <a class="botoncito" href="{{ url_for('registro') }}">Registrarse</a>
     </div>
 </header>
