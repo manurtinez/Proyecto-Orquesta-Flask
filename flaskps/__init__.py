@@ -47,7 +47,8 @@ app.add_url_rule('/user/buscar', 'buscarUsuario', user.buscar, methods=['POST'])
 app.add_url_rule('/administracion.html', 'administracion', admin.administracion)
 app.add_url_rule('/informacion.html', 'informacion', admin.informacion)
 app.add_url_rule('/formulario.html', 'formulario', admin.formulario, methods=['GET', 'POST'])
-
+app.add_url_rule('/desactivar.html', 'desactivar', admin.desactivar)
+app.add_url_rule('/activar.html', 'activar', admin.activar)
 
 @app.route('/')
 def index():

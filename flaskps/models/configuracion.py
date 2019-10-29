@@ -31,15 +31,15 @@ class configuracion(db.Model):
         return True
 
     def set_cantListar(cant):
-        obj = update(configuracion).where(id=1).\
-        values(cantListar=cant)
+        obj = configuracion.query.filter_by(id=1).first()
+        obj.cantListar = cant
         db.session.commit()
         return True
     
     def set_habilitacion(valor):
         # 1 para habilitado. 0 para deshabilitado.
-        obj = update(configuracion).where(id=1).\
-        values(sitio_habilitado=valor)
+        obj = configuracion.query.filter_by(id=1).first()
+        obj.sitio_habilitado = valor
         db.session.commit()
         return True
     
