@@ -1,13 +1,17 @@
-{%extends "base.html"%} 
-{%block title%}Inicio{%endblock title%} 
-{%block head%} 
-{{super()}} 
+{%extends "base.html"%}
+{%block title%}Inicio{%endblock title%}
+{%block head%}
+{{super()}}
 {%endblock head%}
 {%block content%}
 
 <body id="bodyListado">
     {%include 'header.html'%}
     <div class="fondito">
+        <form action="{{ url_for('buscarUsuario')}}" method="POST">
+            <input type="text" id="buscarUser" style="width: 300px; height: 30px;" name="nombre" placeholder="buscar usuario">
+            <input type="submit" value="Buscar">
+        </form>
         <table class="listadoUsuarios">
             <tr class="titulosTabla">
                 <th>Nombre</th>
@@ -17,10 +21,10 @@
             </tr>
             {% for user in lista %}
             <tr>
-                <th>{{user.first_name}}</th>
-                <th>{{user.last_name}}</th>
-                <th>{{user.username}}</th>
-                <th>
+                <td>{{user.first_name}}</td>
+                <td>{{user.last_name}}</td>
+                <td>{{user.username}}</td>
+                <td>
                     <nav>
                         <a href="{{ url_for('showUser')}}">Mostrar</a>
                         {% if session['username'] == 'mail1@gmail.com' %}
@@ -28,11 +32,51 @@
                         <a href="">Eliminar</a>
                         {% endif %}
                     </nav>
-                </th>
+                </td>
             </tr>
             {% endfor %}
         </table>
     </div>
     {%include 'footer.html'%}
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("buscarUser");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("listadoUsuarios");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('form').on('submit', function (event) {
+                $.ajax({
+                    data: {
+                        busqueda: $('#buscarUser').val()
+                    },
+                    type: 'POST',
+                    url: '/buscar'
+                })
+                    .done(function (data) {
+                        if (data.users) {
+
+                        }
+                    }
+                    )
+            }
+            )
+        })
+    </script>
 </body>
 {%endblock content%}

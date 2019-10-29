@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 #config db
+app.secret_key = 'hola'
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://"+Config.DB_USER+":"+Config.DB_PASS+"@"+Config.DB_HOST+"/"+Config.DB_NAME
 db.init_app(app)
 
@@ -40,6 +41,7 @@ app.add_url_rule(
 app.add_url_rule('/user/crear', 'crear', user.crear, methods=['POST'])
 app.add_url_rule('/user/listado', 'listadoUsers', user.listadoUsers)
 app.add_url_rule('/user/showUser', 'showUser', user.showUser)
+app.add_url_rule('/user/buscar', 'buscarUsuario', user.buscar, methods=['POST'])
 
 @app.route('/')
 def index():

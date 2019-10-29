@@ -28,3 +28,13 @@ def listadoUsers():
 def showUser():
     #implementar modal para info
     return(render_template('inicio.html'))
+
+def buscar():
+    nombre = request.form['nombre']
+    user = User.get_by_username(nombre)
+    if user:
+        lista = []
+        lista.append(user)
+    else:
+        lista = User.all()
+    return render_template('user/listado.html', lista=lista)
