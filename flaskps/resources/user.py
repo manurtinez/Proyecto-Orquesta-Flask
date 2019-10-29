@@ -46,10 +46,15 @@ def buscar():
     if tabla.sitio_habilitado == 0:
         return render_template('desactivar.html')
     nombre = request.form['nombre']
-    user = User.get_by_username(nombre)
-    if user:
-        lista = []
-        lista.append(user)
+    if nombre == 'activo':
+        lista = User.select_activos()
+    elif nombre == 'inactivo':
+        lista = User.select_inactivos()
     else:
-        lista = User.all()
+        user = User.get_by_username(nombre)
+        if user:
+            lista = []
+            lista.append(user)
+        else:
+            lista = User.all()
     return render_template('user/listado.html', lista=lista)

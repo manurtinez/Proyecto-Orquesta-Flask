@@ -17,6 +17,7 @@
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Nombre de usuario</th>
+                <th>Activo?</th>
                 <th>Opciones</th>
             </tr>
             {% for user in lista %}
@@ -24,6 +25,13 @@
                 <td>{{user.first_name}}</td>
                 <td>{{user.last_name}}</td>
                 <td>{{user.username}}</td>
+                <td>
+                    {% if user.activo == 1 %}
+                        Si
+                    {% else %}
+                        No
+                    {% endif %}
+                </td>
                 <td>
                     <nav>
                         <a href="{{ url_for('showUser')}}">Mostrar</a>

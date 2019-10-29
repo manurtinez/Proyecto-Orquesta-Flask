@@ -4,3 +4,4 @@ flaskps/grupo36.sql
 flask_env/
 sqlite3/
 .vscode/
+flaskps/config/development.py
