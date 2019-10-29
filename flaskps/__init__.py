@@ -1,6 +1,7 @@
 from os import path
 from flask import Flask, url_for, render_template, g, request, session, flash, redirect
 from flaskps.models.usuario import User
+from flaskps.models.configuracion import configuracion
 from flaskps.resources import user
 from flaskps.db import db
 from flaskps.resources import admin, auth
@@ -52,6 +53,9 @@ app.add_url_rule('/activar.html', 'activar', admin.activar)
 
 @app.route('/')
 def index():
+    tabla = configuracion.get_config()
+    if tabla.sitio_habilitado == 0:
+        return render_template('desactivar.html')
     return render_template('inicio.html')
 
 # @app.route('/registro.html', methods=['POST', 'GET'])

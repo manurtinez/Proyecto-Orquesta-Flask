@@ -2,8 +2,7 @@
     <a class="logo" href="{{url_for('index')}}"></a>
     <div class="menuHeader">
         <a class="botoncito" href="{{url_for('listadoUsers')}}">Listado</a>
-        <a class="botoncito" href="">Musicos</a>
-        <a class="botoncito" href="administracion.html">Area Admin</a>
+        <a class="botoncito" href="{{url_for('administracion')}}">Area Admin</a>
     </div>
     <div class="botonesLogin">
         {%if session['username'] == None%}

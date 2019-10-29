@@ -9,7 +9,8 @@
     {%include 'header.html'%}
     <div class="fondito">
         <form action="{{ url_for('buscarUsuario')}}" method="POST">
-            <input type="text" id="buscarUser" style="width: 300px; height: 30px;" name="nombre" placeholder="buscar usuario">
+            <input type="text" id="buscarUser" style="width: 300px; height: 30px;" name="nombre"
+                placeholder="buscar usuario">
             <input type="submit" value="Buscar">
         </form>
         <table class="listadoUsuarios">
@@ -27,17 +28,22 @@
                 <td>{{user.username}}</td>
                 <td>
                     {% if user.activo == 1 %}
-                        Si
+                    Si
                     {% else %}
-                        No
+                    No
                     {% endif %}
                 </td>
                 <td>
-                    <nav>
-                        <a href="{{ url_for('showUser')}}">Mostrar</a>
+                    <nav id="opcionesUser">
+                        <a href="{{ url_for('showUser')}}" class="botoncito">Mostrar</a>
                         {% if session['username'] == 'mail1@gmail.com' %}
-                        <a href="">Actualizar</a>
-                        <a href="">Eliminar</a>
+                        <a href="" class="botoncito">Actualizar</a>
+                        <a href="" class="botoncito">Eliminar</a>
+                        {% if user.activo == 1 %}
+                        <a href="" class="botoncito">Bloquear</a>
+                        {% else %}
+                        <a href="" class="botoncito">Activar</a>
+                        {% endif %}
                         {% endif %}
                     </nav>
                 </td>
