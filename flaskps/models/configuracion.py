@@ -45,3 +45,6 @@ class configuracion(db.Model):
     
     def get_habilitacion():
         return configuracion.query.filter_by(id=1).first()
+
+    def get_config():
+        return configuracion.query.filter_by(id=1).first()
