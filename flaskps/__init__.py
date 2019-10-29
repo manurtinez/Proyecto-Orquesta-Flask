@@ -39,6 +39,7 @@ app.add_url_rule(
 #app.add_url_rule('/user/registro', 'registro', user.registrar)
 app.add_url_rule('/user/crear', 'crear', user.crear, methods=['POST'])
 app.add_url_rule('/user/listado', 'listadoUsers', user.listadoUsers)
+app.add_url_rule('/user/showUser', 'showUser', user.showUser)
 
 @app.route('/')
 def index():

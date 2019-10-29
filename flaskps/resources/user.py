@@ -24,3 +24,7 @@ def crear():
 def listadoUsers():
     lista = User.all()
     return render_template('user/listado.html', lista=lista)
+
+def showUser():
+    #implementar modal para info
+    return(render_template('inicio.html'))
