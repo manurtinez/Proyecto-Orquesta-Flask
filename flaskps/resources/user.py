@@ -3,8 +3,7 @@ from flaskps.models.usuario import User
 from datetime import date
 
 def registrar():
-    if session['username'] != None:
-        return render_template('user/registro.html')
+    return render_template('user/registro.html')
 
 def crear():
     if session['username'] != None:
