@@ -1,12 +1,12 @@
 from flaskps.db import db
 from sqlalchemy import update
 
-class rol(db.Model):
+class Rol(db.Model):
     __tablename__= 'rol'
 
-    id = db.Column(db.Integer)
+    id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String)
 
     #Este método sirve para obtener el id de un rol específico.
-    def get_id(nombre_rol):
-        return rol.query.filter_by(nombre=nombre_rol).first()
+    def get_by_nombre(nombre_rol):
+        return Rol.query.filter_by(nombre=nombre_rol).first()

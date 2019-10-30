@@ -1,5 +1,7 @@
 from flask import render_template, abort, url_for, request, redirect, session, flash
 from flaskps.models.usuario import User
+from flaskps.models.usuario_tiene_rol import User_tiene_rol
+from flaskps.models.rol import Rol
 from datetime import date
 from flaskps.models.configuracion import configuracion
 
@@ -24,7 +26,7 @@ def crear():
             return redirect(url_for('registro'))
         else:
             User.create(p['email'], p['user'], p['password'], 1, date.today(), date.today(), p['nombre'], p['apellido'])
-            session['username'] = p['user']
+            session['username'] = p['email']
             return redirect('index')
 
 def listadoUsers():
@@ -32,7 +34,14 @@ def listadoUsers():
     if tabla.sitio_habilitado == 0:
         return render_template('desactivar.html')
     lista = User.all()
-    return render_template('user/listado.html', lista=lista)
+    act = User.get_by_email(session['username'])
+    print(act)
+    print(act.id)
+    rol = Rol.get_by_nombre('administrador')
+    print(rol)
+    rolUser = User_tiene_rol.tiene_rol(act.id, rol.id)
+    print(rolUser)
+    return render_template('user/listado.html', lista=lista, rolUser=rolUser)
 
 def showUser():
     tabla = configuracion.get_config()
