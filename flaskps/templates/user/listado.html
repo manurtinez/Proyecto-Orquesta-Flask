@@ -35,14 +35,14 @@
                 </td>
                 <td>
                     <nav id="opcionesUser">
-                        <a href="{{ url_for('showUser')}}" class="botoncito">Mostrar</a>
+                        <a href="{{ url_for('showUser')}}" class="btn btn-info">Mostrar</a>
                         {% if session['username'] == 'mail1@gmail.com' %}
-                        <a href="" class="botoncito">Actualizar</a>
-                        <a href="" class="botoncito">Eliminar</a>
+                        <a href="" class="btn btn-info">Actualizar</a>
+                        <a href="" class="btn btn-info">Eliminar</a>
                         {% if user.activo == 1 %}
-                        <a href="" class="botoncito">Bloquear</a>
+                        <a href="{{ url_for('bloquearUser') }}" class="btn btn-info">Bloquear</a>
                         {% else %}
-                        <a href="" class="botoncito">Activar</a>
+                        <a href="{{ url_for('activarUser') }}" class="btn btn-info">Activar</a>
                         {% endif %}
                         {% endif %}
                     </nav>

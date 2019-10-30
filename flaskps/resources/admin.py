@@ -47,6 +47,12 @@ def activar():
     configuracion.set_habilitacion(1)
     return render_template('activar.html')
 
+def bloquearUser():
+    return None
+
+def activarUser():
+    return None
+
 
  #listar los elementos de las pag FALTA implementar
 #@app.route('/listar.html')

@@ -3,15 +3,15 @@
     <header class="header">
         <a class="logo" href="{{url_for('index')}}"></a>
         <div class="menuHeader">
-            <a class="botoncito" href="{{url_for('listadoUsers')}}">Listado</a>
-            <a class="botoncito" href="{{url_for('administracion')}}">Area Admin</a>
+            <a class="btn btn-info" href="{{url_for('listadoUsers')}}">Listado</a>
+            <a class="btn btn-info" href="{{url_for('administracion')}}">Area Admin</a>
         </div>
         <div class="botonesLogin">
             {%if session['username'] == None%}
-                <a class="botoncito" href="{{url_for('login')}}">Iniciar sesion</a>
-                <a class="botoncito" href="{{ url_for('registro') }}">Registrarse</a>
+                <a class="btn btn-info" href="{{url_for('login')}}">Iniciar sesion</a>
+                <a class="btn btn-info" href="{{ url_for('registro') }}">Registrarse</a>
             {%elif session['username'] != None%}
-                <a class="botoncito" href="{{url_for('logout')}}">Cerrar Sesion</a>
+                <a class="btn btn-info" href="{{url_for('logout')}}">Cerrar Sesion</a>
             {%endif%}
         </div>
     </header>

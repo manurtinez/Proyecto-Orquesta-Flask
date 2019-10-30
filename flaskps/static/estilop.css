@@ -1,3 +1,5 @@
+@import "bootstrap.css";
+
 body{
     text-align: center;
 }
@@ -61,7 +63,7 @@ body{
     width: 160px;
 }
 
-.botoncito {
+.btn btn-info {
     border-radius: 8px;
     height: 50px;
     width: 100px;
@@ -79,7 +81,7 @@ a:-webkit-any-link{
     text-decoration:none !important;
     }
 
-.botoncito:hover{
+.btn btn-info:hover{
     background-color: aquamarine;
 }
 
@@ -207,7 +209,7 @@ tr:nth-child(even) {
     color: inherit;
   }
 
-  #opcionesUser .botoncito {
+  #opcionesUser .btn btn-info {
       height: 20px;
       line-height: 18px;
   }
