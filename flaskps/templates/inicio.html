@@ -16,19 +16,19 @@
 	{% endfor %}
 	{% endif %}
 	{% endwith %}
+	{% if user is defined %}
+	<div class="alert alert-success fade show alert-dismissible" role="alert">
+			Bienvenido {{ user }}
+		</div>
+	{% endif %}
 	<div style="background-color:white; border-radius:5px">
-		<p style="color:black"> Orquesta escuela de berisso </p>
+		<p style="color:black"> 
+			<h3>{{titulo}}</h3> 
+		</p>
 
-		<p style="color:black"> La Orquesta Escuela de Berisso comenzó a funcionar en septiembre del 2005 en el barrio
-			de El Carmen de la localidad de Berisso bajo la dirección del Mtro. Juan Carlos Herrero, orientada
-			especialmente a la atención de chicos en situación de vulnerabilidad socio-cultural.
-		</p>
-		<p style="color:black">
-			Desde sus 20 alumnos iniciales fue creciendo hasta atender actualmente una matrícula de aproximadamente 530
-			chicos, distribuidos en los 15 núcleos que la conforman y dirigida a una franja etaria de 5 a 23 años,
-			cubriendo en su accionar a la casi totalidad de los barrios de Berisso más los espacios cedidos por el Club
-			Español y el Teatro Argentino
-		</p>
+		<p style="color:black"> 
+				{{descripcion}}
+			</p>
 	</div>
 	<a class="btn btn-info" href="{{url_for('login')}}" id="loginButton"> Iniciar Sesion</a>
 	{%include 'footer.html'%}

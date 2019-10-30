@@ -11,10 +11,9 @@
     <tbody>
       
         <tr>
-          <h1> Titulo: {{tabla.titulo}} </h1>
-          <h2> Descripcion: {{tabla.descripcion}} </h2>
-          <h2> Mail: {{tabla.mail}} </h2>
-          <a class="btn btn-info" href="./formulario.html">Editar</a>
+          <h1> Titulo: {{titulo}} </h1>
+          <h2> Descripcion: {{descripcion}} </h2>
+          <a class="btn btn-info" href="{{ url_for('formulario') }}">Editar</a>
         </tr>
 
     </tbody>

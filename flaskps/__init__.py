@@ -6,11 +6,16 @@ from flaskps.resources import user
 from flaskps.db import db
 from flaskps.resources import admin, auth
 from flaskps.config import Config
+from flask_session import Session
 #from flask_mysqldb import MySQL #xampp coneccion bd
 
 #instancio app
 app = Flask(__name__)
 app.config.from_object(Config)
+
+#session
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
 
 #config db
 app.secret_key = 'hola'
@@ -45,11 +50,11 @@ app.add_url_rule('/user/showUser', 'showUser', user.showUser)
 app.add_url_rule('/user/buscar', 'buscarUsuario', user.buscar, methods=['POST'])
 
 #ADMINISTRACION
-app.add_url_rule('/administracion.html', 'administracion', admin.administracion)
-app.add_url_rule('/informacion.html', 'informacion', admin.informacion)
-app.add_url_rule('/formulario.html', 'formulario', admin.formulario, methods=['GET', 'POST'])
-app.add_url_rule('/desactivar.html', 'desactivar', admin.desactivar)
-app.add_url_rule('/activar.html', 'activar', admin.activar)
+app.add_url_rule('/administracion', 'administracion', admin.administracion)
+app.add_url_rule('/informacion', 'asdf', admin.informacion)
+app.add_url_rule('/formulario', 'editarInfo', admin.formulario, methods=['GET', 'POST'])
+app.add_url_rule('/desactivar', 'desactivar', admin.desactivar)
+app.add_url_rule('/activar', 'activar', admin.activar)
 app.add_url_rule('/admin/activarUser', 'activarUser', admin.activarUser)
 app.add_url_rule('/admin/bloquearUser', 'bloquearUser', admin.bloquearUser)
 
@@ -58,7 +63,11 @@ def index():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return render_template('desactivar.html')
-    return render_template('inicio.html')
+    if 'username' in session:
+        username = session['username']
+        return render_template('inicio.html', titulo=tabla.titulo, descripcion=tabla.descripcion, user=username)
+    else:    
+        return render_template('inicio.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
 
 # @app.route('/registro.html', methods=['POST', 'GET'])
 # def registro():

@@ -7,10 +7,10 @@
             <a class="btn btn-info" href="{{url_for('administracion')}}">Area Admin</a>
         </div>
         <div class="botonesLogin">
-            {%if session['username'] == None%}
+            {%if user is not defined%}
                 <a class="btn btn-info" href="{{url_for('login')}}">Iniciar sesion</a>
                 <a class="btn btn-info" href="{{ url_for('registro') }}">Registrarse</a>
-            {%elif session['username'] != None%}
+            {%else%}
                 <a class="btn btn-info" href="{{url_for('logout')}}">Cerrar Sesion</a>
             {%endif%}
         </div>

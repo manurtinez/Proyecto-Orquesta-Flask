@@ -28,6 +28,5 @@ def logout():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return render_template('desactivar.html')
-    session.clear()
-    session['username'] = None
+    del session['username']
     return redirect(url_for('index'))

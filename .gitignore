@@ -5,3 +5,4 @@ flask_env/
 sqlite3/
 .vscode/
 flaskps/config/development.py
+flask_session/

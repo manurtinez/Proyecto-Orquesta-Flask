@@ -16,8 +16,7 @@ def informacion():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return render_template('desactivar.html')
-    tabla = configuracion.get_config()
-    return render_template('informacion.html', tabla=tabla)
+    return render_template('informacion.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
 
 
 
@@ -35,8 +34,8 @@ def formulario():
         configuracion.set_titulo(titulo)
         configuracion.set_descripcion(descripcion)
         configuracion.set_mail(mail)
-
-    return render_template('formulario.html')
+        return redirect(url_for('index'))
+    return render_template('formulario.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
 
 #desactivar el la pagina web FALTA desactivar los templates y agregar la opcion activar sitio
 def desactivar():

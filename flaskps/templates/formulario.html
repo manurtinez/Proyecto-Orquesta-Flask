@@ -1,24 +1,23 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="..\static\estilop.css">
-    <title>formulario</title>
-</head>
+{%extends "base.html"%}
+{%block title%}Formulario{%endblock title%}
+{%block head%}
+{{super()}}
+{%endblock head%}
+{%block content%}
 
 <body>
-    
+
     <form action="" method="post">
         <label for="text">Titulo: </label>
-        <input type="text" id="titulo" name="titulo" /><br>
+        <input type="text" id="titulo" name="titulo" value="{{ titulo }}" /><br>
         <label for="descripcion">Descripcion: </label>
-        <input type="text" id="descripcion" name="descripcion" /><br>
+        <textarea rows="5"  id="descripcion" name="descripcion"  >{{ descripcion}}</textarea>
+        <br>
         <label for="text">Mail: </label>
         <input type="text" id="mail" name="mail" /><br>
         <input class="btn btn-info" type="submit" id="send-signup" name="signup" value="Editar" />
-        <a class="btn btn-info" href="{{ url_for('informacion')}}">Volver</a>
+        <a class="btn btn-info" href="{{ url_for('administracion')}}">Volver</a>
     </form>
-{%include 'footer.html'%}
+    {%include 'footer.html'%}
 </body>
-</html>
+{% endblock content %}
