@@ -1,12 +1,15 @@
 from flask import redirect, render_template, request, session, url_for, flash
 from flaskps.db import db
 from flaskps.models.configuracion import configuracion
+from flaskps.resources import user
 
 def administracion():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
-        return render_template('desactivar.html') 
-    return render_template('administracion.html')
+        return render_template('desactivar.html')
+    username = session['username']
+    admin = user.verificarSiEsAdmin()
+    return render_template('administracion.html', admin=admin, username=username)
 
 
 

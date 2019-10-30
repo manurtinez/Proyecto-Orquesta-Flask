@@ -65,7 +65,8 @@ def index():
         return render_template('desactivar.html')
     if 'username' in session:
         username = session['username']
-        return render_template('inicio.html', titulo=tabla.titulo, descripcion=tabla.descripcion, user=username)
+        admin = user.verificarSiEsAdmin()
+        return render_template('inicio.html', titulo=tabla.titulo, descripcion=tabla.descripcion, username=username, admin=admin)
     else:    
         return render_template('inicio.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
 

@@ -36,7 +36,7 @@
                 <td>
                     <nav id="opcionesUser">
                         <a href="{{ url_for('showUser')}}" class="btn btn-info">Mostrar</a>
-                        {% if session['username'] == 'mail1@gmail.com' %}
+                        {% if admin %}
                         <a href="" class="btn btn-info">Actualizar</a>
                         <a href="" class="btn btn-info">Eliminar</a>
                         {% if user.activo == 1 %}

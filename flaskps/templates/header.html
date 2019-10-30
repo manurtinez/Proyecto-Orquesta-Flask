@@ -2,12 +2,16 @@
 <html lang="es">
     <header class="header">
         <a class="logo" href="{{url_for('index')}}"></a>
+        {%if username is defined%}
         <div class="menuHeader">
             <a class="btn btn-info" href="{{url_for('listadoUsers')}}">Listado</a>
+            {% if admin %}
             <a class="btn btn-info" href="{{url_for('administracion')}}">Area Admin</a>
+            {% endif%}
         </div>
+        {%endif%}
         <div class="botonesLogin">
-            {%if user is not defined%}
+            {%if username is not defined%}
                 <a class="btn btn-info" href="{{url_for('login')}}">Iniciar sesion</a>
                 <a class="btn btn-info" href="{{ url_for('registro') }}">Registrarse</a>
             {%else%}

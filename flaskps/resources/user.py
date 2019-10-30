@@ -34,14 +34,16 @@ def listadoUsers():
     if tabla.sitio_habilitado == 0:
         return render_template('desactivar.html')
     lista = User.all()
-    act = User.get_by_email(session['username'])
-    print(act)
-    print(act.id)
-    rol = Rol.get_by_nombre('administrador')
-    print(rol)
-    rolUser = User_tiene_rol.tiene_rol(act.id, rol.id)
-    print(rolUser)
-    return render_template('user/listado.html', lista=lista, rolUser=rolUser)
+    admin = verificarSiEsAdmin()
+    username = session['username']
+    return render_template('user/listado.html', lista=lista, admin=admin, username=username)
+
+def verificarSiEsAdmin():
+    u = User_tiene_rol.tiene_rol(User.get_by_email(session['username']).id, Rol.get_by_nombre('administrador').id)
+    if u !=None:
+        return True
+    else:
+        return False
 
 def showUser():
     tabla = configuracion.get_config()
