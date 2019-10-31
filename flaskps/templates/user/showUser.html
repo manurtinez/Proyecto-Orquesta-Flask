@@ -1,0 +1,24 @@
+{%extends "base.html"%}
+{%block title%}Informacion{%endblock title%}
+{%block head%}
+{{super()}}
+{%endblock head%}
+{%block content%}
+  <body>
+      {%include 'header.html'%}
+      
+
+    <tbody>
+      
+        <tr>
+          <h1> Titulo: {{ usuario.nombre}} </h1>
+          <h1> apellido: {{ usuario.apellido}} </h1>
+          <h1> Email: {{ usuario.email}} </h1>
+          <h1> Nombre de usuario: {{ usuario.username}} </h1>
+          <a class="btn btn-info" href="{{ url_for('listadoUsers') }}">Volver</a>
+        </tr>
+
+    </tbody>
+    {%include 'footer.html'%}
+  </body>
+  {%endblock content%}

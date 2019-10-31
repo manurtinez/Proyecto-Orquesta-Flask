@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, session, url_for, flash
 from flaskps.db import db
 from flaskps.models.configuracion import configuracion
+from flaskps.models.usuario import User
 from flaskps.resources import user
 
 def administracion():
@@ -64,11 +65,22 @@ def activar():
     session['sitioActivado'] = True
     return render_template('activar.html')
 
-def bloquearUser():
+def eliminarUser():
     return None
 
-def activarUser():
+def bloquearUser(usuario):
     return None
+    # print(usuario)
+    # User.desactivar_user(usuario)
+    # lista = User.all()
+    # return render_template('user/listado.html', lista=lista, admin=user.verificarSiEsAdmin(), username=session['username'])
+
+def activarUser(usuario):
+    return None
+    # print(usuario)
+    # User.activar_user(usuario)
+    # lista = User.all()
+    # return render_template('user/listado.html', lista=lista, admin=user.verificarSiEsAdmin(), username=session['username'])
 
 
  #listar los elementos de las pag FALTA implementar

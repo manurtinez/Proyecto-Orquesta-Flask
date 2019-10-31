@@ -41,9 +41,19 @@ def verificarSiEsAdmin():
     else:
         return False
 
-def showUser():
-    #implementar modal para info
-    return(render_template('inicio.html'))
+def showUser(usuario):
+    print(usuario)
+    return render_template('/user/showUser.html', usuario=usuario)
+
+def actualizarUser(usuario):
+    return render_template('user/actualizarUser.html', user=usuario)
+
+def actualizar():
+    p = request.form
+    act = User.get_by_email(session['username'])
+    User.actualizar_username(act.username,p['user'])
+    User.actualizar_password(p['user'],p['password'])
+    return redirect(url_for('index'))
 
 def buscar():
     nombre = request.form['nombre']

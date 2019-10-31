@@ -1,0 +1,35 @@
+{%extends "base.html"%}
+{%block title%}Inicio{%endblock title%}
+{%block head%}
+{{super()}}
+{%endblock head%}
+{%block content%}
+
+<body>
+  {%include 'header.html'%}
+  <div class="fondito">
+    <div class="centered">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+      <form class="formLogin" method="POST" action="{{url_for('actualizar')}}">
+        <p>Nombre de usuario:</p>
+        <input id="user" class="areaEscribir" name="user" type="text" value="{{ user.username }}" >
+        <p>Contraseña:</p>
+        <input name="password" style="margin-bottom: 15px;" class="areaEscribir" value="{{ user.password }}" type="password" >
+        <div>
+          <input type="submit" class="btn btn-info" value="Aceptar">
+          <a href="{{ url_for('listadoUsers')}}" class="btn btn-info">Mostrar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  {%include 'footer.html'%}
+</body>
+{% endblock content %}

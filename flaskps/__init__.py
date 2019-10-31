@@ -45,8 +45,10 @@ app.add_url_rule(
 app.add_url_rule('/user/registro', 'registro', user.registrar)
 app.add_url_rule('/user/crear', 'crear', user.crear, methods=['POST'])
 app.add_url_rule('/user/listado', 'listadoUsers', user.listadoUsers)
-app.add_url_rule('/user/showUser', 'showUser', user.showUser)
+app.add_url_rule('/user/showUser/<usuario>', 'showUser', user.showUser)
+app.add_url_rule('/user/actualizarUser/<usuario>', 'actualizarUser', user.actualizarUser)
 app.add_url_rule('/user/buscar', 'buscarUsuario', user.buscar, methods=['POST'])
+app.add_url_rule('/user/actualizar', 'actualizar', user.actualizar, methods=['POST'])
 
 #ADMINISTRACION
 app.add_url_rule('/administracion', 'administracion', admin.administracion)
@@ -55,9 +57,10 @@ app.add_url_rule('/informacion', 'asdf', admin.informacion)
 app.add_url_rule('/editarInfo', 'editarInfo', admin.formulario, methods=['GET', 'POST'])
 app.add_url_rule('/desactivar', 'desactivar', admin.desactivar)
 app.add_url_rule('/activar', 'activar', admin.activar)
-app.add_url_rule('/admin/activarUser', 'activarUser', admin.activarUser)
-app.add_url_rule('/admin/bloquearUser', 'bloquearUser', admin.bloquearUser)
+app.add_url_rule('/admin/activarUser/<usuario>', 'activarUser', admin.activarUser)
+app.add_url_rule('/admin/bloquearUser/<usuario>', 'bloquearUser', admin.bloquearUser)
 app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
+app.add_url_rule('/eliminarUser', 'eliminarUser', admin.eliminarUser)
 
 @app.route('/')
 def index():
