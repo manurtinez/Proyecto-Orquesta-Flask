@@ -51,18 +51,18 @@ class User(db.Model):
     def find_by_username(us):
         return User.query.filter_by(username=us).first() 
 
+    #Actualizados
     def activar_user(us):
-        obj = update(usuario).where(username=us).\
-        values(activo='1')
+        obj = User.query.filter_by(username=us).first()
+        obj.activo = 1
         db.session.commit()
         return True
 
     def desactivar_user(us):
-        obj = update(usuario).where(username=us).\
-        values (activo= '0')
+        obj = User.query.filter_by(username=us).first()
+        obj.activo = 0
         db.session.commit()
         return True
-
     
     #Consultas relacionadas a actualización
     def actualizar_username(usernameviejo,usernamenuevo):
