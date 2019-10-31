@@ -50,8 +50,9 @@ app.add_url_rule('/user/buscar', 'buscarUsuario', user.buscar, methods=['POST'])
 
 #ADMINISTRACION
 app.add_url_rule('/administracion', 'administracion', admin.administracion)
+app.add_url_rule('/editarCantElementos', 'editarCantElementos', admin.editarCantElementos, methods=['GET', 'POST'])
 app.add_url_rule('/informacion', 'asdf', admin.informacion)
-app.add_url_rule('/formulario', 'editarInfo', admin.formulario, methods=['GET', 'POST'])
+app.add_url_rule('/editarInfo', 'editarInfo', admin.formulario, methods=['GET', 'POST'])
 app.add_url_rule('/desactivar', 'desactivar', admin.desactivar)
 app.add_url_rule('/activar', 'activar', admin.activar)
 app.add_url_rule('/admin/activarUser', 'activarUser', admin.activarUser)

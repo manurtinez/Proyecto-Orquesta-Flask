@@ -12,7 +12,7 @@
         <h1 style="padding-top: 15px">Menu administrador</h1>
         <nav class="menuAdmin">
             <a class="btn btn-info" href="{{ url_for('editarInfo') }}">Editar informacion de la Orquesta</a>
-            <a class="btn btn-info" href="./listar.html">Cantidad de elementos por pagina</a>
+            <a class="btn btn-info" href="{{url_for('editarCantElementos')}}">Cantidad de elementos por pagina</a>
             {% if session['sitioActivado'] %}
                 <a class="btn btn-info" href="{{ url_for('desactivar') }}">Desactivar Sitio</a>
             {% else %}

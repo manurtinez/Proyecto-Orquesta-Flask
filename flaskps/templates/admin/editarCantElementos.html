@@ -1,0 +1,18 @@
+{%extends "base.html"%}
+{%block title%}Formulario{%endblock title%}
+{%block head%}
+{{super()}}
+{%endblock head%}
+{%block content%}
+
+<body id="bodyInicio">
+    {%include 'header.html'%}
+    <form action="{{url_for('editarCantElementos')}}" method="post">
+        <label for="text">Cantidad por pagina: </label>
+        <input type="text" id="cant" name="cant" style="width: 350px;" value="{{ cant }}" /><br>
+        <input class="btn btn-info" type="submit" value="Editar" />
+        <a class="btn btn-info" href="{{ url_for('administracion')}}">Volver</a>
+    </form>
+    {%include 'footer.html'%}
+</body>
+{% endblock content %}
