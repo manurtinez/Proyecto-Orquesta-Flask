@@ -4,17 +4,15 @@ from flaskps.models.usuario_tiene_rol import User_tiene_rol
 from flaskps.models.rol import Rol
 from datetime import date
 from flaskps.models.configuracion import configuracion
+from flaskps.resources import admin
 
 def registrar():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
-        return render_template('desactivar.html')
+        return redirect(url_for('mantenimiento'))
     return render_template('user/registro.html')
 
 def crear():
-    tabla = configuracion.get_config()
-    if tabla.sitio_habilitado == 0:
-        return render_template('desactivar.html')
     if session['username'] != None:
         #User.create() esto falta
         return redirect(url_for('index'))
@@ -32,11 +30,9 @@ def crear():
 def listadoUsers():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
-        return render_template('desactivar.html')
+        return redirect(url_for('mantenimiento'))
     lista = User.all()
-    admin = verificarSiEsAdmin()
-    username = session['username']
-    return render_template('user/listado.html', lista=lista, admin=admin, username=username)
+    return render_template('user/listado.html', lista=lista, admin=verificarSiEsAdmin(), username=session['username'])
 
 def verificarSiEsAdmin():
     u = User_tiene_rol.tiene_rol(User.get_by_email(session['username']).id, Rol.get_by_nombre('administrador').id)
@@ -46,16 +42,10 @@ def verificarSiEsAdmin():
         return False
 
 def showUser():
-    tabla = configuracion.get_config()
-    if tabla.sitio_habilitado == 0:
-        return render_template('desactivar.html')
     #implementar modal para info
     return(render_template('inicio.html'))
 
 def buscar():
-    tabla = configuracion.get_config()
-    if tabla.sitio_habilitado == 0:
-        return render_template('desactivar.html')
     nombre = request.form['nombre']
     if nombre == 'activo':
         lista = User.select_activos()
@@ -68,4 +58,4 @@ def buscar():
             lista.append(user)
         else:
             lista = User.all()
-    return render_template('user/listado.html', lista=lista)
+    return render_template('user/listado.html', lista=lista, admin=verificarSiEsAdmin(), username=session['username'])
