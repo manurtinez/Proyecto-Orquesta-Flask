@@ -66,14 +66,14 @@ class User(db.Model):
     
     #Consultas relacionadas a actualización
     def actualizar_username(usernameviejo,usernamenuevo):
-        obj = update(usuario).where(username=usernameviejo).\
-        values (username= usernamenuevo)
+        obj = User.query.filter_by(username=usernameviejo).first()
+        obj.username = usernamenuevo
         db.session.commit()
         return True
 
     def actualizar_password(usern,contraseña):
-        obj = update(usuario).where(username=usern).\
-        values (password=contraseña)
+        obj = User.query.filter_by(username=usern).first()
+        obj.password = contraseña
         db.session.commit()
         return True
 
