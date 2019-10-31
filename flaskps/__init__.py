@@ -2,9 +2,8 @@ from os import path
 from flask import Flask, url_for, render_template, g, request, session, flash, redirect
 from flaskps.models.usuario import User
 from flaskps.models.configuracion import configuracion
-from flaskps.resources import user
 from flaskps.db import db
-from flaskps.resources import admin, auth
+from flaskps.resources import admin, auth, user
 from flaskps.config import Config
 from flask_session import Session
 #from flask_mysqldb import MySQL #xampp coneccion bd
@@ -57,12 +56,13 @@ app.add_url_rule('/desactivar', 'desactivar', admin.desactivar)
 app.add_url_rule('/activar', 'activar', admin.activar)
 app.add_url_rule('/admin/activarUser', 'activarUser', admin.activarUser)
 app.add_url_rule('/admin/bloquearUser', 'bloquearUser', admin.bloquearUser)
+app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
 
 @app.route('/')
 def index():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
-        return render_template('desactivar.html')
+        return redirect(url_for('mantenimiento'))
     if 'username' in session:
         username = session['username']
         admin = user.verificarSiEsAdmin()
@@ -83,7 +83,7 @@ def index():
 #desactivar el la pagina web FALTA desactivar los templates y agregar la opcion activar sitio
 #@app.route('/desactivar.html')
 #def desactivar():
-#    return render_template('desactivar.html')
+#    return redirect(url_for('mantenimiento'))
 
 #informacion de la orquesta LISTO!!
 # @app.route('/informacion.html', methods=['POST', 'GET'])
@@ -99,12 +99,12 @@ def index():
 #    return render_template('listar.html')
 
 #formulario para editar informacion
-# @app.route('/formulario.html/<id>')
+# @app.route('/editarInfo.html/<id>')
 # def formulario(id):
 #     cur = mysql.connection.cursor()
 #     cur.execute('SELECT * FROM configuracion WHERE id = %s', (id))
 #     data = cur.fetchall()
-#     return render_template('formulario.html', contact = data[0])
+#     return render_template('editarInfo.html', contact = data[0])
 
 # @app.route('/editar/<id>', methods = ['POST'])
 # def update_conf(id):

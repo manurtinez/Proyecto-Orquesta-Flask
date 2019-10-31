@@ -13,10 +13,13 @@
         <nav class="menuAdmin">
             <a class="btn btn-info" href="{{ url_for('editarInfo') }}">Editar informacion de la Orquesta</a>
             <a class="btn btn-info" href="./listar.html">Cantidad de elementos por pagina</a>
-            <a class="btn btn-info" href="./desactivar.html">Desactivar Sitio</a>
+            {% if session['sitioActivado'] %}
+                <a class="btn btn-info" href="{{ url_for('desactivar') }}">Desactivar Sitio</a>
+            {% else %}
+                <a class="btn btn-info" href="{{ url_for('activar') }}">Activar Sitio</a>
+            {%endif%}
         </nav>
     </div>
-    
-    
+    {%include 'footer.html'%}
 </body>
 {%endblock content%}

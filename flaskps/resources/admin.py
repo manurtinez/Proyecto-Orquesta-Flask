@@ -6,7 +6,7 @@ from flaskps.resources import user
 def administracion():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
-        return render_template('desactivar.html')
+        return mantenimiento()
     username = session['username']
     admin = user.verificarSiEsAdmin()
     return render_template('administracion.html', admin=admin, username=username)
@@ -18,10 +18,16 @@ def administracion():
 def informacion():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
-        return render_template('desactivar.html')
+        return mantenimiento()
     return render_template('informacion.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
 
-
+def mantenimiento():
+    if 'username' in session:
+        username = session['username']
+        admin = user.verificarSiEsAdmin()
+        return render_template('desactivar.html', username=username, admin=admin)
+    else:    
+        return render_template('desactivar.html')
 
 #formulario para editar informacion
 
@@ -38,15 +44,17 @@ def formulario():
         configuracion.set_descripcion(descripcion)
         configuracion.set_mail(mail)
         return redirect(url_for('index'))
-    return render_template('formulario.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
+    return render_template('editarInfo.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
 
 #desactivar el la pagina web FALTA desactivar los templates y agregar la opcion activar sitio
 def desactivar():
     configuracion.set_habilitacion(0)
-    return render_template('desactivar.html')
+    session['sitioActivado'] = False
+    return mantenimiento()
 
 def activar():
     configuracion.set_habilitacion(1)
+    session['sitioActivado'] = True
     return render_template('activar.html')
 
 def bloquearUser():

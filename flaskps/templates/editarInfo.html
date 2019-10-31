@@ -5,11 +5,11 @@
 {%endblock head%}
 {%block content%}
 
-<body>
-
+<body id="bodyInicio">
+    {%include 'header.html'%}
     <form action="" method="post">
         <label for="text">Titulo: </label>
-        <input type="text" id="titulo" name="titulo" value="{{ titulo }}" /><br>
+        <input type="text" id="titulo" name="titulo" style="width: 350px;" value="{{ titulo }}" /><br>
         <label for="descripcion">Descripcion: </label>
         <textarea rows="5"  id="descripcion" name="descripcion"  >{{ descripcion}}</textarea>
         <br>
