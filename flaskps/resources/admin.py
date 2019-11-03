@@ -5,6 +5,8 @@ from flaskps.models.usuario import User
 from flaskps.resources import user
 
 def administracion():
+    if 'username' not in session or not session['admin']:
+        return redirect(url_for('accesoDenegado'))
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return mantenimiento()
@@ -13,6 +15,8 @@ def administracion():
     return render_template('/admin/administracion.html', admin=admin, username=username)
 
 def editarCantElementos():
+    if 'username' not in session or not session['admin']:
+        return redirect(url_for('accesoDenegado'))
     if request.method == 'GET':
         cant = configuracion.get_config().cantListar
         return render_template('/admin/editarCantElementos.html', cant=cant)
@@ -24,12 +28,16 @@ def editarCantElementos():
 #informacion de la orquesta LISTO!!
 
 def informacion():
+    if 'username' not in session or not session['admin']:
+        return redirect(url_for('accesoDenegado'))
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return mantenimiento()
     return render_template('informacion.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
 
 def mantenimiento():
+    if 'username' not in session or not session['admin']:
+        return redirect(url_for('accesoDenegado'))
     if 'username' in session:
         username = session['username']
         admin = user.verificarSiEsAdmin()
@@ -40,6 +48,8 @@ def mantenimiento():
 #formulario para editar informacion
 
 def formulario():
+    if 'username' not in session or not session['admin']:
+        return redirect(url_for('accesoDenegado'))
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return render_template('desactivar.html')
@@ -56,11 +66,15 @@ def formulario():
 
 #desactivar el la pagina web FALTA desactivar los templates y agregar la opcion activar sitio
 def desactivar():
+    if 'username' not in session or not session['admin']:
+        return redirect(url_for('accesoDenegado'))
     configuracion.set_habilitacion(0)
     session['sitioActivado'] = False
     return mantenimiento()
 
 def activar():
+    if 'username' not in session or not session['admin']:
+        return redirect(url_for('accesoDenegado'))
     configuracion.set_habilitacion(1)
     session['sitioActivado'] = True
     return render_template('activar.html')
@@ -82,7 +96,9 @@ def activarUser(id):
     # lista = User.all()
     # return render_template('user/listado.html', lista=lista, admin=user.verificarSiEsAdmin(), username=session['username'])
 
-
+def accesoDenegado():
+    flash('usted no esta autorizado a esta url')
+    return render_template('index.html')
  #listar los elementos de las pag FALTA implementar
 #@app.route('/listar.html')
 #def listar():

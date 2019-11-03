@@ -61,6 +61,7 @@ app.add_url_rule('/admin/activarUser/<id>', 'activarUser', admin.activarUser)
 app.add_url_rule('/admin/bloquearUser/<id>', 'bloquearUser', admin.bloquearUser)
 app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
 app.add_url_rule('/eliminarUser', 'eliminarUser', admin.eliminarUser)
+app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
 
 @app.route('/')
 def index():
