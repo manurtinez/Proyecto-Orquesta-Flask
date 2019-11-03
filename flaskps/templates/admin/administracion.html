@@ -7,19 +7,13 @@
 {%block content%}
 
 <body>
-    {%include 'header.html'%}
     <div class="fondito">
         <h1 style="padding-top: 15px">Menu administrador</h1>
         <nav class="menuAdmin">
             <a class="btn btn-info" href="{{ url_for('editarInfo') }}">Editar informacion de la Orquesta</a>
             <a class="btn btn-info" href="{{url_for('editarCantElementos')}}">Cantidad de elementos por pagina</a>
-            {% if session['sitioActivado'] %}
-                <a class="btn btn-info" href="{{ url_for('desactivar') }}">Desactivar Sitio</a>
-            {% else %}
-                <a class="btn btn-info" href="{{ url_for('activar') }}">Activar Sitio</a>
-            {%endif%}
+            <a class="btn btn-info" href="{{ url_for('desactivar') }}">Desactivar Sitio</a>
         </nav>
     </div>
-    {%include 'footer.html'%}
 </body>
 {%endblock content%}

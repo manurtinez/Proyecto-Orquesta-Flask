@@ -1,26 +1,28 @@
 {%extends "base.html"%}
-{%block title%}Inicio{%endblock title%}
+{%block title%}Listado{%endblock title%}
 {%block head%}
 {{super()}}
 {%endblock head%}
 {%block content%}
 
-<body id="bodyListado">
-    {%include 'header.html'%}
-    <div class="fondito">
+<body >
+    <div>
         <form action="{{ url_for('buscarUsuario')}}" method="POST">
             <input type="text" id="buscarUser" style="width: 300px; height: 30px;" name="nombre"
                 placeholder="buscar usuario">
             <input type="submit" value="Buscar">
         </form>
-        <table class="listadoUsuarios">
-            <tr class="titulosTabla">
+        <table class="table">
+            <thead>
+            <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Nombre de usuario</th>
                 <th>Activo?</th>
                 <th>Opciones</th>
             </tr>
+            </thead>
+            <tbody>
             {% for user in lista %}
             <tr>
                 <td>{{user.first_name}}</td>
@@ -34,24 +36,24 @@
                     {% endif %}
                 </td>
                 <td>
-                    <nav id="opcionesUser">
-                        <a href="{{ url_for('showUser', usuario=user)}}" class="btn btn-info">Mostrar</a>
+                    <nav>
+                        <a href="{{ url_for('showUser', id=user.id)}}" class="btn btn-info">Mostrar</a>
                         {% if admin %}
-                        <a href="{{url_for('actualizarUser', usuario=user)}}" class="btn btn-info">Actualizar</a>
+                        <a href="{{url_for('actualizarUser', id=user.id)}}" class="btn btn-info">Actualizar</a>
                         <a href="{{url_for('eliminarUser')}}" class="btn btn-info">Eliminar</a>
                         {% if user.activo == 1 %}
-                        <a href="{{ url_for('bloquearUser', usuario=user) }}" class="btn btn-info">Bloquear</a>
+                        <a href="{{ url_for('bloquearUser', id=user.id) }}" class="btn btn-info">Bloquear</a>
                         {% else %}
-                        <a href="{{ url_for('activarUser', usuario=user) }}" class="btn btn-info">Activar</a>
+                        <a href="{{ url_for('activarUser', id=user.id) }}" class="btn btn-info">Activar</a>
                         {% endif %}
                         {% endif %}
                     </nav>
                 </td>
             </tr>
             {% endfor %}
+            </tbody>
         </table>
     </div>
-    {%include 'footer.html'%}
     <script>
         function myFunction() {
             var input, filter, table, tr, td, i, txtValue;

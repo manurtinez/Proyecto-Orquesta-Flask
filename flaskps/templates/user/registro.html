@@ -1,12 +1,11 @@
 {%extends "base.html"%}
-{%block title%}Inicio{%endblock title%}
+{%block title%}Registro{%endblock title%}
 {%block head%}
 {{super()}}
 {%endblock head%}
 {%block content%}
 
 <body>
-  {%include 'header.html'%}
   <div class="fondito">
     <div class="centered">
       {% with messages = get_flashed_messages() %}
@@ -18,17 +17,27 @@
       </ul>
       {% endif %}
       {% endwith %}
-      <form class="formLogin" method="POST" action="{{url_for('crear')}}">
-        <p>Nombre:</p>
-        <input id="nombre" class="areaEscribir" name="nombre" type="text" required>
-        <p>Apellido:</p>
-        <input id="apellido" class="areaEscribir" name="apellido" type="text" required>
-        <p>Nombre de usuario:</p>
-        <input id="user" class="areaEscribir" name="user" type="text" required>
-        <p>Email:</p>
-        <input id="email" class="areaEscribir" name="email" type="text" required>
-        <p>Contraseña:</p>
-        <input name="password" style="margin-bottom: 15px;" class="areaEscribir" type="password" required>
+      <form method="POST" action="{{url_for('crear')}}">
+        <div class="form-group">
+          <p>Nombre:</p>
+          <input id="nombre" class="areaEscribir" name="nombre" type="text" required>
+        </div>
+        <div class="form-group">
+          <p>Apellido:</p>
+          <input id="apellido" class="areaEscribir" name="apellido" type="text" required>
+        </div>
+        <div class="form-group">
+          <p>Nombre de usuario:</p>
+          <input id="user" class="areaEscribir" name="user" type="text" required>
+        </div>
+        <div class="form-group">
+          <p>Email:</p>
+          <input id="email" class="areaEscribir" name="email" type="text" required>
+        </div>
+        <div class="form-group">
+          <p>Contraseña:</p>
+          <input name="password" style="margin-bottom: 15px;" class="areaEscribir" type="password" required>
+        </div>
         <div>
           <input type="submit" class="btn btn-info" value="Aceptar">
           <input type="reset" class="btn btn-info" value="Cancelar">
@@ -36,6 +45,5 @@
       </form>
     </div>
   </div>
-  {%include 'footer.html'%}
 </body>
 {% endblock content %}

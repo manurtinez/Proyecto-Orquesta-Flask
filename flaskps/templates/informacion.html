@@ -5,7 +5,6 @@
 {%endblock head%}
 {%block content%}
   <body>
-      {%include 'header.html'%}
       
 
     <tbody>
@@ -13,10 +12,9 @@
         <tr>
           <h1> Titulo: {{titulo}} </h1>
           <h2> Descripcion: {{descripcion}} </h2>
-          <a class="btn btn-info" href="{{ url_for('formulario') }}">Editar</a>
+          <a class="btn btn-info" href="{{ url_for('index') }}">Editar</a>
         </tr>
 
     </tbody>
-    {%include 'footer.html'%}
   </body>
   {%endblock content%}

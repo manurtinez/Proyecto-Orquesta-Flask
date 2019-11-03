@@ -6,14 +6,12 @@
 {%block content%}
 
 <body id="bodyInicio">
-    {% include 'header.html' %}
     {% with messages = get_flashed_messages()%}
     {% endwith%}
     <h1>El sitio se encuentra en mantenimiento</h1>
     {% if admin %}
     <a class="btn btn-info" href="{{url_for('activar')}}">Activar Sitio</a>
     {%endif%}
-    {%include 'footer.html'%}
 </body>
 
 {% endblock content %}

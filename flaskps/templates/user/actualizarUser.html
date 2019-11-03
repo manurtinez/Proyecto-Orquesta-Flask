@@ -6,7 +6,6 @@
 {%block content%}
 
 <body>
-  {%include 'header.html'%}
   <div class="fondito">
     <div class="centered">
       {% with messages = get_flashed_messages() %}
@@ -30,6 +29,5 @@
       </form>
     </div>
   </div>
-  {%include 'footer.html'%}
 </body>
 {% endblock content %}

@@ -68,14 +68,14 @@ def activar():
 def eliminarUser():
     return None
 
-def bloquearUser(usuario):
+def bloquearUser(id):
     return None
     # print(usuario)
     # User.desactivar_user(usuario)
     # lista = User.all()
     # return render_template('user/listado.html', lista=lista, admin=user.verificarSiEsAdmin(), username=session['username'])
 
-def activarUser(usuario):
+def activarUser(id):
     return None
     # print(usuario)
     # User.activar_user(usuario)

@@ -1,0 +1,33 @@
+{%extends "base.html"%}
+{%block title%}Inicio {%endblock title%}
+{%block head%}
+{{super()}}
+{%endblock head%}
+{% block content %}
+<body style="background-color: burlywood;">
+  
+</body>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success fade show alert-dismissible" role="alert">
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+{% if username is defined %}
+<div class="alert alert-success fade show alert-dismissible" role="alert">
+  Bienvenido {{ username }}
+</div>
+{% endif %}
+<div style="background-color:white; border-radius:5px">
+  <p style="color:black">
+    <h3>{{titulo}}</h3>
+  </p>
+
+  <p style="color:black">
+    {{descripcion}}
+  </p>
+</div>
+{% endblock content %}

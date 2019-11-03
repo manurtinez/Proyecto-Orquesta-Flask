@@ -41,12 +41,12 @@ def verificarSiEsAdmin():
     else:
         return False
 
-def showUser(usuario):
-    print(usuario)
-    return render_template('/user/showUser.html', usuario=usuario)
+def showUser(id):
+    print(id)
+    return render_template('/user/showUser.html', usuario=id)
 
-def actualizarUser(usuario):
-    return render_template('user/actualizarUser.html', user=usuario)
+def actualizarUser(id):
+    return render_template('user/actualizarUser.html', user=id)
 
 def actualizar():
     p = request.form

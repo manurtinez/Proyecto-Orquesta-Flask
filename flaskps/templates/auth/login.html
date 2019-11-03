@@ -1,16 +1,10 @@
 {%extends "base.html"%}
-{%block title%}Inicio{%endblock title%}
+{%block title%}Login{%endblock title%}
 {%block head%}
 {{super()}}
 {%endblock head%}
-{%block content%}
-
-<body>
-    {%include 'header.html'%}
-    <div class="split left">
-        <img src="..\static\backgroundinicio.jpg" style="align-self: center; width:100%" alt="imagenOrquesta">
-    </div>
-    <div class="split right">
+{% block content %}
+<body background="..\static\backgroundinicio.jpg" style="background-repeat: no-repeat; background-position: 50%;">
         <div class="centered">
             {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -35,6 +29,5 @@
                 </form>
             </div>
         </div>
-    </div>
 </body>
 {%endblock content%}

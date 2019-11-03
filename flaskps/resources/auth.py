@@ -9,6 +9,10 @@ def login():
 
 def authenticate():
     params = request.form
+    usuarios = User.all()
+    print(usuarios)
+    print(usuarios[0].email)
+    print(usuarios[0].password)
     usuario = User.get_by_email_and_pass(params['email'], params['password'])
     print(usuario)
     if not usuario:
