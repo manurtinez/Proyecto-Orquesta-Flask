@@ -65,15 +65,18 @@ def buscar():
     if 'username' not in session:
         return redirect(url_for('accesoDenegado'))
     nombre = request.form['nombre']
-    if nombre == 'activo':
-        lista = User.select_activos()
-    elif nombre == 'inactivo':
-        lista = User.select_inactivos()
+    user = User.get_by_username(nombre)
+    if user:
+        lista = []
+        lista.append(user)
     else:
-        user = User.get_by_username(nombre)
-        if user:
-            lista = []
-            lista.append(user)
-        else:
-            lista = User.all()
+        lista = User.all()
     return render_template('user/listado.html', lista=lista, admin=verificarSiEsAdmin(), username=session['username'])
+
+def mostrarActivos():
+    lista = User.select_activos()
+    return render_template('user/listado.html', lista=lista, admin=verificarSiEsAdmin(), username=session['username'], activos=True)
+
+def mostrarInactivos():
+    lista = User.select_inactivos()
+    return render_template('user/listado.html', lista=lista, admin=verificarSiEsAdmin(), username=session['username'], inactivos=True)

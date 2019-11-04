@@ -10,7 +10,9 @@
         <form action="{{ url_for('buscarUsuario')}}" method="POST">
             <input type="text" id="buscarUser" style="width: 300px; height: 30px;" name="nombre"
                 placeholder="buscar usuario">
-            <input type="submit" value="Buscar">
+            <input class="btn btn-primary" type="submit" value="Buscar">
+            <a class="btn btn-primary" href="{{url_for('mostrarInactivos')}}">Mostrar inactivos</a>
+            <a class="btn btn-primary" href="{{url_for('mostrarActivos')}}">Mostrar activos</a>
         </form>
         <table class="table">
             <thead>

@@ -47,8 +47,10 @@ app.add_url_rule('/user/crear', 'crear', user.crear, methods=['POST'])
 app.add_url_rule('/user/listado', 'listadoUsers', user.listadoUsers)
 app.add_url_rule('/user/showUser/<id>', 'showUser', user.showUser)
 app.add_url_rule('/user/actualizarUser/<id>', 'actualizarUser', user.actualizarUser)
-app.add_url_rule('/user/buscar', 'buscarUsuario', user.buscar, methods=['POST'])
+app.add_url_rule('/user/buscar', 'buscarUsuario', user.buscar, methods=['POST', 'GET'])
 app.add_url_rule('/user/actualizar', 'actualizar', user.actualizar, methods=['POST'])
+app.add_url_rule('/user/listado/activos', 'mostrarActivos', user.mostrarActivos)
+app.add_url_rule('/user/listado/inactivos', 'mostrarInactivos', user.mostrarInactivos)
 
 #ADMINISTRACION
 app.add_url_rule('/administracion', 'administracion', admin.administracion)
