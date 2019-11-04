@@ -83,6 +83,8 @@ def eliminarUser():
     return None
 
 def bloquearUser(id):
+    if 'username' not in session or not session['admin']:
+        return redirect(url_for('accesoDenegado'))
     return None
     # print(usuario)
     # User.desactivar_user(usuario)
@@ -90,6 +92,8 @@ def bloquearUser(id):
     # return render_template('user/listado.html', lista=lista, admin=user.verificarSiEsAdmin(), username=session['username'])
 
 def activarUser(id):
+    if 'username' not in session or not session['admin']:
+        return redirect(url_for('accesoDenegado'))
     return None
     # print(usuario)
     # User.activar_user(usuario)
@@ -98,7 +102,7 @@ def activarUser(id):
 
 def accesoDenegado():
     flash('usted no esta autorizado a esta url')
-    return render_template('index.html')
+    return redirect(url_for('index'))
  #listar los elementos de las pag FALTA implementar
 #@app.route('/listar.html')
 #def listar():
