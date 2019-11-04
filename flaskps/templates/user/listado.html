@@ -40,7 +40,7 @@
                 <td>
                     <nav>
                         <a href="{{ url_for('showUser', id=user.id)}}" class="btn btn-info">Mostrar</a>
-                        {% if admin %}
+                        {% if session['admin'] is defined and session['admin'] %}
                         <a href="{{url_for('actualizarUser', id=user.id)}}" class="btn btn-info">Actualizar</a>
                         <a href="{{url_for('eliminarUser')}}" class="btn btn-info">Eliminar</a>
                         {% if user.activo == 1 %}

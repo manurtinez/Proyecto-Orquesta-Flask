@@ -70,12 +70,7 @@ def index():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return redirect(url_for('mantenimiento'))
-    if 'username' in session:
-        username = session['username']
-        admin = user.verificarSiEsAdmin()
-        return render_template('index.html', titulo=tabla.titulo, descripcion=tabla.descripcion, username=username, admin=admin)
-    else:    
-        return render_template('index.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
+    return render_template('index.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
 
 # @app.route('/registro.html', methods=['POST', 'GET'])
 # def registro():

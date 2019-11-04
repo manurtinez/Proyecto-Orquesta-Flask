@@ -34,7 +34,7 @@ def listadoUsers():
     if tabla.sitio_habilitado == 0:
         return redirect(url_for('mantenimiento'))
     lista = User.all()
-    return render_template('user/listado.html', lista=lista, admin=verificarSiEsAdmin(), username=session['username'])
+    return render_template('user/listado.html', lista=lista)
 
 def verificarSiEsAdmin():
     u = User_tiene_rol.tiene_rol(User.get_by_email(session['username']).id, Rol.get_by_nombre('administrador').id)
@@ -66,17 +66,18 @@ def buscar():
         return redirect(url_for('accesoDenegado'))
     nombre = request.form['nombre']
     user = User.get_by_username(nombre)
-    if user:
-        lista = []
-        lista.append(user)
-    else:
+    if nombre == '' or not user:
         lista = User.all()
-    return render_template('user/listado.html', lista=lista, admin=verificarSiEsAdmin(), username=session['username'])
+    else:
+        lista = []
+        for u in user:
+            lista.append(u)
+    return render_template('user/listado.html', lista=lista)
 
 def mostrarActivos():
     lista = User.select_activos()
-    return render_template('user/listado.html', lista=lista, admin=verificarSiEsAdmin(), username=session['username'], activos=True)
+    return render_template('user/listado.html', lista=lista)
 
 def mostrarInactivos():
     lista = User.select_inactivos()
-    return render_template('user/listado.html', lista=lista, admin=verificarSiEsAdmin(), username=session['username'], inactivos=True)
+    return render_template('user/listado.html', lista=lista)

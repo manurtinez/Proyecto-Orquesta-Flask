@@ -16,9 +16,9 @@
 {% endfor %}
 {% endif %}
 {% endwith %}
-{% if username is defined %}
+{% if session['username'] is defined %}
 <div class="alert alert-success fade show alert-dismissible" role="alert">
-  Bienvenido {{ username }}
+  Bienvenido {{ session['username'] }}
 </div>
 {% endif %}
 <div style="background-color:white; border-radius:5px">

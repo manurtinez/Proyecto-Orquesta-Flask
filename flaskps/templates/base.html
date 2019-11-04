@@ -54,7 +54,7 @@
             <li class="nav-item active">
               <a class="nav-link" href="{{url_for('index')}}">Inicio <span class="sr-only">(current)</span></a>
             </li>
-            {%if username is not defined%}
+            {%if session['username'] is not defined%}
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('login') }}">Login</a>
             </li>
@@ -68,7 +68,7 @@
             <li>
               <a class="nav-link" href="{{ url_for('listadoUsers') }}">Listado</a>
             </li>
-            {% if admin %}
+            {% if session['admin'] is defined and session['admin'] %}
             <a class="nav-link" href="{{ url_for('administracion') }}">Administracion</a>
             {% endif %}
             {%endif%}

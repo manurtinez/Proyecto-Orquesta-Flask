@@ -10,9 +10,7 @@ def administracion():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return mantenimiento()
-    username = session['username']
-    admin = user.verificarSiEsAdmin()
-    return render_template('/admin/administracion.html', admin=admin, username=username)
+    return render_template('/admin/administracion.html')
 
 def editarCantElementos():
     if 'username' not in session or not session['admin']:
@@ -39,9 +37,7 @@ def mantenimiento():
     if 'username' not in session or not session['admin']:
         return redirect(url_for('accesoDenegado'))
     if 'username' in session:
-        username = session['username']
-        admin = user.verificarSiEsAdmin()
-        return render_template('desactivar.html', username=username, admin=admin)
+        return render_template('desactivar.html')
     else:    
         return render_template('desactivar.html')
 
