@@ -81,7 +81,9 @@ def eliminarUser():
 def bloquearUser(id):
     if 'username' not in session or not session['admin']:
         return redirect(url_for('accesoDenegado'))
-    return None
+    user = User.desactivar_user(User.get_by_id(id).username)
+    print(user.activo)
+    return redirect(url_for('listadoUsers'))
     # print(usuario)
     # User.desactivar_user(usuario)
     # lista = User.all()
@@ -90,7 +92,9 @@ def bloquearUser(id):
 def activarUser(id):
     if 'username' not in session or not session['admin']:
         return redirect(url_for('accesoDenegado'))
-    return None
+    user = User.activar_user(User.get_by_id(id).username)
+    print(user.activo)
+    return redirect(url_for('listadoUsers'))
     # print(usuario)
     # User.activar_user(usuario)
     # lista = User.all()
