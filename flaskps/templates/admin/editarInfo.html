@@ -8,13 +8,14 @@
 <body id="bodyInicio">
     <form action="" method="post">
         <label for="text">Titulo: </label>
-        <input type="text" id="titulo" name="titulo" style="width: 350px;" value="{{ titulo }}" /><br>
+        <input type="text" id="titulo" name="titulo" style="width: 350px;" value="{{ titulo }}" ></br>
         <label for="descripcion">Descripcion: </label>
         <textarea rows="5"  id="descripcion" name="descripcion"  >{{ descripcion}}</textarea>
         <br>
         <label for="text">Mail: </label>
-        <input type="text" id="mail" name="mail" /><br>
-        <input class="btn btn-info" type="submit" id="send-signup" name="signup" value="Editar" />
+        <input type="text" id="mail" name="mail" style="width: 350px;" value="{{ mail }}" >
+    </br>
+        <input class="btn btn-info" type="submit" id="send-signup" name="signup" value="Editar" >
         <a class="btn btn-info" href="{{ url_for('administracion')}}">Volver</a>
     </form>
 </body>

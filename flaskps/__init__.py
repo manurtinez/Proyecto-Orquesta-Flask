@@ -70,7 +70,7 @@ def index():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return redirect(url_for('mantenimiento'))
-    return render_template('index.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
+    return render_template('index.html', titulo=tabla.titulo, descripcion=tabla.descripcion, mail=tabla.mail)
 
 # @app.route('/registro.html', methods=['POST', 'GET'])
 # def registro():
