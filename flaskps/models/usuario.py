@@ -56,13 +56,13 @@ class User(db.Model):
         obj = User.query.filter_by(username=us).first()
         obj.activo = 1
         db.session.commit()
-        return True
+        return obj
 
     def desactivar_user(us):
         obj = User.query.filter_by(username=us).first()
         obj.activo = 0
         db.session.commit()
-        return True
+        return obj
     
     #Consultas relacionadas a actualización
     def actualizar_username(usernameviejo,usernamenuevo):

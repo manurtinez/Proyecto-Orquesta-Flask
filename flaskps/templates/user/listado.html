@@ -5,8 +5,36 @@
 {%endblock head%}
 {%block content%}
 
-<body >
+<body>
     <div>
+        {%for user in lista %}
+        <!-- Modal -->
+        <div class="modal fade" id="myModal{{user.id}}" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Informacion de {{user.username}}</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li>Nombre: {{user.first_name}}</li>
+                            <li>Apellido: {{user.last_name}}</li>
+                            <li>Nombre de usuario: {{user.username}}</li>
+                            <li>Email: {{user.email}}</li>
+                            <li>Es usuario activo?{% if user.activo %} Si {% else %} No {% endif%}</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {%endfor%}
         <form action="{{ url_for('buscarUsuario')}}" method="POST">
             <input type="text" id="buscarUser" style="width: 300px; height: 30px;" name="nombre"
                 placeholder="buscar usuario">
@@ -16,43 +44,44 @@
         </form>
         <table class="table">
             <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Nombre de usuario</th>
-                <th>Activo?</th>
-                <th>Opciones</th>
-            </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Nombre de usuario</th>
+                    <th>Activo?</th>
+                    <th>Opciones</th>
+                </tr>
             </thead>
             <tbody>
-            {% for user in lista %}
-            <tr>
-                <td>{{user.first_name}}</td>
-                <td>{{user.last_name}}</td>
-                <td>{{user.username}}</td>
-                <td>
-                    {% if user.activo == 1 %}
-                    Si
-                    {% else %}
-                    No
-                    {% endif %}
-                </td>
-                <td>
-                    <nav>
-                        <a href="{{ url_for('showUser', id=user.id)}}" class="btn btn-info">Mostrar</a>
-                        {% if session['admin'] is defined and session['admin'] %}
-                        <a href="{{url_for('actualizarUser', id=user.id)}}" class="btn btn-info">Actualizar</a>
-                        <a href="{{url_for('eliminarUser')}}" class="btn btn-info">Eliminar</a>
+                {% for user in lista %}
+                <tr>
+                    <td>{{user.first_name}}</td>
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.username}}</td>
+                    <td>
                         {% if user.activo == 1 %}
-                        <a href="{{ url_for('bloquearUser', id=user.id) }}" class="btn btn-info">Bloquear</a>
+                        Si
                         {% else %}
-                        <a href="{{ url_for('activarUser', id=user.id) }}" class="btn btn-info">Activar</a>
+                        No
                         {% endif %}
-                        {% endif %}
-                    </nav>
-                </td>
-            </tr>
-            {% endfor %}
+                    </td>
+                    <td>
+                        <nav>
+                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                data-target="#myModal{{ user.id }}">Mostrar</button>
+                                {% if session['admin'] is defined and session['admin'] %}
+                                <a href="{{url_for('actualizarUser', id=user.id)}}" class="btn btn-info">Actualizar</a>
+                                <a href="{{url_for('eliminarUser')}}" class="btn btn-info">Eliminar</a>
+                                {% if user.activo == 1 %}
+                                <a href="{{ url_for('bloquearUser', id=user.id) }}" class="btn btn-info">Bloquear</a>
+                                {% else %}
+                                <a href="{{ url_for('activarUser', id=user.id) }}" class="btn btn-info">Activar</a>
+                                {% endif %}
+                                {% endif %}
+                        </nav>
+                    </td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
