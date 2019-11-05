@@ -26,7 +26,7 @@ class User(db.Model):
 
     #esta es para poder buscar por usuario
     def get_by_username(u):
-        return User.query.filter(User.username.contains(u))
+        return User.query.filter(User.username.contains(u)).first()
     
     def all():
         return User.query.all()

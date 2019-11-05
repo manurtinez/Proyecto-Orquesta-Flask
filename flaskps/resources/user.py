@@ -62,9 +62,17 @@ def actualizarUser(id):
 
 def actualizar():
     p = request.form
-    act = User.get_by_email(session['username'])
-    User.actualizar_username(act.username,p['user'])
-    User.actualizar_password(p['user'],p['password'])
+    print(p)
+    act = User.get_by_username(p['username'])
+    roles = Rol.all()
+    User.actualizar_username(act.username,p['username'])
+    User.actualizar_password(act.username,p['password'])
+    for r in roles:
+        c = 'rol' + str(r.id)
+        if request.form.get(c):
+            User_tiene_rol.asignar_rol(act.id, r.id)
+        else:
+            User_tiene_rol.desasignar_rol(act.id, r.id)
     return redirect(url_for('index'))
 
 def buscar():
