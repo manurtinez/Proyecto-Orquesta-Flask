@@ -6,28 +6,49 @@
 {%block content%}
 
 <body>
-  <div class="fondito">
-    <div class="centered">
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      <ul class=flashes>
-        {% for message in messages %}
-        <li>{{ message }}</li>
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <h1>Editar informacion de {{user.username}}</h1>
+    <form method="POST" action="{{url_for('actualizar')}}">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input class="form-control" id="user" class="areaEscribir" id="nombre" name="user" type="text" value="{{ user.first_name }}">
+      </div>
+      <div class="form-group">
+          <label for="apellido">Apellido:</label>
+        <input class="form-control" id="user" class="areaEscribir" id="apellido" name="user" type="text" value="{{ user.last_name }}">
+      </div>
+      <div class="form-group">
+          <label for="username">Nombre de usuario:</label>
+        <input class="form-control" id="user" class="areaEscribir" id="username" name="user" type="text" value="{{ user.username }}">
+      </div>
+      <div class="form-group">
+          <label for="password">Contraseña:</label>
+        <input class="form-control" name="password" style="margin-bottom: 15px;" id="password" class="areaEscribir" value="{{ user.password }}"
+          type="password">
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input class="form-control" type="email" name="email" id="email" value="{{user.email}}">
+      </div>
+      <div class="form-group">
+        <p>Roles:</p>
+        {% for r in roles %}
+          {{r.nombre}}:<input  type="checkbox" name="rol{{r.id}}" id="roles" {% if r in rolesUser %} checked {% endif %}> <br>
         {% endfor %}
-      </ul>
-      {% endif %}
-      {% endwith %}
-      <form class="formLogin" method="POST" action="{{url_for('actualizar')}}">
-        <p>Nombre de usuario:</p>
-        <input id="user" class="areaEscribir" name="user" type="text" value="{{ user.username }}" >
-        <p>Contraseña:</p>
-        <input name="password" style="margin-bottom: 15px;" class="areaEscribir" value="{{ user.password }}" type="password" >
         <div>
           <input type="submit" class="btn btn-info" value="Aceptar">
-          <a href="{{ url_for('listadoUsers')}}" class="btn btn-info">Mostrar</a>
+          <a href="{{ url_for('listadoUsers')}}" class="btn btn-info">Volver</a>
         </div>
-      </form>
-    </div>
+    </form>
   </div>
 </body>
 {% endblock content %}

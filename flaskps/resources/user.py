@@ -52,7 +52,13 @@ def showUser(id):
 def actualizarUser(id):
     if 'username' not in session or not session['admin']:
         return redirect(url_for('accesoDenegado'))
-    return render_template('user/actualizarUser.html', user=id)
+    user = User.get_by_id(id)
+    roles = Rol.all()
+    rolesUser = []
+    for rol in roles:
+        if User_tiene_rol.tiene_rol(user.id, rol.id):
+            rolesUser.append(rol)
+    return render_template('user/actualizarUser.html', user=user, roles=roles, rolesUser=rolesUser)
 
 def actualizar():
     p = request.form

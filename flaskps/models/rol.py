@@ -10,3 +10,6 @@ class Rol(db.Model):
     #Este método sirve para obtener el id de un rol específico.
     def get_by_nombre(nombre_rol):
         return Rol.query.filter_by(nombre=nombre_rol).first()
+
+    def all():
+        return Rol.query.all()

@@ -5,16 +5,16 @@
 {%endblock head%}
 {% block content %}
 <body background="..\static\backgroundinicio.jpg" style="background-repeat: no-repeat; background-position: 50%;">
-        <div class="centered">
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <ul class=flashes>
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            {% endwith %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-danger fade show alert-dismissible" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}       
+    <div class="centered">
             <div>{{error}}</div>
             <div class="containerForm">
                 <form class="formLogin" method="POST" action="/authenticate">
