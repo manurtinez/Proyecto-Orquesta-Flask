@@ -4,30 +4,36 @@
 {{super()}}
 {%endblock head%}
 {% block content %}
+
 <body background="..\static\backgroundinicio.jpg" style="background-repeat: no-repeat; background-position: 50%;">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-danger fade show alert-dismissible" role="alert">
-          {{ message }}
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}       
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger fade show alert-dismissible" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <div class="centered">
-            <div>{{error}}</div>
-            <div class="containerForm">
-                <form class="formLogin" method="POST" action="/authenticate">
-                    <p>Email:</p>
-                    <input id="user" class="areaEscribir" name="email" type="text" required>
-                    <p>Contraseña:</p>
-                    <input style="margin-bottom: 30px" name="password" class="areaEscribir" type="password" required>
-                    <div>
-                        <input type="submit" class="btn btn-info" value="Aceptar">
-                        <input type="reset" class="btn btn-info" value="Cancelar">
-                    </div>
-                </form>
-            </div>
+        <div>{{error}}</div>
+        <div class="containerForm">
+            <form method="POST" action="/authenticate">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input class="form-control" type="email" name="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input class="form-control" name="password" style="margin-bottom: 15px;" id="password"
+                        placeholder="Contraseña" class="areaEscribir" type="password" required>
+                </div>
+                <div>
+                    <input type="submit" class="btn btn-info" value="Aceptar">
+                    <input type="reset" class="btn btn-info" value="Cancelar">
+                </div>
+            </form>
         </div>
+    </div>
 </body>
 {%endblock content%}
