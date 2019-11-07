@@ -23,7 +23,7 @@ def crear():
             flash('el mail ya se encuentra registrado!')
             return redirect(url_for('registro'))
         else:
-            User.create(p['email'], p['user'], p['password'], 1, date.today(), date.today(), p['nombre'], p['apellido'])
+            User.create(p['email'], p['user'], p['password'], 1, p['nombre'], p['apellido'])
             session['username'] = p['email']
             return redirect('index')
 
@@ -60,13 +60,13 @@ def actualizarUser(id):
             rolesUser.append(rol)
     return render_template('user/actualizarUser.html', user=user, roles=roles, rolesUser=rolesUser)
 
-def actualizar():
+def actualizar(m):
     p = request.form
     print(p)
-    act = User.get_by_username(p['username'])
+    act = User.get_by_email(m)
     roles = Rol.all()
-    User.actualizar_username(act.username,p['username'])
-    User.actualizar_password(act.username,p['password'])
+    print(act)
+    User.actualizar(act.username, p['username'],p['password'], p['nombre'], p['apellido'])
     for r in roles:
         c = 'rol' + str(r.id)
         if request.form.get(c):

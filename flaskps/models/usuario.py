@@ -87,7 +87,7 @@ class User(db.Model):
         obj.password = passnueva
         obj.first_name = firnuevo
         obj.last_name = lanuevo
-        obj.updated_at = obj.datetime.now()
+        obj.updated_at = datetime.now()
         db.session.commit()
         return obj
 

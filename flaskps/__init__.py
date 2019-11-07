@@ -3,7 +3,7 @@ from flask import Flask, url_for, render_template, g, request, session, flash, r
 from flaskps.models.usuario import User
 from flaskps.models.configuracion import configuracion
 from flaskps.db import db
-from flaskps.resources import admin, auth, user
+from flaskps.resources import admin, auth, user, estudiante
 from flaskps.config import Config
 from flask_session import Session
 #from flask_mysqldb import MySQL #xampp coneccion bd
@@ -41,6 +41,9 @@ app.add_url_rule(
     methods=['POST', 'GET']
 )
 
+#Estudiante
+app.add_url_rule('/user/listadoEstudiantes', 'listadoEstudiantes', estudiante.listadoEstudiantes)
+
 #Usuario
 app.add_url_rule('/user/registro', 'registro', user.registrar)
 app.add_url_rule('/user/crear', 'crear', user.crear, methods=['POST'])
@@ -48,7 +51,7 @@ app.add_url_rule('/user/listado', 'listadoUsers', user.listadoUsers)
 app.add_url_rule('/user/showUser/<id>', 'showUser', user.showUser)
 app.add_url_rule('/user/actualizarUser/<id>', 'actualizarUser', user.actualizarUser)
 app.add_url_rule('/user/buscar', 'buscarUsuario', user.buscar, methods=['POST', 'GET'])
-app.add_url_rule('/user/actualizar', 'actualizar', user.actualizar, methods=['POST'])
+app.add_url_rule('/user/actualizar/<m>', 'actualizar', user.actualizar, methods=['POST'])
 app.add_url_rule('/user/listado/activos', 'mostrarActivos', user.mostrarActivos)
 app.add_url_rule('/user/listado/inactivos', 'mostrarInactivos', user.mostrarInactivos)
 
