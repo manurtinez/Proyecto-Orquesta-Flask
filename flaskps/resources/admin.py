@@ -9,7 +9,7 @@ def administracion():
         return redirect(url_for('accesoDenegado'))
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
-        return render_template('desactivar.html')
+        return render_template('/admin/desactivar.html')
     #configuracion.set_titulo("orquesta berisso")
     if request.method == 'POST':
         titulo = request.form['titulo']
@@ -49,9 +49,9 @@ def mantenimiento():
     if 'username' not in session or not session['admin']:
         return redirect(url_for('accesoDenegado'))
     if 'username' in session:
-        return render_template('desactivar.html')
+        return render_template('/admin/desactivar.html')
     else:    
-        return render_template('desactivar.html')
+        return render_template('/admin/desactivar.html')
 
 #formulario para editar informacion
 
