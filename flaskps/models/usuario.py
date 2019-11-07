@@ -1,5 +1,6 @@
 from flaskps.db import db
 from sqlalchemy import update
+from datetime import datetime
 
 class User(db.Model):
     __tablename__ = 'usuario'
@@ -33,8 +34,10 @@ class User(db.Model):
 
     def create(em,us,pa,ac,up,cr,fi,la):
 
-        elemento = User (email=em, username=us, password=pa, activo=ac, updated_at=up, 
-        created_at=cr, first_name=fi, last_name=la )
+        elemento = User (email=em, username=us, password=pa, first_name=fi, last_name=la )
+        elemento.updated_at= datetime.now()
+        elemento.created_at= datetime.now()
+        elemento.activo= 1
 
         db.session.add (elemento)
         db.session.commit()
@@ -84,6 +87,7 @@ class User(db.Model):
         obj.password = passnueva
         obj.first_name = firnuevo
         obj.last_name = lanuevo
+        obj.updated_at = datetime.now()
         db.session.commit()
         return obj
 

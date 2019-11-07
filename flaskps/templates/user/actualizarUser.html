@@ -17,27 +17,27 @@
     {% endif %}
     {% endwith %}
     <h1>Editar informacion de {{user.username}}</h1>
-    <form method="POST" action="{{url_for('actualizar')}}">
+    <form method="POST" action="{{url_for('actualizar', m=user.email)}}">
       <div class="form-group">
         <label for="nombre">Nombre:</label>
-        <input class="form-control" class="areaEscribir" id="nombre" name="nombre" type="text" value="{{ user.first_name }}">
+        <input class="form-control" class="areaEscribir" id="nombre" name="nombre" type="text" value="{{ user.first_name }}" required>
       </div>
       <div class="form-group">
           <label for="apellido">Apellido:</label>
-        <input class="form-control" class="areaEscribir" id="apellido" name="apellido" type="text" value="{{ user.last_name }}">
+        <input class="form-control" class="areaEscribir" id="apellido" name="apellido" type="text" value="{{ user.last_name }}"required>
       </div>
       <div class="form-group">
           <label for="username">Nombre de usuario:</label>
-        <input class="form-control" class="areaEscribir" id="username" name="username" type="text" value="{{ user.username }}">
+        <input class="form-control" class="areaEscribir" id="username" name="username" type="text" value="{{ user.username }}"required>
       </div>
       <div class="form-group">
           <label for="password">Contraseña:</label>
         <input class="form-control" name="password" style="margin-bottom: 15px;" id="password" class="areaEscribir" value="{{ user.password }}"
-          type="password">
+          type="password"required>
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input class="form-control" type="email" name="email" id="email" value="{{user.email}}">
+        <input class="form-control" type="email" name="email" id="email" value="{{user.email}}" disabled>
       </div>
       <div class="form-group">
         <p>Roles:</p>
