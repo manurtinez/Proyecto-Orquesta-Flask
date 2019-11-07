@@ -35,15 +35,13 @@
             </div>
         </div>
         {%endfor%}
-        <form action="{{ url_for('buscarUsuario')}}" method="POST">
-            <input type="text" id="buscarUser" style="width: 300px; height: 30px;" name="nombre"
-                placeholder="buscar usuario">
-            <input class="btn btn-primary" type="submit" value="Buscar">
+        <div>
+                <a class="btn btn-primary" href="{{url_for('listadoUsers')}}">Mostrar todos</a>
             <a class="btn btn-primary" href="{{url_for('mostrarInactivos')}}">Mostrar inactivos</a>
             <a class="btn btn-primary" href="{{url_for('mostrarActivos')}}">Mostrar activos</a>
-        </form>
-        <table class="table">
-            <thead>
+        </div>
+        <table id="listado" data-page-length="{{cant}}" class="table table-stripped">
+            <thead class="thead-dark">
                 <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
@@ -69,15 +67,15 @@
                         <nav>
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#myModal{{ user.id }}">Mostrar</button>
-                                {% if session['admin'] is defined and session['admin'] %}
-                                <a href="{{url_for('actualizarUser', id=user.id)}}" class="btn btn-info">Editar Datos</a>
-                                <a href="{{url_for('eliminarUser')}}" class="btn btn-info">Eliminar</a>
-                                {% if user.activo == 1 %}
-                                <a href="{{ url_for('bloquearUser', id=user.id) }}" class="btn btn-info">Bloquear</a>
-                                {% else %}
-                                <a href="{{ url_for('activarUser', id=user.id) }}" class="btn btn-info">Activar</a>
-                                {% endif %}
-                                {% endif %}
+                            {% if session['admin'] is defined and session['admin'] %}
+                            <a href="{{url_for('actualizarUser', id=user.id)}}" class="btn btn-info">Editar Datos</a>
+                            <a href="{{url_for('eliminarUser')}}" class="btn btn-info">Eliminar</a>
+                            {% if user.activo == 1 %}
+                            <a href="{{ url_for('bloquearUser', id=user.id) }}" class="btn btn-info">Bloquear</a>
+                            {% else %}
+                            <a href="{{ url_for('activarUser', id=user.id) }}" class="btn btn-info">Activar</a>
+                            {% endif %}
+                            {% endif %}
                         </nav>
                     </td>
                 </tr>
@@ -85,6 +83,11 @@
             </tbody>
         </table>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#listado').DataTable();
+        });
+    </script>
     <script>
         function myFunction() {
             var input, filter, table, tr, td, i, txtValue;
