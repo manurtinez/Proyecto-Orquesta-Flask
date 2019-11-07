@@ -77,6 +77,16 @@ class User(db.Model):
         db.session.commit()
         return True
 
+    #ESTA CONSULTA SE ACCEDE CON EL NOMBRE DE USUARIO (viejo), RETORNA EL OBJETO ACTUALIZADO
+    def actualizar(useractual,usernuevo,passnueva,firnuevo,lanuevo):
+        obj = User.query.filter_by(username=useractual).first()
+        obj.username = usernuevo
+        obj.password = passnueva
+        obj.first_name = firnuevo
+        obj.last_name = lanuevo
+        db.session.commit()
+        return obj
+
     #Baja fisica del sistema
     def eliminar_usuario(uname):
         User.query.filter_by(username=uname).delete()
