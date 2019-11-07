@@ -9,29 +9,41 @@ def administracion():
         return redirect(url_for('accesoDenegado'))
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
-        return mantenimiento()
-    return render_template('/admin/administracion.html')
-
-def editarCantElementos():
-    if 'username' not in session or not session['admin']:
-        return redirect(url_for('accesoDenegado'))
-    if request.method == 'GET':
-        cant = configuracion.get_config().cantListar
-        return render_template('/admin/editarCantElementos.html', cant=cant)
-    else:
-        cant = request.form['cant']
-        configuracion.set_cantListar(cant)
+        return render_template('desactivar.html')
+    #configuracion.set_titulo("orquesta berisso")
+    if request.method == 'POST':
+        titulo = request.form['titulo']
+        descripcion = request.form['descripcion']
+        mail =request.form['mail']
+        cantListar=request.form['cantListar']
+        configuracion.set_titulo(titulo)
+        configuracion.set_descripcion(descripcion)
+        configuracion.set_mail(mail)
+        configuracion.set_cantListar(cantListar)
         return redirect(url_for('index'))
+    return render_template('/admin/administracion.html', titulo=tabla.titulo, descripcion=tabla.descripcion, mail=tabla.mail, cantListar=tabla.cantListar)
+
+#def editarCantElementos():
+ #   if 'username' not in session or not session['admin']:
+ #       return redirect(url_for('accesoDenegado'))
+ #   if request.method == 'GET':
+ #       cant = configuracion.get_config().cantListar
+ #       return render_template('/admin/editarCantElementos.html', cant=cant)
+ #   else:
+ #       cant = request.form['cant']
+ #       configuracion.set_cantListar(cant)
+ #       return redirect(url_for('index'))
 
 #informacion de la orquesta LISTO!!
 
-def informacion():
-    if 'username' not in session or not session['admin']:
-        return redirect(url_for('accesoDenegado'))
-    tabla = configuracion.get_config()
-    if tabla.sitio_habilitado == 0:
-        return mantenimiento()
-    return render_template('informacion.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
+#def informacion():
+#    if 'username' not in session or not session['admin']:
+#        return redirect(url_for('accesoDenegado'))
+#    tabla = configuracion.get_config()
+#    cant = configuracion.get_config().cantListar
+#    if tabla.sitio_habilitado == 0:
+#        return mantenimiento()
+#    return render_template('informacion.html', titulo=tabla.titulo, descripcion=tabla.descripcion, mail=tabla.mail, cant=cant)
 
 def mantenimiento():
     if 'username' not in session or not session['admin']:
@@ -43,22 +55,24 @@ def mantenimiento():
 
 #formulario para editar informacion
 
-def formulario():
-    if 'username' not in session or not session['admin']:
-        return redirect(url_for('accesoDenegado'))
-    tabla = configuracion.get_config()
-    if tabla.sitio_habilitado == 0:
-        return render_template('desactivar.html')
+#def formulario():
+#    if 'username' not in session or not session['admin']:
+#        return redirect(url_for('accesoDenegado'))
+#    tabla = configuracion.get_config()
+#    if tabla.sitio_habilitado == 0:
+#        return render_template('desactivar.html')
     #configuracion.set_titulo("orquesta berisso")
-    if request.method == 'POST':
-        titulo = request.form['titulo']
-        descripcion = request.form['descripcion']
-        mail =request.form['mail']
-        configuracion.set_titulo(titulo)
-        configuracion.set_descripcion(descripcion)
-        configuracion.set_mail(mail)
-        return redirect(url_for('index'))
-    return render_template('/admin/editarInfo.html', titulo=tabla.titulo, descripcion=tabla.descripcion)
+#    if request.method == 'POST':
+#        titulo = request.form['titulo']
+#        descripcion = request.form['descripcion']
+#        mail =request.form['mail']
+#        cantListar=request.form['cantListar']
+#        configuracion.set_titulo(titulo)
+#        configuracion.set_descripcion(descripcion)
+#        configuracion.set_mail(mail)
+#        configuracion.set_cantListar(cantListar)
+#        return redirect(url_for('index'))
+#    return render_template('/admin/editarInfo.html', titulo=tabla.titulo, descripcion=tabla.descripcion, mail=tabla.mail, cantListar=tabla.cantListar)
 
 #desactivar el la pagina web FALTA desactivar los templates y agregar la opcion activar sitio
 def desactivar():

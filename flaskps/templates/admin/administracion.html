@@ -6,12 +6,32 @@
 {%endblock head%}
 {%block content%}
 
-<body>
+<body id="bodyInicio">
     <div class="fondito">
         <h1 style="padding-top: 15px">Menu administrador</h1>
         <nav class="menuAdmin">
-            <a class="btn btn-info" href="{{ url_for('editarInfo') }}">Editar informacion de la Orquesta</a>
-            <a class="btn btn-info" href="{{url_for('editarCantElementos')}}">Cantidad de elementos por pagina</a>
+            <form action="" method="post">
+                <br>
+                <label for="text">Titulo: </label>
+                <input type="text" id="titulo" name="titulo" style="width: 350px;" value="{{ titulo }}" >
+                </br>
+                <br>
+                <label for="descripcion">Descripcion: </label>
+                <textarea rows="5"  id="descripcion" name="descripcion"  >{{ descripcion}}</textarea>
+                </br>
+                <br>
+                <label for="text">Mail: </label>
+                <input type="text" id="mail" name="mail" style="width: 350px;" value="{{ mail }}" >
+                </br>
+                <br>
+                <label for="text">Cantidad por pagina: </label>
+                <input type="text" id="cantListar" name="cantListar" style="width: 350px;" value="{{ cantListar }}" >
+                </br>
+        
+                <input class="btn btn-info" type="submit" id="send-signup" name="signup" value="Editar" >
+                
+            </form>
+            
             <a class="btn btn-info" href="{{ url_for('desactivar') }}">Desactivar Sitio</a>
         </nav>
     </div>
