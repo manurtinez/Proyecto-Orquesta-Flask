@@ -34,7 +34,7 @@ def listadoUsers():
     if tabla.sitio_habilitado == 0:
         return redirect(url_for('mantenimiento'))
     lista = User.all()
-    return render_template('user/listado.html', lista=lista)
+    return render_template('user/listado.html', lista=lista, cant=tabla.cantListar)
 
 def verificarSiEsAdmin():
     u = User_tiene_rol.tiene_rol(User.get_by_email(session['username']).id, Rol.get_by_nombre('administrador').id)
@@ -90,8 +90,10 @@ def buscar():
 
 def mostrarActivos():
     lista = User.select_activos()
-    return render_template('user/listado.html', lista=lista)
+    tabla = configuracion.get_config()
+    return render_template('user/listado.html', lista=lista, cant=tabla.cantListar)
 
 def mostrarInactivos():
     lista = User.select_inactivos()
-    return render_template('user/listado.html', lista=lista)
+    tabla = configuracion.get_config()
+    return render_template('user/listado.html', lista=lista, cant=tabla.cantListar)
