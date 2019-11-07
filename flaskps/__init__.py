@@ -65,6 +65,11 @@ app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
 app.add_url_rule('/eliminarUser', 'eliminarUser', admin.eliminarUser)
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
 
+#estudiante
+@app.route('/estudiante/estudiante')
+def estudiante():
+    return render_template('/estudiante/estudiante.html')
+
 @app.route('/')
 def index():
     tabla = configuracion.get_config()
