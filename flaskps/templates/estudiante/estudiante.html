@@ -6,103 +6,103 @@
 {%block content%}
 
 <body>
-  <div class="fondito">
-    <div class="centered">
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      <ul class=flashes>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      {% endwith %}
-      <form method="POST" action="{{url_for('crear')}}">
-        <fieldset>
-        <div class="form-inline">
-          <p>Nombre:</p>
-          <input id="nombre" class="areaEscribir" name="nombre" type="text" style="float: left"  required>
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <form method="POST" action="{{url_for('crear')}}">
+      <div class="row">
+        <div class="col">
+          <label for="nombre">Nombre:</label>
+          <input class="form-control" id="nombre" class="areaEscribir" name="nombre" type="text" required>
         </div>
-        
-        <div class="form-inline">
-          <p>Apellido:</p>
-          <input id="apellido" class="areaEscribir" name="apellido" type="text" style="float: left" required>
+        <div class="col">
+          <label for="apellido">Apellido:</label>
+          <input class="form-control" id="apellido" class="areaEscribir" name="apellido" type="text" required>
         </div>
-        </fieldset>
-        <fieldset>
-        <div class="form-inline">
-            <p>Fecha Nacimiento:</p>
-            <input id="fechaN" class="areaEscribir" name="fechaN" type="date" style="float: left" required>
+        <div class="col">
+          <label for="username">Nombre de usuario:</label>
+          <input class="form-control" id="username" class="areaEscribir" name="username" type="text" required>
         </div>
+      </div>
 
-        <div class="form-inline">
-            <p>Lugar Nacimiento:</p>
-            <input id="lugarN" class="areaEscribir" name="lugarN" type="date" style="float: left" required>
+      <div class="row">
+        <div class="col">
+          <label for="fechaN">Fecha Nacimiento:</label>
+          <input class="form-control" id="fechaN" class="areaEscribir" name="fechaN" type="date" required>
         </div>
-        </fieldset>
-
-        <div class="form-inline">
-            <p>Localidad:</p>
-            <input id="localidad" class="areaEscribir" name="localidad" type="select" style="float: left" required>
+        <div class="col">
+          <label for="lugarN">Lugar Nacimiento:</label>
+          <input class="form-control" id="lugarN" class="areaEscribir" name="lugarN" type="text" required>
         </div>
+      </div>
 
-        <div class="form-inline">
-            <p>Domicilio:</p>
-            <input id="domicilio" class="areaEscribir" name="domicilio" type="text" style="float: left" required>
+      <div class="row">
+        <div class="col">
+          <label for="localidad">Localidad:</label>
+          <input class="form-control" id="localidad" class="areaEscribir" name="localidad" type="select" required>
         </div>
-
-        <div class="form-inline">
-            <p>Barrio:</p>
-            <input id="barrio" class="areaEscribir" name="barrio" type="select" style="float: left" required>
+        <div class="col">
+          <label for="domicilio">Domicilio:</label>
+          <input class="form-control" id="domicilio" class="areaEscribir" name="domicilio" type="text" required>
         </div>
-
-        <div class="form-inline">
-            <p>Genero:</p>
-            <input id="denero" class="areaEscribir" name="genero" type="select" style="float: left" required>
+        <div class="col">
+          <label for="barrio">Barrio:</label>
+          <input class="form-control" id="barrio" class="areaEscribir" name="barrio" type="select" required>
         </div>
+      </div>
 
-        <div class="form-inline">
-            <p>Tipo de Documento:</p>
-            <input id="tipo" class="areaEscribir" name="tipo" type="select" style="float: left" required>
+      <div class="row">
+        <div class="col">
+          <label for="genero">Genero:</label>
+          <input class="form-control" id="denero" class="areaEscribir" name="genero" type="select" required>
         </div>
+      </div>
 
-        <div class="form-inline">
-            <p>Numero de Documento:</p>
-            <input id="numero" class="areaEscribir" name="numero" type="number" style="float: left" required>
+      <div class="row">
+        <div class="col">
+          <label for="tipoD">Tipo de Documento:</label>
+          <input class="form-control" id="tipoD" class="areaEscribir" name="tipoD" type="select" required>
         </div>
-
-        <div class="form-inline">
-            <p>Responsable a Cargo:</p>
-            <input id="responsable" class="areaEscribir" name="responsable" type="select" style="float: left" required>
+        <div class="col">
+          <label for="numeroD">Numero de Documento:</label>
+          <input class="form-control" id="numeroD" class="areaEscribir" name="numeroD" type="number" required>
         </div>
+      </div>
 
-        <div class="form-inline">
-            <p>Telefono:</p>
-            <input id="telefono" class="areaEscribir" name="telefono" type="text" style="float: left" required>
+      <div class="row">
+        <div class="col">
+          <label for="telefono">Telefono:</label>
+          <input class="form-control" id="telefono" class="areaEscribir" name="telefono" type="text" required>
         </div>
+      </div>
 
-        <div class="form-inline">
-            <p>Escuela:</p>
-            <input id="escuela" class="areaEscribir" name="escuela" type="select" style="float: left" required>
+      <div class="row" style="padding-bottom: 20px;">
+        <div class="col">
+          <label for="responsable">Responsable a Cargo:</label>
+          <input class="form-control" id="responsable" class="areaEscribir" name="responsable" type="select" required>
         </div>
-
-        <div class="form-inline">
-            <p>Nivel:</p>
-            <input id="nivel" class="areaEscribir" name="nivel" type="select" style="float: left" required>
+        <div class="col">
+          <label for="escuela">Escuela:</label>
+          <input class="form-control" id="escuela" class="areaEscribir" name="escuela" type="select" required>
         </div>
-
-        <div class="form-inline">
-          <p>Nombre de usuario:</p>
-          <input id="user" class="areaEscribir" name="user" type="text" style="float: left" required>
+        <div class="col">
+          <label for="nivel">Nivel:</label>
+          <input class="form-control" id="nivel" class="areaEscribir" name="nivel" type="select" required>
         </div>
+      </div>
 
-
-        <div>
-          <input type="submit" class="btn btn-info" value="Aceptar">
-          <input type="reset" class="btn btn-info" value="Cancelar">
-        </div>
-      </form>
-    </div>
+      <div>
+        <input type="submit" class="btn btn-info" value="Aceptar">
+        <a href="{{ url_for('listadoUsers')}}" class="btn btn-info">Volver</a>
+      </div>
+    </form>
   </div>
 </body>
 {% endblock content %}

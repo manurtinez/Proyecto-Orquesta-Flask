@@ -17,7 +17,7 @@
     {% endif %}
     {% endwith %}
     <h1>Editar informacion de {{user.username}}</h1>
-    <form method="POST" action="{{url_for('actualizar', m=user.email)}}">
+    <form method="POST" action="{{url_for('actualizar', m =user.email)}}">
       <div class="form-group">
         <label for="nombre">Nombre:</label>
         <input class="form-control" class="areaEscribir" id="nombre" name="nombre" type="text" value="{{ user.first_name }}" required>
