@@ -1,0 +1,112 @@
+<div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Crear Estudiante</h4>
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form method="POST" action="{{url_for('crear')}}">
+        <div class="row">
+          <div class="col">
+            <label for="nombre">Nombre:</label>
+            <input class="form-control form-control-sm" id="nombre" class="areaEscribir" name="nombre" type="text"
+              required>
+          </div>
+          <div class="col">
+            <label for="apellido">Apellido:</label>
+            <input class="form-control form-control-sm" id="apellido" class="areaEscribir" name="apellido"
+              type="text" required>
+          </div>
+          <div class="col">
+            <label for="username">Nombre de usuario:</label>
+            <input class="form-control form-control-sm" id="username" class="areaEscribir" name="username"
+              type="text" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="fechaN">Fecha Nacimiento:</label>
+            <input class="form-control form-control-sm" id="fechaN" class="areaEscribir" name="fechaN" type="date"
+              required>
+          </div>
+          <div class="col">
+            <label for="lugarN">Lugar Nacimiento:</label>
+            <input class="form-control form-control-sm" id="lugarN" class="areaEscribir" name="lugarN" type="text"
+              required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="localidad">Localidad:</label>
+            <input class="form-control form-control-sm" id="localidad" class="areaEscribir" name="localidad"
+              type="select" required>
+          </div>
+          <div class="col">
+            <label for="domicilio">Domicilio:</label>
+            <input class="form-control form-control-sm" id="domicilio" class="areaEscribir" name="domicilio"
+              type="text" required>
+          </div>
+          <div class="col">
+            <label for="barrio">Barrio:</label>
+            <input class="form-control form-control-sm" id="barrio" class="areaEscribir" name="barrio" type="select"
+              required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="genero">Genero:</label>
+            <input class="form-control form-control-sm" id="denero" class="areaEscribir" name="genero" type="select"
+              required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="tipoD">Tipo de Documento:</label>
+            <input class="form-control form-control-sm" id="tipoD" class="areaEscribir" name="tipoD" type="select"
+              required>
+          </div>
+          <div class="col">
+            <label for="numeroD">Numero de Documento:</label>
+            <input class="form-control form-control-sm" id="numeroD" class="areaEscribir" name="numeroD"
+              type="number" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="telefono">Telefono:</label>
+            <input class="form-control form-control-sm" id="telefono" class="areaEscribir" name="telefono"
+              type="text" required>
+          </div>
+        </div>
+
+        <div class="row" style="padding-bottom: 20px;">
+          <div class="col">
+            <label for="responsable">Responsable a Cargo:</label>
+            <input class="form-control form-control-sm" id="responsable" class="areaEscribir" name="responsable"
+              type="select" required>
+          </div>
+          <div class="col">
+            <label for="escuela">Escuela:</label>
+            <input class="form-control form-control-sm" id="escuela" class="areaEscribir" name="escuela"
+              type="select" required>
+          </div>
+          <div class="col">
+            <label for="nivel">Nivel:</label>
+            <input class="form-control form-control-sm" id="nivel" class="areaEscribir" name="nivel" type="select"
+              required>
+          </div>
+        </div>
+
+        <div>
+          <input type="submit" class="btn btn-info" value="Aceptar">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    </div>
+  </div>
