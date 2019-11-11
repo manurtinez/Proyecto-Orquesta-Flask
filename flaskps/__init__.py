@@ -3,7 +3,7 @@ from flask import Flask, url_for, render_template, g, request, session, flash, r
 from flaskps.models.usuario import User
 from flaskps.models.configuracion import configuracion
 from flaskps.db import db
-from flaskps.resources import admin, auth, user, estudiante
+from flaskps.resources import admin, auth, user, estudiante, docente
 from flaskps.config import Config
 from flask_session import Session
 #from flask_mysqldb import MySQL #xampp coneccion bd
@@ -43,6 +43,10 @@ app.add_url_rule(
 
 #Estudiante
 app.add_url_rule('/user/listadoEstudiantes', 'listadoEstudiantes', estudiante.listadoEstudiantes)
+app.add_url_rule('/estudiante/altaEstudiante', 'altaEstudiante', estudiante.altaEstudiante)
+
+#Docente
+app.add_url_rule('/docente/altaEstudiante', 'altaDocente', docente.altaDocente)
 
 #Usuario
 app.add_url_rule('/user/registro', 'registro', user.registrar)
@@ -67,11 +71,6 @@ app.add_url_rule('/admin/bloquearUser/<id>', 'bloquearUser', admin.bloquearUser)
 app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
 app.add_url_rule('/eliminarUser', 'eliminarUser', admin.eliminarUser)
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
-
-#estudiante
-@app.route('/estudiante/estudiante')
-def estudiante():
-    return render_template('/estudiante/estudiante.html')
 
 @app.route('/')
 def index():

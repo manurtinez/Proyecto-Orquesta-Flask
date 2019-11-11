@@ -11,3 +11,6 @@ def listadoEstudiantes():
         return redirect(url_for('mantenimiento'))
     lista = User.all()
     return render_template('user/listado.html', lista=lista, cant=tabla.cantListar)
+
+def altaEstudiante():
+    return render_template('/estudiante/altaEstudiante.html')
