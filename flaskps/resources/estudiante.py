@@ -1,6 +1,9 @@
 from flask import render_template, abort, url_for, request, redirect, session, flash
 from flaskps.models import configuracion
+from flaskps.models.escuela import Escuela
+from flaskps.models.nivel import Nivel
 from flaskps.models.usuario import User
+from flaskps.models.barrio import Barrio
 
 
 def listadoEstudiantes():
@@ -13,4 +16,4 @@ def listadoEstudiantes():
     return render_template('user/listado.html', lista=lista, cant=tabla.cantListar)
 
 def altaEstudiante():
-    return render_template('/estudiante/altaEstudiante.html')
+    return render_template('/estudiante/altaEstudiante.html', escuelas=Escuela.get_all(), niveles=Nivel.get_all(), barrios=Barrio.get_all())

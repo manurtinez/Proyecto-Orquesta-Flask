@@ -6,7 +6,6 @@
 {%block content%}
 
 <body>
-  <div class="fondito">
     <div class="centered">
       {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -20,23 +19,23 @@
       <form method="POST" action="{{url_for('crear')}}">
         <div class="form-group">
           <p>Nombre:</p>
-          <input id="nombre" class="areaEscribir" name="nombre" type="text" required>
+          <input id="nombre" class="form-control form-control-sm" name="nombre" type="text" required>
         </div>
         <div class="form-group">
           <p>Apellido:</p>
-          <input id="apellido" class="areaEscribir" name="apellido" type="text" required>
+          <input id="apellido" class="form-control form-control-sm" name="apellido" type="text" required>
         </div>
         <div class="form-group">
           <p>Nombre de usuario:</p>
-          <input id="user" class="areaEscribir" name="user" type="text" required>
+          <input id="user" class="form-control form-control-sm" name="user" type="text" required>
         </div>
         <div class="form-group">
           <p>Email:</p>
-          <input id="email" class="areaEscribir" name="email" type="text" required>
+          <input id="email" class="form-control form-control-sm" name="email" type="text" required>
         </div>
         <div class="form-group">
           <p>Contraseña:</p>
-          <input name="password" style="margin-bottom: 15px;" class="areaEscribir" type="password" required>
+          <input name="password" class="form-control form-control-sm" style="margin-bottom: 15px;" type="password" required>
         </div>
         <div>
           <input type="submit" class="btn btn-info" value="Aceptar">
@@ -44,6 +43,5 @@
         </div>
       </form>
     </div>
-  </div>
 </body>
 {% endblock content %}

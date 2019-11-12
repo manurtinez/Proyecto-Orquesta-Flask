@@ -29,19 +29,6 @@
 
 <body style="background-color:antiquewhite; background-repeat: no-repeat; background-position: 50%;">
   <!-- Modal -->
-  <div class="modal fade" id="modalCrearEstudiante" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <!-- Modal content-->
-      {% include 'modalCrearEstudiante.html' %}
-    </div>
-  </div>
-  <!-- Modal -->
-  <div class="modal fade" id="modalCrearDocente" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <!-- Modal content-->
-      {% include 'modalCrearDocente.html' %}
-    </div>
-  </div>
   <div class="modal fade" id="modalCicloLectivo" role="dialog">
     <div class="modal-dialog modal-lg">
       <!-- Modal content-->
@@ -110,10 +97,8 @@
                 Agregar
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <button class="dropdown-item" data-toggle="modal"
-                data-target="#modalCrearEstudiante">Estudiantes</button>
-                <button class="dropdown-item" data-toggle="modal"
-                data-target="#modalCrearDocente">Docente</button>
+                <a class="dropdown-item" href="{{ url_for('altaEstudiante') }}">Estudiante</a>
+                <a class="dropdown-item" href="{{ url_for('altaDocente') }}">Docente</a>
                 <button class="dropdown-item" data-toggle="modal"
                 data-target="#modalCicloLectivo">Ciclo Lectivo</button>
                 <div class="dropdown-divider"></div>

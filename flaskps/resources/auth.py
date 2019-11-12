@@ -25,4 +25,5 @@ def authenticate():
 
 def logout():
     del session['username']
+    del session['admin']
     return redirect(url_for('index'))

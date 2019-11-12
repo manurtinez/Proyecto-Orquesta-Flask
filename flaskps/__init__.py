@@ -2,6 +2,7 @@ from os import path
 from flask import Flask, url_for, render_template, g, request, session, flash, redirect
 from flaskps.models.usuario import User
 from flaskps.models.configuracion import configuracion
+from flaskps.models.escuela import Escuela
 from flaskps.db import db
 from flaskps.resources import admin, auth, user, estudiante, docente
 from flaskps.config import Config
@@ -20,16 +21,6 @@ Session(app)
 app.secret_key = 'hola'
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://"+Config.DB_USER+":"+Config.DB_PASS+"@"+Config.DB_HOST+"/"+Config.DB_NAME
 db.init_app(app)
-
-#Conexion a la base de datos para xampp instalar: pip install flask-mysqldb
-# app.config['MYSQL_HOST'] = 'localhost'
-# app.config['MYSQL_USER'] = 'root'
-# app.config['MYSQL_PASSWORD'] = 'root'
-# app.config['MYSQL_DB'] = 'grupo36'
-# mysql = MySQL(app)
-
-#settings
-# app.secret_key = 'mysecretkey'
 
 #Autenticacion
 app.add_url_rule('/login', 'login', auth.login)
@@ -72,9 +63,15 @@ app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
 app.add_url_rule('/eliminarUser', 'eliminarUser', admin.eliminarUser)
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
 
+def crear_sesion():
+    app.config['SESSION_TYPE'] = 'filesystem'
+    Session(app)
+    session['escuelas'] = Escuela.get_all()
+    #session['niveles'] = Nivel.get_all()
+
 @app.route('/')
 def index():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return redirect(url_for('mantenimiento'))
-    return render_template('index.html', titulo=tabla.titulo, descripcion=tabla.descripcion, mail=tabla.mail) 
+    return render_template('index.html', titulo=tabla.titulo, descripcion=tabla.descripcion, mail=tabla.mail, escuelas=Escuela.get_all()) 
