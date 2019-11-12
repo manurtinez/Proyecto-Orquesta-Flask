@@ -46,7 +46,11 @@
       <div class="row">
         <div class="col">
           <label for="localidad">Localidad:</label>
-          <input class="form-control form-control-sm" id="localidad" name="localidad" type="select" required>
+          <select class="form-control form-control-sm" id="localidad" name="localidad" required>
+              {% for l in localidades %}
+              <option value="{{l}}">{{l}}</option>
+              {% endfor %}
+            </select>
         </div>
         <div class="col">
           <label for="domicilio">Domicilio:</label>
@@ -72,7 +76,11 @@
       <div class="row">
         <div class="col">
           <label for="tipoD">Tipo de Documento:</label>
-          <input class="form-control form-control-sm" id="tipoD" name="tipoD" type="select" required>
+          <select class="form-control form-control-sm" id="tipoD" name="tipoD" required>
+              {% for t in dnis %}
+              <option value="{{t}}">{{t}}</option>
+              {% endfor %}
+            </select>  
         </div>
         <div class="col">
           <label for="numeroD">Numero de Documento:</label>
