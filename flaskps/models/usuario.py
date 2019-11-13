@@ -32,6 +32,7 @@ class User(db.Model):
     def all():
         return User.query.all()
 
+    #create
     def create(em,us,pa,ac,up,cr,fi,la):
 
         elemento = User (email=em, username=us, password=pa, first_name=fi, last_name=la )
