@@ -1,0 +1,120 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Actualizar Estudiante</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+        <form method="POST" action="{{url_for('actualizarEstudiante', dni=e.dni)}}">
+            <div class="row">
+                <div class="col">
+                    <label for="nombre">Nombre:</label>
+                    <input value="{{e.nombre}}" class="form-control form-control-sm" id="nombre" name="nombre" type="text" required>
+                </div>
+                <div class="col">
+                    <label for="apellido">Apellido:</label>
+                    <input value="{{e.apellido}}" class="form-control form-control-sm" id="apellido" name="apellido" type="text" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label for="fechaN">Fecha Nacimiento:</label>
+                    <input value="{{e.fecha_nac}}" class="form-control form-control-sm" id="fechaN" name="fechaN" type="date" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label for="localidad">Localidad:</label>
+                    <select class="form-control form-control-sm" id="localidad" name="localidad" required>
+                        {% for l in localidades %}
+                        <option value="{{l}}">{{l}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="domicilio">Domicilio:</label>
+                    <input value="{{e.domicilio}}" class="form-control form-control-sm" id="domicilio" name="domicilio" type="text" required>
+                </div>
+                <div class="col">
+                    <label for="barrio">Barrio:</label>
+                    <select class="form-control form-control-sm" id="barrio" name="barrio" required>
+                        {% for b in barrios %}
+                        <option value="{{b.id}}" {% if b.id == e.barrio_id %} selected {% endif %}>{{b.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label for="genero">Genero:</label>
+                    <select class="form-control form-control-sm" id="genero" name="genero" required>
+                        {% for g in generos %}
+                        <option value="{{g.id}}" {% if g.id == e.genero_id %} selected {% endif %}>{{g.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label for="tipoD">Tipo de Documento:</label>
+                    <select class="form-control form-control-sm" id="tipoD" name="tipoD" required>
+                        {% for t in dnis %}
+                        <option value="{{t}}">{{t}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="numeroD">Numero de Documento:</label>
+                    <input value="{{e.nombre}}" class="form-control form-control-sm" id="numeroD" name="numeroD" type="number" required>
+                </div>
+                <div class="col">
+                    <label for="numero">Numero:</label>
+                    <input value="{{e.nombre}}" class="form-control form-control-sm" id="numero" name="numero" type="number" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label for="telefono">Telefono:</label>
+                    <input value="{{e.nombre}}" class="form-control form-control-sm" id="telefono" name="telefono" type="text" required>
+                </div>
+            </div>
+
+            <div class="row" style="padding-bottom: 20px;">
+                <div class="col">
+                    <label for="responsable">Responsable a Cargo:</label>
+                    <select class="form-control form-control-sm" id="responsable" name="responsable" required>
+                        <option value="1">1</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="escuela">Escuela:</label>
+                    <select class="form-control form-control-sm" id="escuela" name="escuela" required>
+                        {% for es in escuelas %}
+                        <option value="{{es.id}}" {% if es.id == e.escuela_id %} selected {% endif %}>{{es.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="nivel">Nivel:</label>
+                    <select class="form-control form-control-sm" id="nivel" name="nivel" required>
+                        {% for n in niveles %}
+                        <option value="{{n.id}}" {% if n.id == e.nivel_id %} selected {% endif %}>{{n.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <input type="submit" class="btn btn-info" value="Aceptar">
+                <a href="{{ url_for('index')}}" class="btn btn-info">Volver</a>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    </div>
+</div>

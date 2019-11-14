@@ -34,17 +34,17 @@ app.add_url_rule(
 
 #Estudiante
 app.add_url_rule('/user/listadoEstudiantes', 'listadoEstudiantes', estudiante.listadoEstudiantes)
-app.add_url_rule('/estudiante/altaEstudiante', 'altaEstudiante', estudiante.altaEstudiante)
+app.add_url_rule('/estudiante/actualizarEstudiante/<dni>', 'actualizarEstudiante', estudiante.actualizarEstudiante)
+app.add_url_rule('/estudiante/eliminarEstudiante/<dni>', 'eliminarEstudiante', estudiante.eliminarEstudiante)
+app.add_url_rule('/estudiantes/crearEstudiante', 'crearEstudiante', estudiante.crearEstudiante, methods=['POST'])
 
 #Docente
-app.add_url_rule('/docente/altaEstudiante', 'altaDocente', docente.altaDocente)
 
 #Usuario
 app.add_url_rule('/user/registro', 'registro', user.registrar)
 app.add_url_rule('/user/crear', 'crear', user.crear, methods=['POST'])
 app.add_url_rule('/user/listado', 'listadoUsers', user.listadoUsers)
 app.add_url_rule('/user/showUser/<id>', 'showUser', user.showUser)
-app.add_url_rule('/user/actualizarUser/<id>', 'actualizarUser', user.actualizarUser)
 app.add_url_rule('/user/buscar', 'buscarUsuario', user.buscar, methods=['POST', 'GET'])
 app.add_url_rule('/user/actualizar/<m>', 'actualizar', user.actualizar, methods=['POST'])
 app.add_url_rule('/user/listado/activos', 'mostrarActivos', user.mostrarActivos)

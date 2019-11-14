@@ -32,7 +32,16 @@ def listadoUsers():
     if tabla.sitio_habilitado == 0:
         return redirect(url_for('mantenimiento'))
     lista = User.all()
-    return render_template('user/listado.html', lista=lista, cant=tabla.cantListar)
+    roles = Rol.all()
+    rolesUsers = {}
+    for user in lista:
+        aux = []
+        for rol in roles:
+            if User_tiene_rol.tiene_rol(user.id, rol.id):
+                aux.append(rol)
+        rolesUsers[user.id] = aux
+    print(rolesUsers)
+    return render_template('user/listado.html', lista=lista, cant=tabla.cantListar, roles=roles, rolesUsers=rolesUsers)
 
 def verificarSiEsAdmin():
     u = User_tiene_rol.tiene_rol(User.get_by_email(session['email']).id, Rol.get_by_nombre('administrador').id)
@@ -47,17 +56,6 @@ def showUser(id):
     print(id)
     return render_template('/user/showUser.html', usuario=id)
 
-def actualizarUser(id):
-    if 'username' not in session or not session['admin']:
-        return redirect(url_for('accesoDenegado'))
-    user = User.get_by_id(id)
-    roles = Rol.all()
-    rolesUser = []
-    for rol in roles:
-        if User_tiene_rol.tiene_rol(user.id, rol.id):
-            rolesUser.append(rol)
-    return render_template('user/actualizarUser.html', user=user, roles=roles, rolesUser=rolesUser)
-
 def actualizar(m):
     p = request.form
     print(p)
@@ -71,7 +69,7 @@ def actualizar(m):
             User_tiene_rol.asignar_rol(act.id, r.id)
         else:
             User_tiene_rol.desasignar_rol(act.id, r.id)
-    return redirect(url_for('index'))
+    return redirect(url_for('listadoUsers'))
 
 def buscar():
     if 'username' not in session:

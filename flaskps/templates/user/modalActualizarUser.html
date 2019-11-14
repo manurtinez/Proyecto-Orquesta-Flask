@@ -1,0 +1,53 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Actualizar User</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+        <form method="POST" action="{{url_for('actualizar', m =user.email)}}">
+            <div class="row">
+                <div class="col">
+                    <label for="nombre">Nombre:</label>
+                    <input class="form-control" id="nombre" name="nombre" type="text" value="{{ user.first_name }}"
+                        required>
+                </div>
+                <div class="col">
+                    <label for="apellido">Apellido:</label>
+                    <input class="form-control" id="apellido" name="apellido" type="text" value="{{ user.last_name }}"
+                        required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="username">Nombre de usuario:</label>
+                    <input class="form-control" id="username" name="username" type="text" value="{{ user.username }}"
+                        required>
+                </div>
+                <div class="col">
+                    <label for="password">Contraseña:</label>
+                    <input class="form-control" name="password" style="margin-bottom: 15px;" id="password"
+                        value="{{ user.password }}" type="password" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="email">Email:</label>
+                    <input class="form-control" type="email" name="email" id="email" value="{{user.email}}" disabled>
+                </div>
+            </div>
+            <div>
+                <p>Roles:</p>
+                {% for r in roles %}
+                {{r.nombre}}:<input type="checkbox" name="rol{{r.id}}" id="rol{{r.id}}" {% if r in rolesUsers[user.id] %} checked
+                    {% endif %}><br>
+                {% endfor %}
+                <div>
+                    <input type="submit" class="btn btn-info" value="Aceptar">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    </div>
+</div>

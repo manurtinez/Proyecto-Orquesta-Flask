@@ -1,7 +1,7 @@
 from flaskps.db import db
 from sqlalchemy import update, ForeignKey
 from datetime import datetime
-from flaskps.models import escuela, barrio, nivel
+from flaskps.models import escuela, barrio, nivel, genero
 
 class Estudiante(db.Model):
     __tablename__ = 'estudiante'
@@ -58,6 +58,5 @@ class Estudiante(db.Model):
     def all():
         return Estudiante.query.all()
 
-    
-
-    
+    def getByDNI(dni):
+        return Estudiante.query.filter_by(dni=dni).first()
