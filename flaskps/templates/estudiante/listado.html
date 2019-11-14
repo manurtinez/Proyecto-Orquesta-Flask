@@ -36,7 +36,7 @@
                         <ul>
                             <li>Nombre: {{e.nombre}}</li>
                             <li>Apellido: {{e.apellido}}</li>
-                            <li>DNI: {{e.dni}}</li>
+                            <li>DNI: {{e.numero}}</li>
                             <li>Telefono: {{e.tel}}</li>
                         </ul>
                     </div>
@@ -74,7 +74,7 @@
                             {% if session['admin'] is defined and session['admin'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#modalActualizar{{ e.dni }}">Actualizar Datos</button>
-                            <a href="{{url_for('eliminarEstudiante', dni=e.dni)}}" class="btn btn-info"
+                            <a href="{{url_for('eliminarEstudiante', dni=e.numero)}}" class="btn btn-info"
                                 onclick="return confirm('Esta seguro de que quiere eliminar a {{e.nombre}}?')">Eliminar</a>
                             {% endif %}
                         </nav>

@@ -2,6 +2,7 @@ from flask import redirect, render_template, request, session, url_for, flash
 from flaskps.db import db
 from flaskps.models.configuracion import configuracion
 from flaskps.models.usuario import User
+from flaskps.models.estudiante import Estudiante
 from flaskps.resources import user
 
 def administracion():
@@ -97,6 +98,11 @@ def eliminarUser(email):
     else:
         flash('no se puede eliminar a usted mismo!')
         return redirect(url_for('listadoUsers'))
+
+def eliminarEstudiante(dni):
+    Estudiante.eliminar_estudiante(dni)
+    flash('el usuario ha sido eliminado')
+    return redirect(url_for('listadoEstudiantes'))
 
 def bloquearUser(id):
     if 'username' not in session or not session['admin']:
