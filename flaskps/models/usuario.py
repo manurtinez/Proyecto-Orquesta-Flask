@@ -32,7 +32,7 @@ class User(db.Model):
     def all():
         return User.query.all()
 
-    def create(em,us,pa,ac,up,cr,fi,la):
+    def create(em,us,pa,ac,fi,la):
 
         elemento = User (email=em, username=us, password=pa, first_name=fi, last_name=la )
         elemento.updated_at= datetime.now()
@@ -92,8 +92,8 @@ class User(db.Model):
         return obj
 
     #Baja fisica del sistema
-    def eliminar_usuario(uname):
-        User.query.filter_by(username=uname).delete()
+    def eliminar_usuario(email):
+        User.query.filter_by(email=email).delete()
         db.session.commit()
         return True 
 

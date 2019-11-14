@@ -13,19 +13,17 @@ def registrar():
     return render_template('user/registro.html')
 
 def crear():
-    if session['username'] != None:
-        #User.create() esto falta
-        return redirect(url_for('index'))
+    p = request.form
+    user = User.get_by_email(p['email'])
+    if user:
+        flash('el mail ya se encuentra registrado!')
+        return redirect(url_for('registro'))
     else:
-        p = request.form
-        user = User.get_by_email(p['email'])
-        if user:
-            flash('el mail ya se encuentra registrado!')
-            return redirect(url_for('registro'))
-        else:
-            User.create(p['email'], p['user'], p['password'], 1, p['nombre'], p['apellido'])
-            session['username'] = p['email']
-            return redirect('index')
+        User.create(p['email'], p['user'], p['password'], 1, p['nombre'], p['apellido'])
+        usuario = User.get_by_email_and_pass(p['email'], p['password'])
+        session['email'] = usuario.email
+        session['admin'] = verificarSiEsAdmin()
+        return redirect(url_for('index'))
 
 def listadoUsers():
     if 'username' not in session:
@@ -37,7 +35,7 @@ def listadoUsers():
     return render_template('user/listado.html', lista=lista, cant=tabla.cantListar)
 
 def verificarSiEsAdmin():
-    u = User_tiene_rol.tiene_rol(User.get_by_email(session['username']).id, Rol.get_by_nombre('administrador').id)
+    u = User_tiene_rol.tiene_rol(User.get_by_email(session['email']).id, Rol.get_by_nombre('administrador').id)
     if u !=None:
         return True
     else:

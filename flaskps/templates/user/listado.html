@@ -36,7 +36,7 @@
         </div>
         {%endfor%}
         <div>
-                <a class="btn btn-primary" href="{{url_for('listadoUsers')}}">Mostrar todos</a>
+            <a class="btn btn-primary" href="{{url_for('listadoUsers')}}">Mostrar todos</a>
             <a class="btn btn-primary" href="{{url_for('mostrarInactivos')}}">Mostrar inactivos</a>
             <a class="btn btn-primary" href="{{url_for('mostrarActivos')}}">Mostrar activos</a>
         </div>
@@ -69,7 +69,8 @@
                                 data-target="#myModal{{ user.id }}">Mostrar</button>
                             {% if session['admin'] is defined and session['admin'] %}
                             <a href="{{url_for('actualizarUser', id=user.id)}}" class="btn btn-info">Editar Datos</a>
-                            <a href="{{url_for('eliminarUser')}}" class="btn btn-info">Eliminar</a>
+                            <a href="{{url_for('eliminarUser', email=user.email)}}" class="btn btn-info"
+                                onclick="return confirm('Esta seguro de que quiere eliminar a {{user.username}}?')">Eliminar</a>
                             {% if user.activo == 1 %}
                             <a href="{{ url_for('bloquearUser', id=user.id) }}" class="btn btn-info">Bloquear</a>
                             {% else %}
@@ -82,51 +83,20 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info fade show alert-dismissible" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
     </div>
     <script>
         $(document).ready(function () {
             $('#listado').DataTable();
         });
-    </script>
-    <script>
-        function myFunction() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("buscarUser");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("listadoUsuarios");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('form').on('submit', function (event) {
-                $.ajax({
-                    data: {
-                        busqueda: $('#buscarUser').val()
-                    },
-                    type: 'POST',
-                    url: '/buscar'
-                })
-                    .done(function (data) {
-                        if (data.users) {
-
-                        }
-                    }
-                    )
-            }
-            )
-        })
     </script>
 </body>
 {%endblock content%}

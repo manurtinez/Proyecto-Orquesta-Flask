@@ -30,3 +30,6 @@ def altaEstudiante():
     print(tiposDNI)
     return render_template('/estudiante/altaEstudiante.html', escuelas=Escuela.get_all(), niveles=Nivel.get_all(),
      barrios=Barrio.get_all(), dnis=tiposDNI, localidades=listaLoc)
+
+def crearEstudiante():
+    return None
