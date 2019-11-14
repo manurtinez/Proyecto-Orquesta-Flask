@@ -35,25 +35,20 @@ def listadoEstudiantes():
     )
     dnis = json.loads(dnis.text)
     localidades = json.loads(localidades.text)
-    for i in range(len(dnis)):
-        tiposDNI.append(dnis[i]["nombre"])
-    for i in range(len(localidades)):
-        listaLoc.append(localidades[i]["nombre"])
     return render_template(
         "estudiante/listado.html", lista=lista, cant=tabla.cantListar,
         escuelas=Escuela.get_all(),
         niveles=Nivel.get_all(),
         barrios=Barrio.get_all(),
         generos=Genero.get_all(),
-        dnis=tiposDNI,
-        localidades=listaLoc,
+        dnis=dnis,
+        localidades=localidades,
     )
 
 
 def crearEstudiante():
     p = request.form
     Estudiante.create(
-        p["numeroD"],
         p["apellido"],
         p["nombre"],
         p["fechaN"],
