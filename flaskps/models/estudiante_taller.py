@@ -4,9 +4,13 @@ from datetime import datetime
 
 class Estudiante_taller(db.Model):
     __tablename__ = 'estudiante_taller'
-    estudiante_id = db.Column(db.Integer, primary_key=True)
-    ciclo_lectivo_id = db.Column(db.Integer, primary_key=True)
-    taller_id = db.Column(db.Integer, primary_key=True)
+    __table_args__ = (
+        PrimaryKeyConstraint('estudiante_id', 'ciclo_lectivo_id','taller_id'),
+    )
+
+    estudiante_id = db.Column(db.Integer, ForeignKey(Estudiante.id))
+    ciclo_lectivo_id = db.Column(db.Integer, ForeignKey(Ciclo_lectivo.id))
+    taller_id = db.Column(db.Integer, ForeignKey(Taller.id))
 
     #Alta
     def create(es,ci,ta):

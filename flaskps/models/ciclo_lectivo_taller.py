@@ -4,8 +4,12 @@ from datetime import datetime
 
 class Ciclo_lectivo_taller(db.Model):
     __tablename__ = 'ciclo_lectivo_taller'
-    taller_id = db.Column(db.Integer, primary_key=True)
-    ciclo_lectivo_id = db.Column(db.Integer, primary_key=True)
+    __table_args__ = (
+        PrimaryKeyConstraint('taller_id', 'ciclo_lectivo_id'),
+    )
+
+    taller_id = db.Column(db.Integer, ForeignKey(Taller.id))
+    ciclo_lectivo_id = db.Column(db.Integer, ForeignKey(Ciclo_lectivo.id))
 
     #Para añadir anexo entre taller y ciclo lectivo. Se hace con los id's de taller y ciclo.
     def create(ta,ci):
