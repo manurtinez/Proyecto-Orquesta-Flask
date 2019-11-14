@@ -15,3 +15,7 @@ class Docente_responsable_taller(db.Model):
         db.session.add (elemento)
         db.session.commit()
         return elemento
+
+    #Read (devuelve todo)
+    def all():
+        return Docente_responsable_taller.query.all()

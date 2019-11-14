@@ -14,3 +14,7 @@ class Ciclo_lectivo_taller(db.Model):
         db.session.add (elemento)
         db.session.commit()
         return elemento
+
+    #Read (devuelve todo)
+    def all():
+        return Ciclo_lectivo_taller.query.all()
