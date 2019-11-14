@@ -3,6 +3,7 @@ from flaskps.db import db
 from flaskps.models.configuracion import configuracion
 from flaskps.models.usuario import User
 from flaskps.resources import user
+from flaskps.models.ciclo_lectivo import Ciclo_lectivo
 
 def administracion():
     if 'username' not in session or not session['admin']:
@@ -121,9 +122,17 @@ def activarUser(id):
     # return render_template('user/listado.html', lista=lista, admin=user.verificarSiEsAdmin(), username=session['email'])
 
 def accesoDenegado():
-    flash('usted no esta autorizado a esta url')
+    flash('Usted no posee autorizacion para acceder a esta url')
     return redirect(url_for('index'))
  #listar los elementos de las pag FALTA implementar
 #@app.route('/listar.html')
 #def listar():
 #    return render_template('listar.html')
+
+def crearciclolectivo():
+    param = request.form
+    
+    Ciclo_lectivo.create(param['inicio'], param['fin'],param['semestre'])
+
+    flash('El ciclo lectivo se generó exitosamente')
+    return redirect(url_for('index'))

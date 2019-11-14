@@ -4,7 +4,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">
-        <form method="POST" action="{{url_for('crear')}}">
+        <form method="POST" action="{{url_for('crearciclolectivo')}}">
             <div class="row" style="padding-bottom: 25px;">
                 <div class="col">
                     <label for="inicio">Fecha de inicio:</label>
@@ -18,7 +18,7 @@
                 </div>
                 <div class="col">
                     <label for="fechaN">Semestre:</label>
-                    <select class="form-control form-control-sm" id="semestre"required>
+                    <select class="form-control form-control-sm" id="semestre" name="semestre" required>
                         <option value="1">Primer Semestre</option>
                         <option value="2">Segundo Semestre</option>
                     </select>

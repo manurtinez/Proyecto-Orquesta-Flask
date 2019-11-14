@@ -62,6 +62,7 @@ app.add_url_rule('/admin/bloquearUser/<id>', 'bloquearUser', admin.bloquearUser)
 app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
 app.add_url_rule('/eliminarUser/<email>', 'eliminarUser', admin.eliminarUser)
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
+app.add_url_rule('/AgregarCicloLectivo', 'crearciclolectivo', admin.crearciclolectivo,methods=['GET','POST'])
 
 @app.route('/')
 def index():
