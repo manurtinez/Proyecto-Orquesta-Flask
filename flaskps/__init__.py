@@ -60,14 +60,8 @@ app.add_url_rule('/admin/activar', 'activar', admin.activar)
 app.add_url_rule('/admin/activarUser/<id>', 'activarUser', admin.activarUser)
 app.add_url_rule('/admin/bloquearUser/<id>', 'bloquearUser', admin.bloquearUser)
 app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
-app.add_url_rule('/eliminarUser', 'eliminarUser', admin.eliminarUser)
+app.add_url_rule('/eliminarUser/<email>', 'eliminarUser', admin.eliminarUser)
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
-
-def crear_sesion():
-    app.config['SESSION_TYPE'] = 'filesystem'
-    Session(app)
-    session['escuelas'] = Escuela.get_all()
-    #session['niveles'] = Nivel.get_all()
 
 @app.route('/')
 def index():

@@ -1,6 +1,7 @@
 from flaskps.db import db
-from sqlalchemy import update
+from sqlalchemy import update, ForeignKey
 from datetime import datetime
+from flaskps.models import escuela, barrio, nivel
 
 class Estudiante(db.Model):
     __tablename__ = 'estudiante'
@@ -9,14 +10,14 @@ class Estudiante(db.Model):
     nombre = db.Column(db.String)
     fecha_nac = db.Column(db.String)
     localidad_id = db.Column(db.Integer)
-    nivel_id = db.Column(db.Integer)
+    nivel_id = db.Column(db.Integer, ForeignKey(nivel.Nivel.id))
     domicilio = db.Column(db.String)
-    genero_id = db.Column(db.Integer)
-    escuela_id = db.Column(db.Integer)
+    genero_id = db.Column(db.Integer, ForeignKey(genero.Genero.id))
+    escuela_id = db.Column(db.Integer, ForeignKey(escuela.Escuela.id))
     tipo_doc_id = db.Column(db.Integer)
     numero = db.Column(db.Integer) #DNI
     tel = db.Column(db.String)
-    barrio_id = db.Column(db.Integer)
+    barrio_id = db.Column(db.Integer, ForeignKey(barrio.Barrio.id))
 
     #Create (Alta)
     def create(ap,no,fe,lo,ni,do,ge,es,ti,nu,te,ba):

@@ -9,21 +9,17 @@ def login():
 
 def authenticate():
     params = request.form
-    usuarios = User.all()
-    print(usuarios)
-    print(usuarios[0].email)
-    print(usuarios[0].password)
     usuario = User.get_by_email_and_pass(params['email'], params['password'])
     print(usuario)
     if not usuario:
         flash('credenciales invalidas')
         return redirect(url_for('login'))
-    session['username'] = request.form['email']
+    session['email'] = request.form['email']
     session['admin'] = user.verificarSiEsAdmin()
     flash('logeo exitoso!')
     return redirect(url_for('index'))
 
 def logout():
-    del session['username']
+    del session['email']
     del session['admin']
     return redirect(url_for('index'))

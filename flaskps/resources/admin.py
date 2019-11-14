@@ -89,8 +89,14 @@ def activar():
     session['sitioActivado'] = True
     return render_template('activar.html')
 
-def eliminarUser():
-    return None
+def eliminarUser(email):
+    if session['email'] != email:
+        User.eliminar_usuario(email)
+        flash('el usuario ha sido eliminado')
+        return redirect(url_for('listadoUsers'))
+    else:
+        flash('no se puede eliminar a usted mismo!')
+        return redirect(url_for('listadoUsers'))
 
 def bloquearUser(id):
     if 'username' not in session or not session['admin']:
@@ -101,7 +107,7 @@ def bloquearUser(id):
     # print(usuario)
     # User.desactivar_user(usuario)
     # lista = User.all()
-    # return render_template('user/listado.html', lista=lista, admin=user.verificarSiEsAdmin(), username=session['username'])
+    # return render_template('user/listado.html', lista=lista, admin=user.verificarSiEsAdmin(), username=session['email'])
 
 def activarUser(id):
     if 'username' not in session or not session['admin']:
@@ -112,7 +118,7 @@ def activarUser(id):
     # print(usuario)
     # User.activar_user(usuario)
     # lista = User.all()
-    # return render_template('user/listado.html', lista=lista, admin=user.verificarSiEsAdmin(), username=session['username'])
+    # return render_template('user/listado.html', lista=lista, admin=user.verificarSiEsAdmin(), username=session['email'])
 
 def accesoDenegado():
     flash('usted no esta autorizado a esta url')
