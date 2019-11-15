@@ -26,7 +26,7 @@ def crear():
         return redirect(url_for('index'))
 
 def listadoUsers():
-    if 'username' not in session:
+    if 'email' not in session:
         return redirect(url_for('accesoDenegado'))
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
@@ -51,7 +51,7 @@ def verificarSiEsAdmin():
         return False
 
 def showUser(id):
-    if 'username' not in session:
+    if 'email' not in session:
         return redirect(url_for('accesoDenegado'))
     print(id)
     return render_template('/user/showUser.html', usuario=id)
@@ -72,7 +72,7 @@ def actualizar(m):
     return redirect(url_for('listadoUsers'))
 
 def buscar():
-    if 'username' not in session:
+    if 'email' not in session:
         return redirect(url_for('accesoDenegado'))
     nombre = request.form['nombre']
     user = User.get_by_username(nombre)

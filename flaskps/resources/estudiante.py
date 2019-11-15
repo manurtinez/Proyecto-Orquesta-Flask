@@ -9,6 +9,8 @@ from flask import (
     flash,
 )
 from flaskps.models.configuracion import configuracion
+from flaskps.models.rol import Rol
+from flaskps.models.usuario_tiene_rol import User_tiene_rol
 from flaskps.models.escuela import Escuela
 from flaskps.models.nivel import Nivel
 from flaskps.models.usuario import User
@@ -19,7 +21,7 @@ import json, requests
 
 
 def listadoEstudiantes():
-    if "username" not in session:
+    if 'email' not in session:
         return redirect(url_for("accesoDenegado"))
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
@@ -35,6 +37,13 @@ def listadoEstudiantes():
     )
     dnis = json.loads(dnis.text)
     localidades = json.loads(localidades.text)
+    user = User.get_by_email(session['email'])
+    roles = Rol.all()
+    aux = []
+    for r in roles:
+        if User_tiene_rol.tiene_rol(user.id, r.id):
+            aux.append(r.nombre)
+    print(aux)
     return render_template(
         "estudiante/listado.html", lista=lista, cant=tabla.cantListar,
         escuelas=Escuela.get_all(),
@@ -43,6 +52,7 @@ def listadoEstudiantes():
         generos=Genero.get_all(),
         dnis=dnis,
         localidades=localidades,
+        roles=aux,
     )
 
 

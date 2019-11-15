@@ -68,16 +68,18 @@
                     <td>{{e.apellido}}</td>
                     <td>{{e.dni}}</td>
                     <td>
+                        {% if 'preceptor' in session['roles'] or 'profesor' in session['roles'] or 'administrador' in session['roles'] %}
                         <nav>
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#myModal{{ e.id }}">Mostrar</button>
-                            {% if session['admin'] is defined and session['admin'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#modalActualizar{{ e.dni }}">Actualizar Datos</button>
+                            {% if 'administrador' in session['roles'] %}
                             <a href="{{url_for('eliminarEstudiante', dni=e.numero)}}" class="btn btn-info"
                                 onclick="return confirm('Esta seguro de que quiere eliminar a {{e.nombre}}?')">Eliminar</a>
                             {% endif %}
                         </nav>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

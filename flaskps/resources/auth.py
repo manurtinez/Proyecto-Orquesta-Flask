@@ -1,6 +1,8 @@
 from flask import redirect, render_template, request, session, url_for, flash
 from flaskps.db import db
 from flaskps.models.usuario import User
+from flaskps.models.rol import Rol
+from flaskps.models.usuario_tiene_rol import User_tiene_rol
 from flaskps.models.configuracion import configuracion
 from flaskps.resources import admin, user
 
@@ -15,11 +17,16 @@ def authenticate():
         flash('credenciales invalidas')
         return redirect(url_for('login'))
     session['email'] = request.form['email']
-    session['admin'] = user.verificarSiEsAdmin()
+    roles = Rol.all()
+    aux = []
+    for r in roles:
+        if User_tiene_rol.tiene_rol(usuario.id, r.id):
+            aux.append(r.nombre)
+    session['roles'] = aux
+    print(session['roles'])
     flash('logeo exitoso!')
     return redirect(url_for('index'))
 
 def logout():
-    del session['email']
-    del session['admin']
+    session.clear()
     return redirect(url_for('index'))
