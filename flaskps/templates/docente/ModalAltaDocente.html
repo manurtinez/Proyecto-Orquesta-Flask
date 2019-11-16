@@ -25,6 +25,17 @@
           </div>
 
           <div class="row">
+                <div class="col">
+                    <label for="genero">Genero:</label>
+                    <select class="form-control form-control-sm" id="genero" name="genero" required>
+                        {% for g in generos %}
+                        <option value="{{g.id}}">{{g.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+          <div class="row">
               <div class="col">
                   <label for="localidad">Localidad:</label>
                   <select class="form-control form-control-sm" id="localidad" name="localidad" required>
@@ -42,17 +53,6 @@
 
           <div class="row">
               <div class="col">
-                  <label for="genero">Genero:</label>
-                  <select class="form-control form-control-sm" id="genero" name="genero" required>
-                      {% for g in generos %}
-                      <option value="{{g.id}}">{{g.nombre}}</option>
-                      {% endfor %}
-                  </select>
-              </div>
-          </div>
-
-          <div class="row">
-              <div class="col">
                   <label for="tipoD">Tipo de Documento:</label>
                   <select class="form-control form-control-sm" id="tipoD" name="tipoD" required>
                       {% for t in dnis %}
@@ -61,7 +61,7 @@
                   </select>
               </div>
               <div class="col">
-                  <label for="numero">Numero:</label>
+                  <label for="numero">Numero de documento:</label>
                   <input class="form-control form-control-sm" id="numero" name="numero" type="number" required>
               </div>
           </div>

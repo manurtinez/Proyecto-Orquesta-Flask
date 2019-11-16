@@ -37,13 +37,6 @@ def listadoEstudiantes():
     )
     dnis = json.loads(dnis.text)
     localidades = json.loads(localidades.text)
-    user = User.get_by_email(session['email'])
-    roles = Rol.all()
-    aux = []
-    for r in roles:
-        if User_tiene_rol.tiene_rol(user.id, r.id):
-            aux.append(r.nombre)
-    print(aux)
     return render_template(
         "estudiante/listado.html", lista=lista, cant=tabla.cantListar,
         escuelas=Escuela.get_all(),
@@ -52,7 +45,6 @@ def listadoEstudiantes():
         generos=Genero.get_all(),
         dnis=dnis,
         localidades=localidades,
-        roles=aux,
     )
 
 

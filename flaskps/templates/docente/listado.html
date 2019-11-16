@@ -7,37 +7,37 @@
 
 <body>
     <div>
-        {%for e in lista %}
-        <!-- Modal -->
-        <div class="modal fade" id="modalActualizar{{e.dni}}" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <!-- Modal content-->
-                {% include 'estudiante/modalActualizarEstudiante.html' %}
-            </div>
-        </div>
         <!-- Modal -->
         <div class="modal fade" id="nuevoEstudiante" role="dialog">
                 <div class="modal-dialog modal-lg">
                     <!-- Modal content-->
-                    {% include 'docente/altaDocente.html' %}
+                    {% include 'docente/ModalAltaDocente.html' %}
                 </div>
             </div>
+        {%for d in lista %}
         <!-- Modal -->
-        <div class="modal fade" id="myModal{{e.id}}" role="dialog">
+        <div class="modal fade" id="modalActualizar{{d.id}}" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                {% include 'docente/ModalActualizarDocente.html' %}
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal{{d.id}}" role="dialog">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Informacion de {{e.nombre}}, {{e.apellido}}, {{e.numero}}</h4>
+                        <h4 class="modal-title">Informacion de {{d.nombre}}, {{d.apellido}}, {{d.numero}}</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
                         <ul>
-                            <li>Nombre: {{e.nombre}}</li>
-                            <li>Apellido: {{e.apellido}}</li>
-                            <li>DNI: {{e.numero}}</li>
-                            <li>Telefono: {{e.tel}}</li>
+                            <li>Nombre: {{d.nombre}}</li>
+                            <li>Apellido: {{d.apellido}}</li>
+                            <li>DNI: {{d.numero}}</li>
+                            <li>Telefono: {{d.tel}}</li>
                         </ul>
                     </div>
                     <div class="modal-footer">
@@ -62,21 +62,21 @@
                 </tr>
             </thead>
             <tbody>
-                {% for e in lista %}
+                {% for d in lista %}
                 <tr>
-                    <td>{{e.nombre}}</td>
-                    <td>{{e.apellido}}</td>
-                    <td>{{e.numero}}</td>
+                    <td>{{d.nombre}}</td>
+                    <td>{{d.apellido}}</td>
+                    <td>{{d.numero}}</td>
                     <td>
                         {% if 'preceptor' in session['roles'] or 'profesor' in session['roles'] or 'administrador' in session['roles'] %}
                         <nav>
                             <button type="button" class="btn btn-info" data-toggle="modal"
-                                data-target="#myModal{{ e.id }}">Mostrar</button>
+                                data-target="#myModal{{ d.id }}">Mostrar</button>
                             <button type="button" class="btn btn-info" data-toggle="modal"
-                                data-target="#modalActualizar{{ e.dni }}">Actualizar Datos</button>
+                                data-target="#modalActualizar{{ d.id }}">Actualizar Datos</button>
                             {% if 'administrador' in session['roles'] %}
-                            <a href="{{url_for('eliminarEstudiante', dni=e.numero)}}" class="btn btn-info"
-                                onclick="return confirm('Esta seguro de que quiere eliminar a {{e.nombre}}?')">Eliminar</a>
+                            <a href="{{url_for('eliminarDocente', dni=d.numero)}}" class="btn btn-info"
+                                onclick="return confirm('Esta seguro de que quiere eliminar a {{d.nombre}}?')">Eliminar</a>
                             {% endif %}
                         </nav>
                         {% endif %}

@@ -19,7 +19,7 @@ from flaskps.models.genero import Genero
 from flaskps.models.docente import Docente
 import json, requests
 
-def listadoDocente():
+def listadoDocentes():
     if 'email' not in session:
         return redirect(url_for("accesoDenegado"))
     tabla = configuracion.get_config()
@@ -36,22 +36,11 @@ def listadoDocente():
     )
     dnis = json.loads(dnis.text)
     localidades = json.loads(localidades.text)
-    user = User.get_by_email(session['email'])
-    roles = Rol.all()
-    aux = []
-    for r in roles:
-        if User_tiene_rol.tiene_rol(user.id, r.id):
-            aux.append(r.nombre)
-    print(aux)
     return render_template(
         "/docente/listado.html", lista=lista, cant=tabla.cantListar,
-        escuelas=Escuela.get_all(),
-        niveles=Nivel.get_all(),
-        barrios=Barrio.get_all(),
         generos=Genero.get_all(),
         dnis=dnis,
         localidades=localidades,
-        roles=aux,
     )
 def crearDocente():
     p = request.form
@@ -66,12 +55,4 @@ def crearDocente():
         p["numero"],
         p["telefono"],
     )
-    return redirect(url_for("listadoDocente"))
-
-def actualizarDocente(dni):
-    return None
-
-def eliminarDocente(dni):
-    return None
-
-   
+    return redirect(url_for("listadoDocentes"))

@@ -7,6 +7,13 @@
 
 <body>
     <div>
+        <!-- Modal -->
+        <div class="modal fade" id="nuevoEstudiante" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <!-- Modal content-->
+                    {% include 'estudiante/modalAltaEstudiante.html' %}
+                </div>
+            </div>
         {%for e in lista %}
         <!-- Modal -->
         <div class="modal fade" id="modalActualizar{{e.dni}}" role="dialog">
@@ -15,13 +22,6 @@
                 {% include 'estudiante/modalActualizarEstudiante.html' %}
             </div>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="nuevoEstudiante" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <!-- Modal content-->
-                    {% include 'estudiante/modalAltaEstudiante.html' %}
-                </div>
-            </div>
         <!-- Modal -->
         <div class="modal fade" id="myModal{{e.id}}" role="dialog">
             <div class="modal-dialog">

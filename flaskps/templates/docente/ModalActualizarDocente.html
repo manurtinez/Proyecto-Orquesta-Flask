@@ -1,0 +1,84 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Alta Docente</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+        <form method="POST" action="{{url_for('actualizarEstudiante', dni=d.numero)}}">
+            <div class="row">
+                <div class="col">
+                    <label for="nombre">Nombre:</label>
+                    <input class="form-control form-control-sm" id="nombre" value="{{d.nombre}}" name="nombre" type="text" required>
+                </div>
+                <div class="col">
+                    <label for="apellido">Apellido:</label>
+                    <input class="form-control form-control-sm" value="{{d.apellido}}" id="apellido" name="apellido" type="text" required>
+                </div>
+            </div>
+  
+            <div class="row">
+                <div class="col">
+                    <label for="fechaN">Fecha Nacimiento:</label>
+                    <input class="form-control form-control-sm" value="{{d.fecha_nac}}" id="fechaN" name="fechaN" type="date" required>
+                </div>
+                
+            </div>
+  
+            <div class="row">
+                  <div class="col">
+                      <label for="genero">Genero:</label>
+                      <select class="form-control form-control-sm" id="genero" name="genero" required>
+                          {% for g in generos %}
+                          <option value="{{g.id}}" {% if g.id == d.genero_id %} selected {% endif %}>{{g.nombre}}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+              </div>
+  
+            <div class="row">
+                <div class="col">
+                    <label for="localidad">Localidad:</label>
+                    <select class="form-control form-control-sm" value="{{d.nombre}}" id="localidad" name="localidad" required>
+                        {% for l in localidades %}
+                        <option value="{{l['id']}}">{{l['nombre']}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="domicilio">Domicilio:</label>
+                    <input class="form-control form-control-sm" value="{{d.domicilio}}" id="domicilio" name="domicilio" type="text" required>
+                </div>
+                
+            </div>
+  
+            <div class="row">
+                <div class="col">
+                    <label for="tipoD">Tipo de Documento:</label>
+                    <select class="form-control form-control-sm" value="{{d.nombre}}" id="tipoD" name="tipoD" required>
+                        {% for t in dnis %}
+                        <option value="{{t['id']}}">{{t['nombre']}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="numero">Numero de documento:</label>
+                    <input class="form-control form-control-sm" value="{{d.numero}}" id="numero" name="numero" type="number" required>
+                </div>
+            </div>
+  
+            <div class="row">
+                <div class="col">
+                    <label for="telefono">Telefono:</label>
+                    <input class="form-control form-control-sm" value="{{d.tel}}" id="telefono" name="telefono" type="text" required>
+                </div>
+            </div>
+  
+            <div>
+                <input type="submit" class="btn btn-info" value="Aceptar">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    </div>
+  </div>

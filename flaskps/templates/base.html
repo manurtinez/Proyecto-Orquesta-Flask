@@ -94,7 +94,7 @@
                 <a class="dropdown-item" href="{{ url_for('listadoEstudiantes') }}">Estudiantes</a>
                 {% endif %}
                 {% if 'docente' in session['roles'] or 'administrador' in session['roles'] %}
-                <a class="dropdown-item" href="{{ url_for('listadoDocente') }}">Docentes/Preceptores</a>
+                <a class="dropdown-item" href="{{ url_for('listadoDocentes') }}">Docentes/Preceptores</a>
                 {% endif %}
               </div>
             </li>
