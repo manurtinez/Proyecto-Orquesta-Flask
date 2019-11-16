@@ -35,10 +35,11 @@ app.add_url_rule(
 #Estudiante
 app.add_url_rule('/user/listadoEstudiantes', 'listadoEstudiantes', estudiante.listadoEstudiantes)
 app.add_url_rule('/estudiante/actualizarEstudiante/<dni>', 'actualizarEstudiante', estudiante.actualizarEstudiante)
-app.add_url_rule('/estudiantes/crearEstudiante', 'crearEstudiante', estudiante.crearEstudiante, methods=['POST'])
+app.add_url_rule('/estudiante/crearEstudiante', 'crearEstudiante', estudiante.crearEstudiante, methods=['POST'])
 
 #Docente
 app.add_url_rule('/docente/listado', 'listadoDocente', docente.listadoDocente)
+app.add_url_rule('/docente/altaDocente', 'crearDocente', docente.crearDocente, methods=['POST'])
 
 #Usuario
 app.add_url_rule('/user/registro', 'registro', user.registrar)

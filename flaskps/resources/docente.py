@@ -53,3 +53,25 @@ def listadoDocente():
         localidades=localidades,
         roles=aux,
     )
+def crearDocente():
+    p = request.form
+    Docente.create(
+        p["apellido"],
+        p["nombre"],
+        p["fechaN"],
+        p["localidad"],
+        p["domicilio"],
+        p["genero"],
+        p["tipoD"],
+        p["numero"],
+        p["telefono"],
+    )
+    return redirect(url_for("listadoDocente"))
+
+def actualizarDocente(dni):
+    return None
+
+def eliminarDocente(dni):
+    return None
+
+   

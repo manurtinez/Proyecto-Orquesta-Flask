@@ -19,7 +19,7 @@
         <div class="modal fade" id="nuevoEstudiante" role="dialog">
                 <div class="modal-dialog modal-lg">
                     <!-- Modal content-->
-                    {% include 'estudiante/modalAltaEstudiante.html' %}
+                    {% include 'docente/altaDocente.html' %}
                 </div>
             </div>
         <!-- Modal -->
@@ -29,7 +29,7 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Informacion de {{e.nombre}}, {{e.apellido}}</h4>
+                        <h4 class="modal-title">Informacion de {{e.nombre}}, {{e.apellido}}, {{e.numero}}</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
@@ -50,7 +50,7 @@
         {%endfor%}
         <div>
                 <button type="button" class="btn btn-info" data-toggle="modal"
-                data-target="#nuevoEstudiante">Crear Estudiante</button>
+                data-target="#nuevoEstudiante" >Crear Docente</button>
         </div>
         <table id="listado" data-page-length="{{cant}}" class="table table-stripped">
             <thead class="thead-dark">
@@ -66,7 +66,7 @@
                 <tr>
                     <td>{{e.nombre}}</td>
                     <td>{{e.apellido}}</td>
-                    <td>{{e.dni}}</td>
+                    <td>{{e.numero}}</td>
                     <td>
                         {% if 'preceptor' in session['roles'] or 'profesor' in session['roles'] or 'administrador' in session['roles'] %}
                         <nav>
