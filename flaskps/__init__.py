@@ -38,6 +38,7 @@ app.add_url_rule('/estudiante/actualizarEstudiante/<dni>', 'actualizarEstudiante
 app.add_url_rule('/estudiantes/crearEstudiante', 'crearEstudiante', estudiante.crearEstudiante, methods=['POST'])
 
 #Docente
+app.add_url_rule('/docente/listado', 'listadoDocente', docente.listadoDocente)
 
 #Usuario
 app.add_url_rule('/user/registro', 'registro', user.registrar)
