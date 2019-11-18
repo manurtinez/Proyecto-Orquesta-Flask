@@ -9,18 +9,12 @@ from flask import (
     flash,
 )
 from flaskps.models.configuracion import configuracion
-from flaskps.models.rol import Rol
-from flaskps.models.usuario_tiene_rol import User_tiene_rol
-from flaskps.models.escuela import Escuela
-from flaskps.models.nivel import Nivel
-from flaskps.models.usuario import User
-from flaskps.models.barrio import Barrio
 from flaskps.models.genero import Genero
 from flaskps.models.docente import Docente
 import json, requests
 
 def listadoDocentes():
-    if 'email' not in session:
+    if 'email' not in session or not any(i in ['administrador', 'docente'] for i in session['roles']):
         return redirect(url_for("accesoDenegado"))
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
@@ -37,12 +31,14 @@ def listadoDocentes():
     dnis = json.loads(dnis.text)
     localidades = json.loads(localidades.text)
     return render_template(
-        "/docente/listado.html", lista=lista, cant=tabla.cantListar,
+        "/docente/listadoDocentes.html", lista=lista, cant=tabla.cantListar,
         generos=Genero.get_all(),
         dnis=dnis,
         localidades=localidades,
     )
 def crearDocente():
+    if 'email' not in session or not any(i in ['administrador', 'docente'] for i in session['roles']):
+        return redirect(url_for("accesoDenegado"))
     p = request.form
     Docente.create(
         p["apellido"],

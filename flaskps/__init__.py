@@ -33,8 +33,8 @@ app.add_url_rule(
 )
 
 #Estudiante
-app.add_url_rule('/user/listadoEstudiantes', 'listadoEstudiantes', estudiante.listadoEstudiantes)
-app.add_url_rule('/estudiante/actualizarEstudiante/<dni>', 'actualizarEstudiante', estudiante.actualizarEstudiante)
+app.add_url_rule('/estudiante/listadoEstudiantes', 'listadoEstudiantes', estudiante.listadoEstudiantes)
+app.add_url_rule('/estudiante/actualizarEstudiante/<dni>', 'actualizarEstudiante', estudiante.actualizarEstudiante, methods=['POST'])
 app.add_url_rule('/estudiante/crearEstudiante', 'crearEstudiante', estudiante.crearEstudiante, methods=['POST'])
 
 #Docente
@@ -43,19 +43,14 @@ app.add_url_rule('/docente/altaDocente', 'crearDocente', docente.crearDocente, m
 
 #Usuario
 app.add_url_rule('/user/registro', 'registro', user.registrar)
-app.add_url_rule('/user/crear', 'crear', user.crear, methods=['POST'])
+app.add_url_rule('/user/crear', 'crearUser', user.crear, methods=['POST'])
 app.add_url_rule('/user/listado', 'listadoUsers', user.listadoUsers)
-app.add_url_rule('/user/showUser/<id>', 'showUser', user.showUser)
-app.add_url_rule('/user/buscar', 'buscarUsuario', user.buscar, methods=['POST', 'GET'])
-app.add_url_rule('/user/actualizar/<m>', 'actualizar', user.actualizar, methods=['POST'])
+app.add_url_rule('/user/actualizar/<m>', 'actualizarUser', user.actualizar, methods=['POST'])
 app.add_url_rule('/user/listado/activos', 'mostrarActivos', user.mostrarActivos)
 app.add_url_rule('/user/listado/inactivos', 'mostrarInactivos', user.mostrarInactivos)
 
 #ADMINISTRACION
 app.add_url_rule('/administracion', 'administracion', admin.administracion, methods=['GET', 'POST'])
-#app.add_url_rule('/editarCantElementos', 'editarCantElementos', admin.editarCantElementos, methods=['GET', 'POST'])
-#app.add_url_rule('/informacion', 'informacion', admin.informacion)
-#app.add_url_rule('/editarInfo', 'editarInfo', admin.formulario, methods=['GET', 'POST'])
 app.add_url_rule('/admin/desactivar', 'desactivar', admin.desactivar)
 app.add_url_rule('/admin/activar', 'activar', admin.activar)
 app.add_url_rule('/admin/activarUser/<id>', 'activarUser', admin.activarUser)

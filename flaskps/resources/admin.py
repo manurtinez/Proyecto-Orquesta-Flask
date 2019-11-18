@@ -12,27 +12,18 @@ def administracion():
         return redirect(url_for('accesoDenegado'))
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
-        return render_template('/admin/desactivar.html')
+        return redirect(url_for('mantenimiento'))
     #configuracion.set_titulo("orquesta berisso")
     if request.method == 'POST':
-        titulo = request.form['titulo']
-        descripcion = request.form['descripcion']
-        mail =request.form['mail']
-        cantListar=request.form['cantListar']
-        configuracion.set_titulo(titulo)
-        configuracion.set_descripcion(descripcion)
-        configuracion.set_mail(mail)
-        configuracion.set_cantListar(cantListar)
+        configuracion.set_titulo(request.form['titulo'])
+        configuracion.set_descripcion(request.form['descripcion'])
+        configuracion.set_mail(request.form['mail'])
+        configuracion.set_cantListar(request.form['cantListar'])
         return redirect(url_for('index'))
     return render_template('/admin/administracion.html', titulo=tabla.titulo, descripcion=tabla.descripcion, mail=tabla.mail, cantListar=tabla.cantListar)
 
-def mantenimiento():
-    if 'email' not in session or 'administrador' not in session['roles']:
-        return redirect(url_for('accesoDenegado'))
-    if 'username' in session:
-        return render_template('/admin/desactivar.html')
-    else:    
-        return render_template('/admin/desactivar.html')
+def mantenimiento():  
+    return render_template('/admin/desactivar.html', desactivado=True)
 
 def desactivar():
     if 'email' not in session or 'administrador' not in session['roles']:
@@ -49,6 +40,8 @@ def activar():
     return redirect(url_for('index'))
 
 def eliminarUser(email):
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
     if session['email'] != email:
         User.eliminar_usuario(email)
         flash('el usuario ha sido eliminado')
@@ -58,8 +51,10 @@ def eliminarUser(email):
         return redirect(url_for('listadoUsers'))
 
 def eliminarEstudiante(dni):
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
     Estudiante.eliminar_estudiante(dni)
-    flash('el usuario ha sido eliminado')
+    flash('el estudiante ha sido eliminado')
     return redirect(url_for('listadoEstudiantes'))
 
 def bloquearUser(id):
@@ -68,10 +63,6 @@ def bloquearUser(id):
     user = User.desactivar_user(User.get_by_id(id).username)
     print(user.activo)
     return redirect(url_for('listadoUsers'))
-    # print(usuario)
-    # User.desactivar_user(usuario)
-    # lista = User.all()
-    # return render_template('user/listado.html', lista=lista, admin=user.verificarSiEsAdmin(), username=session['email'])
 
 def activarUser(id):
     if 'email' not in session or 'administrador' not in session['roles']:
@@ -79,20 +70,14 @@ def activarUser(id):
     user = User.activar_user(User.get_by_id(id).username)
     print(user.activo)
     return redirect(url_for('listadoUsers'))
-    # print(usuario)
-    # User.activar_user(usuario)
-    # lista = User.all()
-    # return render_template('user/listado.html', lista=lista, admin=user.verificarSiEsAdmin(), username=session['email'])
 
 def accesoDenegado():
     flash('Usted no posee autorizacion para acceder a esta url')
     return redirect(url_for('index'))
- #listar los elementos de las pag FALTA implementar
-#@app.route('/listar.html')
-#def listar():
-#    return render_template('listar.html')
 
 def crearciclolectivo():
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
     param = request.form
     
     Ciclo_lectivo.create(param['inicio'], param['fin'],param['semestre'])
@@ -101,6 +86,8 @@ def crearciclolectivo():
     return redirect(url_for('index'))
 
 def eliminarDocente(dni):
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
     Docente.eliminar_docente(dni)
     flash('el docente ha sido eliminado')
     return redirect(url_for('listadoDocentes'))

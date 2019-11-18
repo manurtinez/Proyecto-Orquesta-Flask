@@ -13,6 +13,8 @@ def registrar():
     return render_template('user/registro.html')
 
 def crear():
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
     p = request.form
     user = User.get_by_email(p['email'])
     if user:
@@ -20,13 +22,10 @@ def crear():
         return redirect(url_for('registro'))
     else:
         User.create(p['email'], p['user'], p['password'], 1, p['nombre'], p['apellido'])
-        usuario = User.get_by_email_and_pass(p['email'], p['password'])
-        session['email'] = usuario.email
-        session['admin'] = verificarSiEsAdmin()
         return redirect(url_for('index'))
 
 def listadoUsers():
-    if 'email' not in session:
+    if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
@@ -40,23 +39,11 @@ def listadoUsers():
             if User_tiene_rol.tiene_rol(user.id, rol.id):
                 aux.append(rol)
         rolesUsers[user.id] = aux
-    print(rolesUsers)
-    return render_template('user/listado.html', lista=lista, cant=tabla.cantListar, roles=roles, rolesUsers=rolesUsers)
-
-def verificarSiEsAdmin():
-    u = User_tiene_rol.tiene_rol(User.get_by_email(session['email']).id, Rol.get_by_nombre('administrador').id)
-    if u !=None:
-        return True
-    else:
-        return False
-
-def showUser(id):
-    if 'email' not in session:
-        return redirect(url_for('accesoDenegado'))
-    print(id)
-    return render_template('/user/showUser.html', usuario=id)
+    return render_template('user/listadoUsers.html', lista=lista, cant=tabla.cantListar, roles=roles, rolesUsers=rolesUsers)
 
 def actualizar(m):
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for("accesoDenegado"))
     p = request.form
     print(p)
     act = User.get_by_email(m)
@@ -71,25 +58,16 @@ def actualizar(m):
             User_tiene_rol.desasignar_rol(act.id, r.id)
     return redirect(url_for('listadoUsers'))
 
-def buscar():
-    if 'email' not in session:
-        return redirect(url_for('accesoDenegado'))
-    nombre = request.form['nombre']
-    user = User.get_by_username(nombre)
-    if nombre == '' or not user:
-        lista = User.all()
-    else:
-        lista = []
-        for u in user:
-            lista.append(u)
-    return render_template('user/listado.html', lista=lista)
-
 def mostrarActivos():
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for("accesoDenegado"))
     lista = User.select_activos()
     tabla = configuracion.get_config()
     return render_template('user/listado.html', lista=lista, cant=tabla.cantListar)
 
 def mostrarInactivos():
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for("accesoDenegado"))
     lista = User.select_inactivos()
     tabla = configuracion.get_config()
     return render_template('user/listado.html', lista=lista, cant=tabla.cantListar)

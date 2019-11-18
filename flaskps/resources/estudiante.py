@@ -21,7 +21,7 @@ import json, requests
 
 
 def listadoEstudiantes():
-    if 'email' not in session:
+    if 'email' not in session or not any(i in ['administrador', 'docente', 'preceptor'] for i in session['roles']):
         return redirect(url_for("accesoDenegado"))
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
@@ -38,7 +38,7 @@ def listadoEstudiantes():
     dnis = json.loads(dnis.text)
     localidades = json.loads(localidades.text)
     return render_template(
-        "estudiante/listado.html", lista=lista, cant=tabla.cantListar,
+        "estudiante/listadoEstudiantes.html", lista=lista, cant=tabla.cantListar,
         escuelas=Escuela.get_all(),
         niveles=Nivel.get_all(),
         barrios=Barrio.get_all(),
@@ -49,6 +49,8 @@ def listadoEstudiantes():
 
 
 def crearEstudiante():
+    if 'email' not in session or not any(i in ['administrador', 'docente', 'preceptor'] for i in session['roles']):
+        return redirect(url_for("accesoDenegado"))
     p = request.form
     Estudiante.create(
         p["apellido"],
@@ -64,10 +66,27 @@ def crearEstudiante():
         p["telefono"],
         p["barrio"],
     )
+    flash('estudiante creado con exito!')
     return redirect(url_for("listadoEstudiantes"))
 
 def actualizarEstudiante(dni):
-    return None
-
-def eliminarEstudiante(dni):
-    return None
+    if 'email' not in session or not any(i in ['administrador', 'docente', 'preceptor'] for i in session['roles']):
+        return redirect(url_for("accesoDenegado"))
+    p = request.form
+    Estudiante.actualizar(
+        dni,
+        p["apellido"],
+        p["nombre"],
+        p["fechaN"],
+        p["localidad"],
+        p["nivel"],
+        p["domicilio"],
+        p["genero"],
+        p["escuela"],
+        p["tipoD"],
+        p["numero"],
+        p["telefono"],
+        p["barrio"],
+    )
+    flash('estudiante creado con exito!')
+    return redirect(url_for('listadoEstudiantes'))

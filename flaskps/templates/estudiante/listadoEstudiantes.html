@@ -16,7 +16,7 @@
             </div>
         {%for e in lista %}
         <!-- Modal -->
-        <div class="modal fade" id="modalActualizar{{e.dni}}" role="dialog">
+        <div class="modal fade" id="modalActualizar{{e.id}}" role="dialog">
             <div class="modal-dialog modal-lg">
                 <!-- Modal content-->
                 {% include 'estudiante/modalActualizarEstudiante.html' %}
@@ -73,7 +73,7 @@
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#myModal{{ e.id }}">Mostrar</button>
                             <button type="button" class="btn btn-info" data-toggle="modal"
-                                data-target="#modalActualizar{{ e.dni }}">Actualizar Datos</button>
+                                data-target="#modalActualizar{{ e.id }}">Actualizar Datos</button>
                             {% if 'administrador' in session['roles'] %}
                             <a href="{{url_for('eliminarEstudiante', dni=e.numero)}}" class="btn btn-info"
                                 onclick="return confirm('Esta seguro de que quiere eliminar a {{e.nombre}}?')">Eliminar</a>

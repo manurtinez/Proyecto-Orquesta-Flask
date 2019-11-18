@@ -8,18 +8,21 @@
             <div class="row">
                 <div class="col">
                     <label for="nombre">Nombre:</label>
-                    <input value="{{e.nombre}}" class="form-control form-control-sm" id="nombre" name="nombre" type="text" required>
+                    <input value="{{e.nombre}}" class="form-control form-control-sm" id="nombre" name="nombre"
+                        type="text" required>
                 </div>
                 <div class="col">
                     <label for="apellido">Apellido:</label>
-                    <input value="{{e.apellido}}" class="form-control form-control-sm" id="apellido" name="apellido" type="text" required>
+                    <input value="{{e.apellido}}" class="form-control form-control-sm" id="apellido" name="apellido"
+                        type="text" required>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col">
                     <label for="fechaN">Fecha Nacimiento:</label>
-                    <input value="{{e.fecha_nac}}" class="form-control form-control-sm" id="fechaN" name="fechaN" type="date" required>
+                    <input value="{{e.fecha_nac}}" class="form-control form-control-sm" id="fechaN" name="fechaN"
+                        type="date" required>
                 </div>
             </div>
 
@@ -27,14 +30,16 @@
                 <div class="col">
                     <label for="localidad">Localidad:</label>
                     <select class="form-control form-control-sm" id="localidad" name="localidad" required>
+                        <option hidden disabled selected value> -- selecciona un tipo -- </option>
                         {% for l in localidades %}
-                        <option value="{{l}}">{{l}}</option>
+                        <option value="{{l['id']}}">{{l['nombre']}}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col">
                     <label for="domicilio">Domicilio:</label>
-                    <input value="{{e.domicilio}}" class="form-control form-control-sm" id="domicilio" name="domicilio" type="text" required>
+                    <input value="{{e.domicilio}}" class="form-control form-control-sm" id="domicilio" name="domicilio"
+                        type="text" required>
                 </div>
                 <div class="col">
                     <label for="barrio">Barrio:</label>
@@ -61,25 +66,24 @@
                 <div class="col">
                     <label for="tipoD">Tipo de Documento:</label>
                     <select class="form-control form-control-sm" id="tipoD" name="tipoD" required>
+                        <option hidden disabled selected value> -- selecciona un tipo -- </option>
                         {% for t in dnis %}
-                        <option value="{{t}}">{{t}}</option>
+                        <option value="{{t['id']}}">{{t['nombre']}}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col">
                     <label for="numeroD">Numero de Documento:</label>
-                    <input value="{{e.nombre}}" class="form-control form-control-sm" id="numeroD" name="numeroD" type="number" required>
-                </div>
-                <div class="col">
-                    <label for="numero">Numero:</label>
-                    <input value="{{e.nombre}}" class="form-control form-control-sm" id="numero" name="numero" type="number" required>
+                    <input value="{{e.numero}}" class="form-control form-control-sm" id="numero" name="numero"
+                        type="number" required>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col">
                     <label for="telefono">Telefono:</label>
-                    <input value="{{e.nombre}}" class="form-control form-control-sm" id="telefono" name="telefono" type="text" required>
+                    <input value="{{e.tel}}" class="form-control form-control-sm" id="telefono" name="telefono"
+                        type="text" required>
                 </div>
             </div>
 
@@ -94,7 +98,8 @@
                     <label for="escuela">Escuela:</label>
                     <select class="form-control form-control-sm" id="escuela" name="escuela" required>
                         {% for es in escuelas %}
-                        <option value="{{es.id}}" {% if es.id == e.escuela_id %} selected {% endif %}>{{es.nombre}}</option>
+                        <option value="{{es.id}}" {% if es.id == e.escuela_id %} selected {% endif %}>{{es.nombre}}
+                        </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -110,7 +115,6 @@
 
             <div>
                 <input type="submit" class="btn btn-info" value="Aceptar">
-                <a href="{{ url_for('index')}}" class="btn btn-info">Volver</a>
             </div>
         </form>
     </div>

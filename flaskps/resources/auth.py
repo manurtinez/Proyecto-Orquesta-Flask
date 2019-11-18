@@ -23,7 +23,6 @@ def authenticate():
         if User_tiene_rol.tiene_rol(usuario.id, r.id):
             aux.append(r.nombre)
     session['roles'] = aux
-    print(session['roles'])
     flash('logeo exitoso!')
     return redirect(url_for('index'))
 

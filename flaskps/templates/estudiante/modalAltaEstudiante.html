@@ -31,6 +31,7 @@
                 <div class="col">
                     <label for="localidad">Localidad:</label>
                     <select class="form-control form-control-sm" id="localidad" name="localidad" required>
+                        <option hidden disabled selected value> -- selecciona un tipo -- </option>
                         {% for l in localidades %}
                         <option value="{{l['id']}}">{{l['nombre']}}</option>
                         {% endfor %}
@@ -65,13 +66,14 @@
                 <div class="col">
                     <label for="tipoD">Tipo de Documento:</label>
                     <select class="form-control form-control-sm" id="tipoD" name="tipoD" required>
+                        <option hidden disabled selected value> -- selecciona un tipo -- </option>
                         {% for t in dnis %}
                         <option value="{{t['id']}}">{{t['nombre']}}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col">
-                    <label for="numero">Numero:</label>
+                    <label for="numero">Numero de documento:</label>
                     <input class="form-control form-control-sm" id="numero" name="numero" type="number" required>
                 </div>
             </div>

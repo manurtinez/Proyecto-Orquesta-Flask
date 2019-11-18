@@ -98,7 +98,7 @@
                 {% endif %}
               </div>
             </li>
-            {% if 'administrador' in session['roles'] %}
+            {% if 'administrador' in session['roles'] and not desactivado %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">

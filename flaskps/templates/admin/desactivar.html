@@ -9,7 +9,7 @@
     {% with messages = get_flashed_messages()%}
     {% endwith%}
     <h1>El sitio se encuentra en mantenimiento</h1>
-    {% if admin %}
+    {% if 'administrador' in session['roles'] %}
     <a class="btn btn-info" href="{{url_for('activar')}}">Activar Sitio</a>
     {%endif%}
 </body>
