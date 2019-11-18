@@ -1,10 +1,10 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h4 class="modal-title">Alta Docente</h4>
+        <h4 class="modal-title">Actualizar Docente</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">
-        <form method="POST" action="{{url_for('actualizarEstudiante', dni=d.numero)}}">
+        <form method="POST" action="{{url_for('actualizarDocente', dni=d.numero)}}">
             <div class="row">
                 <div class="col">
                     <label for="nombre">Nombre:</label>

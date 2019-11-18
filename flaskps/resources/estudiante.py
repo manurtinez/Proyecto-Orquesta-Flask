@@ -88,5 +88,5 @@ def actualizarEstudiante(dni):
         p["telefono"],
         p["barrio"],
     )
-    flash('estudiante creado con exito!')
+    flash('estudiante actualizado con exito!')
     return redirect(url_for('listadoEstudiantes'))

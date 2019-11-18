@@ -11,6 +11,7 @@ from flask import (
 from flaskps.models.configuracion import configuracion
 from flaskps.models.genero import Genero
 from flaskps.models.docente import Docente
+from flaskps.models.usuario import User
 import json, requests
 
 def listadoDocentes():
@@ -52,3 +53,22 @@ def crearDocente():
         p["telefono"],
     )
     return redirect(url_for("listadoDocentes"))
+
+def actualizarDocente(dni):
+    if 'email' not in session or not any(i in ['administrador', 'docente', 'preceptor'] for i in session['roles']):
+        return redirect(url_for("accesoDenegado"))
+    p = request.form
+    Docente.actualizar(
+        dni,
+        p["apellido"],
+        p["nombre"],
+        p["fechaN"],
+        p["localidad"],
+        p["domicilio"],
+        p["genero"],
+        p["tipoD"],
+        p["numero"],
+        p["telefono"],
+    )
+    flash('docente actualizado con exito!')
+    return redirect(url_for('listadoDocentes'))
