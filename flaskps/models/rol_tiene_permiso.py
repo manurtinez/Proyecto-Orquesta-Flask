@@ -1,5 +1,7 @@
 from flaskps.db import db
-from sqlalchemy import update
+from flaskps.models.rol import Rol
+from flaskps.models.permiso import Permiso
+from sqlalchemy import update, ForeignKey, PrimaryKeyConstraint
 
 class rol_tiene_permiso(db.Model):
     __tablename__= 'rol_tiene_permiso'
@@ -13,4 +15,4 @@ class rol_tiene_permiso(db.Model):
     # Con este método, se sabe si un rol tiene un permiso específico. Se debe utilizar pasándole los id de ambas cosas 
     #   (para ello ambas clases poseen un método para averiguarlo)
     def tiene_permiso(idrol,idpermiso):
-        return permiso.query.filter_by(id_rol=idrol, id_permiso=idpermiso).first()
+        return Permiso.query.filter_by(id_rol=idrol, id_permiso=idpermiso).first()

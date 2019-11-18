@@ -4,7 +4,7 @@ from flaskps.models.usuario import User
 from flaskps.models.configuracion import configuracion
 from flaskps.models.escuela import Escuela
 from flaskps.db import db
-from flaskps.resources import admin, auth, user, estudiante, docente
+from flaskps.resources import admin, auth, user, estudiante, docente, taller
 from flaskps.config import Config
 from flask_session import Session
 #from flask_mysqldb import MySQL #xampp coneccion bd
@@ -62,6 +62,9 @@ app.add_url_rule('/eliminarEstudiante/<dni>', 'eliminarEstudiante', admin.elimin
 app.add_url_rule('/eliminarDocente/<dni>', 'eliminarDocente', admin.eliminarDocente)
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
 app.add_url_rule('/AgregarCicloLectivo', 'crearciclolectivo', admin.crearciclolectivo,methods=['GET','POST'])
+
+#taller
+app.add_url_rule('/asociarTallerCiclo', 'asociarTallerCiclo', taller.asociarTallerCiclo, methods=['GET','POST'])
 
 @app.route('/')
 def index():

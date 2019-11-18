@@ -1,5 +1,7 @@
 from flaskps.db import db
-from sqlalchemy import update
+from sqlalchemy import update, ForeignKey, PrimaryKeyConstraint
+from flaskps.models.taller import Taller
+from flaskps.models.ciclo_lectivo import Ciclo_lectivo
 from datetime import datetime
 
 class Ciclo_lectivo_taller(db.Model):

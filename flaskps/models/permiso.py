@@ -1,7 +1,7 @@
 from flaskps.db import db
 from sqlalchemy import update
 
-class permiso(db.Model):
+class Permiso(db.Model):
     __tablename__= 'permiso'
 
     id = db.Column(db.Integer)
@@ -9,4 +9,4 @@ class permiso(db.Model):
 
     #Este método sirve para obtener el id de un permiso específico.
     def get_id(nombre_permiso):
-        return permiso.query.filter_by(nombre=nombre_permiso).first()
+        return Permiso.query.filter_by(nombre=nombre_permiso).first()

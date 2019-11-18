@@ -15,7 +15,7 @@ class Taller(db.Model):
         db.session.commit()
         return elemento
 
-     def get_by_nombre(nom):
+    def get_by_nombre(nom):
         return Taller.query.filter_by(nombre=nom).first()
 
     def all():

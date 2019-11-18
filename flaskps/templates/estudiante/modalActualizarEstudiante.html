@@ -30,7 +30,7 @@
                 <div class="col">
                     <label for="localidad">Localidad:</label>
                     <select class="form-control form-control-sm" id="localidad" name="localidad" required>
-                        <option hidden disabled selected value> -- selecciona un tipo -- </option>
+                        <option hidden disabled selected value> -- selecciona una localidad -- </option>
                         {% for l in localidades %}
                         <option value="{{l['id']}}">{{l['nombre']}}</option>
                         {% endfor %}
