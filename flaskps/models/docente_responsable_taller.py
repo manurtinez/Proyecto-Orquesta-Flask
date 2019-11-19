@@ -6,7 +6,7 @@ from flaskps.models.taller import Taller
 from datetime import datetime
 
 class Docente_responsable_taller(db.Model):
-    __tablename__ = 'ciclo_lectivo_taller'
+    __tablename__ = 'docente_responsable_taller'
     __table_args__ = (
         PrimaryKeyConstraint('docente_id', 'ciclo_lectivo_id','taller_id'),
     )

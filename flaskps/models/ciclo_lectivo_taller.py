@@ -3,6 +3,7 @@ from sqlalchemy import update, ForeignKey, PrimaryKeyConstraint
 from flaskps.models.taller import Taller
 from flaskps.models.ciclo_lectivo import Ciclo_lectivo
 from datetime import datetime
+from sqlalchemy.sql.expression import Tuple
 
 class Ciclo_lectivo_taller(db.Model):
     __tablename__ = 'ciclo_lectivo_taller'
@@ -24,3 +25,7 @@ class Ciclo_lectivo_taller(db.Model):
     #Read (devuelve todo)
     def all():
         return Ciclo_lectivo_taller.query.all()
+
+    def get(tid, cid):
+        return db.session.query(Ciclo_lectivo_taller).filter(
+            Tuple(Ciclo_lectivo_taller.taller_id, Ciclo_lectivo_taller.ciclo_lectivo_id).in_([(tid, cid)])).all()

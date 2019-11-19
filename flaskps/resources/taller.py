@@ -17,11 +17,14 @@ def asociarTallerCiclo():
             docentes=Docente.all(),
         )
     elif request.method == "POST":
-        p = request.form.getlist('ciclo')
-        print(p)
-        #Ciclo_lectivo_taller.create(p["taller"], p["ciclo"])
-        flash("la asociacion se hizo exitosamente")
-        return redirect(url_for("index"))
+        p = request.form
+        if not Ciclo_lectivo_taller.get(p['taller'], p['ciclo']):
+            Ciclo_lectivo_taller.create(p["taller"], p["ciclo"])
+            flash("la asociacion se hizo exitosamente")
+            return redirect(url_for("index"))
+        else:
+            flash('Esta asociacion ya existe!')
+            return redirect(url_for('asociarTallerCiclo'))
 
 def asociarTallerDocentes():
     d = request.form.getlist('docentes')

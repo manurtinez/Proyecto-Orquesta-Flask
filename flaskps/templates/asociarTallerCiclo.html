@@ -6,6 +6,15 @@
 {% block content %}
 
 <body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info fade show alert-dismissible" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <div style="max-width: 500px; margin: 0 auto; padding-top: 40px;">
         <h3>Asociar Taller - Ciclo Lectivo</h3>
         <form method="POST" action="{{url_for('asociarTallerCiclo')}}">
@@ -60,7 +69,7 @@
             <div class="row">
                 <div class="col">
                     <select class="form-control" id="taller" name="taller">
-                        {% for t in talleres %}
+                        {% for c in ciclosTalleres %}
                         <option value="{{t.id}}">{{t.nombre}}</option>
                         {% endfor %}
                     </select>
