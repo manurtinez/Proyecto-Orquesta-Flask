@@ -29,9 +29,8 @@ class Estudiante(db.Model):
         return elemento
     
     #Verificar si un DNI existe en el sistema (si no existe retorna nulo)
-    def existe_dni(num):
-        elem = Estudiante.query.filter_by(numero=num).first()
-        return elem
+    def getByDNI(dni):
+        return Estudiante.query.filter_by(numero=dni).first()
         
     #Baja fisica del sistema // SE HACE CON EL DNI
     def eliminar_estudiante(dn):
@@ -40,7 +39,7 @@ class Estudiante(db.Model):
         return True 
 
     #ESTA CONSULTA SE ACCEDE CON EL DNI VIEJO, retorna el objeto actualizado
-    def actualizar(nuVIEJO,ap,no,fe,lo,ni,do,ge,es,ti,nuNUEVO,te,ba):
+    def actualizar(nuVIEJO,ap,no,fe,lo,ni,do,ge,es,ti,te,ba):
         obj = Estudiante.query.filter_by(numero=nuVIEJO).first()
         obj.apellido = ap
         obj.nombre = no
@@ -51,7 +50,6 @@ class Estudiante(db.Model):
         obj.genero_id = ge
         obj.escuela_id = es
         obj.tipo_doc_id = ti
-        obj.numero = nuNUEVO
         obj.tel = te
         obj.barrio_id = ba
 
@@ -61,6 +59,3 @@ class Estudiante(db.Model):
     #Read (devuelve todo)
     def all():
         return Estudiante.query.all()
-
-    def getByDNI(dni):
-        return Estudiante.query.filter_by(dni=dni).first()

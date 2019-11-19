@@ -52,22 +52,26 @@ def crearEstudiante():
     if 'email' not in session or not any(i in ['administrador', 'docente', 'preceptor'] for i in session['roles']):
         return redirect(url_for("accesoDenegado"))
     p = request.form
-    Estudiante.create(
-        p["apellido"],
-        p["nombre"],
-        p["fechaN"],
-        p["localidad"],
-        p["nivel"],
-        p["domicilio"],
-        p["genero"],
-        p["escuela"],
-        p["tipoD"],
-        p["numero"],
-        p["telefono"],
-        p["barrio"],
-    )
-    flash('estudiante creado con exito!')
-    return redirect(url_for("listadoEstudiantes"))
+    if Estudiante.getByDNI(p['numero']) is not None:
+        flash('ya existe un estudiante con ese numero de dni!')
+        return redirect(url_for('listadoEstudiantes'))
+    else:
+        Estudiante.create(
+            p["apellido"],
+            p["nombre"],
+            p["fechaN"],
+            p["localidad"],
+            p["nivel"],
+            p["domicilio"],
+            p["genero"],
+            p["escuela"],
+            p["tipoD"],
+            p["numero"],
+            p["telefono"],
+            p["barrio"],
+        )
+        flash('estudiante creado con exito!')
+        return redirect(url_for("listadoEstudiantes"))
 
 def actualizarEstudiante(dni):
     if 'email' not in session or not any(i in ['administrador', 'docente', 'preceptor'] for i in session['roles']):
@@ -84,7 +88,6 @@ def actualizarEstudiante(dni):
         p["genero"],
         p["escuela"],
         p["tipoD"],
-        p["numero"],
         p["telefono"],
         p["barrio"],
     )

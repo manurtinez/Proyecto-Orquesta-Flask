@@ -41,18 +41,22 @@ def crearDocente():
     if 'email' not in session or not any(i in ['administrador', 'docente'] for i in session['roles']):
         return redirect(url_for("accesoDenegado"))
     p = request.form
-    Docente.create(
-        p["apellido"],
-        p["nombre"],
-        p["fechaN"],
-        p["localidad"],
-        p["domicilio"],
-        p["genero"],
-        p["tipoD"],
-        p["numero"],
-        p["telefono"],
-    )
-    return redirect(url_for("listadoDocentes"))
+    if Docente.getByDNI(p['numero']) is not None:
+        flash('ya existe un docente con ese numero de documento!')
+        return redirect(url_for('listadoDocentes'))
+    else:
+        Docente.create(
+            p["apellido"],
+            p["nombre"],
+            p["fechaN"],
+            p["localidad"],
+            p["domicilio"],
+            p["genero"],
+            p["tipoD"],
+            p["numero"],
+            p["telefono"],
+        )
+        return redirect(url_for("listadoDocentes"))
 
 def actualizarDocente(dni):
     if 'email' not in session or not any(i in ['administrador', 'docente', 'preceptor'] for i in session['roles']):
@@ -67,7 +71,6 @@ def actualizarDocente(dni):
         p["domicilio"],
         p["genero"],
         p["tipoD"],
-        p["numero"],
         p["telefono"],
     )
     flash('docente actualizado con exito!')

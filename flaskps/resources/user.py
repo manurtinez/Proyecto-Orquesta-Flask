@@ -45,10 +45,8 @@ def actualizar(m):
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for("accesoDenegado"))
     p = request.form
-    print(p)
     act = User.get_by_email(m)
     roles = Rol.all()
-    print(act)
     User.actualizar(act.username, p['username'],p['password'], p['nombre'], p['apellido'])
     for r in roles:
         c = 'rol' + str(r.id)
