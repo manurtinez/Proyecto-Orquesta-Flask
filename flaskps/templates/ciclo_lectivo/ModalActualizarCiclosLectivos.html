@@ -1,0 +1,35 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Actualizar Ciclo lectivo</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+        <form method="POST" action="{{url_for('actualizarCiclosLectivos', id=c.id)}}">
+            <div class="row">
+                <div class="col">
+                    <label for="nombre">Fecha de inicio:</label>
+                    <input class="form-control form-control-sm" id="fecha_ini" value="{{c.fecha_ini}}" name="fecha_ini" type="date" required>
+                </div>
+                <div class="col">
+                    <label for="apellido">Fecha de fin:</label>
+                    <input class="form-control form-control-sm" value="{{c.fecha_fin}}" id="fecha_fin" name="fecha_fin" type="date" required>
+                </div>
+            </div>
+  
+            <div class="row">
+                <div class="col">
+                    <label for="fechaN">Semestre:</label>
+                    <input class="form-control form-control-sm" value="{{c.semestre}}" id="semestre" name="semestre" type="text" required>
+                </div>
+                
+            </div>
+  
+            <div>
+                <input type="submit" class="btn btn-info" value="Aceptar">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    </div>
+  </div>

@@ -89,5 +89,12 @@ def eliminarDocente(dni):
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
     Docente.eliminar_docente(dni)
-    flash('el docente ha sido eliminado')
+    flash('El docente ha sido eliminado')
     return redirect(url_for('listadoDocentes'))
+
+def eliminarCicloLectivo(i):
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
+    Ciclo_lectivo.eliminar_ciclolectivo(i)
+    flash('El ciclo lectivo ha sido eliminado')
+    return redirect(url_for('listadoCiclosLectivos'))

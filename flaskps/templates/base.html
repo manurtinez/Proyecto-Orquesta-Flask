@@ -100,6 +100,10 @@
                 {% if 'docente' in session['roles'] or 'administrador' in session['roles'] %}
                 <a class="dropdown-item" href="{{ url_for('listadoDocentes') }}">Docentes/Preceptores</a>
                 {% endif %}
+                <!-- Para ciclo lectivo -->
+                {% if 'docente' in session['roles'] or 'administrador' in session['roles'] %}
+                <a class="dropdown-item" href="{{ url_for('listadoCiclosLectivos') }}">Ciclos lectivos</a>
+                {% endif %}
               </div>
             </li>
             {% if 'administrador' in session['roles'] and not desactivado %}

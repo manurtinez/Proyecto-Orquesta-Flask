@@ -4,9 +4,10 @@ from flaskps.models.usuario import User
 from flaskps.models.configuracion import configuracion
 from flaskps.models.escuela import Escuela
 from flaskps.db import db
-from flaskps.resources import admin, auth, user, estudiante, docente, taller
+from flaskps.resources import admin, auth, user, estudiante, docente, taller, ciclo_lectivo
 from flaskps.config import Config
 from flask_session import Session
+
 #from flask_mysqldb import MySQL #xampp coneccion bd
 
 #instancio app
@@ -50,6 +51,10 @@ app.add_url_rule('/user/actualizar/<m>', 'actualizarUser', user.actualizar, meth
 app.add_url_rule('/user/listado/activos', 'mostrarActivos', user.mostrarActivos)
 app.add_url_rule('/user/listado/inactivos', 'mostrarInactivos', user.mostrarInactivos)
 
+#Ciclo lectivo
+app.add_url_rule('/ciclo_lectivo/listadoCiclosLectivos', 'listadoCiclosLectivos', ciclo_lectivo.listadoCiclosLectivos)
+app.add_url_rule('/ciclo_lectivo/actualizarCiclosLectivos/<id>', 'actualizarCiclosLectivos', ciclo_lectivo.actualizarCiclosLectivos, methods=['POST','GET'])
+
 #ADMINISTRACION
 app.add_url_rule('/administracion', 'administracion', admin.administracion, methods=['GET', 'POST'])
 app.add_url_rule('/admin/desactivar', 'desactivar', admin.desactivar)
@@ -60,6 +65,7 @@ app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
 app.add_url_rule('/eliminarUser/<email>', 'eliminarUser', admin.eliminarUser)
 app.add_url_rule('/eliminarEstudiante/<dni>', 'eliminarEstudiante', admin.eliminarEstudiante)
 app.add_url_rule('/eliminarDocente/<dni>', 'eliminarDocente', admin.eliminarDocente)
+app.add_url_rule('/eliminarCicloLectivo/<id>', 'eliminarCicloLectivo', admin.eliminarCicloLectivo)
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
 app.add_url_rule('/AgregarCicloLectivo', 'crearciclolectivo', admin.crearciclolectivo,methods=['GET','POST'])
 

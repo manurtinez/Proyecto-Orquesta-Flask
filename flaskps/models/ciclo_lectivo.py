@@ -18,6 +18,22 @@ class Ciclo_lectivo(db.Model):
         db.session.commit()
         return elemento
     
+    #Baja fisica del sistema // SE HACE CON FECHA DE INICIO
+    def eliminar_ciclolectivo(i):
+        Ciclo_lectivo.query.filter_by(id=i).delete()
+        db.session.commit()
+        return True 
+    
+    #ESTA CONSULTA SE ACCEDE CON EL id, retorna el objeto actualizado
+    def actualizar(i,fi,ff,sem):
+        obj = Ciclo_lectivo.query.filter_by(id=i).first()
+        obj.fecha_ini = fi
+        obj.fecha_fin = ff
+        obj.semestre = sem
+
+        db.session.commit()
+        return obj
+    
     #Read (devuelve todo)
     def all():
         return Ciclo_lectivo.query.all()
