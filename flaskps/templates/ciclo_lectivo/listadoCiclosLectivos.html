@@ -6,6 +6,15 @@
 {%block content%}
 
 <body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info fade show alert-dismissible" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <div>
 
         {%for c in lista %}
@@ -65,7 +74,7 @@
 
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#modalActualizar{{ c.id }}">Actualizar Datos</button>
-                                
+
                             {% if 'administrador' in session['roles'] %}
                             <a href="{{url_for('eliminarCicloLectivo', id=c.id)}}" class="btn btn-info"
                                 onclick="return confirm('Esta seguro de que quiere eliminar el ciclo lectivo {{c.fecha_ini}} - {{c.fecha_fin}}?')">Eliminar</a>
@@ -77,15 +86,6 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-info fade show alert-dismissible" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
     </div>
     <script>
         $(document).ready(function () {
