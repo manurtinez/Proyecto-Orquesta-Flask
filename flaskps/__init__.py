@@ -65,6 +65,7 @@ app.add_url_rule('/AgregarCicloLectivo', 'crearciclolectivo', admin.crearciclole
 
 #taller
 app.add_url_rule('/asociarTallerCiclo', 'asociarTallerCiclo', taller.asociarTallerCiclo, methods=['GET','POST'])
+app.add_url_rule('/asociarTallerDocentes', 'asociarTallerDocentes', taller.asociarTallerDocentes, methods=['GET','POST'])
 
 @app.route('/')
 def index():

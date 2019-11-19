@@ -1,5 +1,8 @@
 from flaskps.db import db
-from sqlalchemy import update
+from sqlalchemy import update, PrimaryKeyConstraint, ForeignKey
+from flaskps.models.docente import Docente
+from flaskps.models.ciclo_lectivo import Ciclo_lectivo
+from flaskps.models.taller import Taller
 from datetime import datetime
 
 class Docente_responsable_taller(db.Model):
