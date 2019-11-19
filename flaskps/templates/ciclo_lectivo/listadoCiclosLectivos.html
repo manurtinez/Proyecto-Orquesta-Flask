@@ -1,0 +1,96 @@
+{%extends "base.html"%}
+{%block title%}Listado de ciclos lectivos{%endblock title%}
+{%block head%}
+{{super()}}
+{%endblock head%}
+{%block content%}
+
+<body>
+    <div>
+
+        {%for c in lista %}
+        <!-- Modal -->
+        <div class="modal fade" id="modalActualizar{{c.id}}" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                {% include 'ciclo_lectivo/ModalActualizarCiclosLectivos.html' %}
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal{{c.id}}" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Informacion del ciclo lectivo</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li>Fecha de inicio: {{c.fecha_ini}}</li>
+                            <li>Fecha de fin: {{c.fecha_fin}}</li>
+                            <li>Semestre: {{c.semestre}}</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {%endfor%}
+
+        <table id="listado" data-page-length="{{cant}}" class="table table-stripped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Fin</th>
+                    <th>Semestre</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in lista %}
+                <tr>
+                    <td>{{c.fecha_ini}}</td>
+                    <td>{{c.fecha_fin}}</td>
+                    <td>{{c.semestre}}</td>
+                    <td>
+                        {% if 'preceptor' in session['roles'] or 'profesor' in session['roles'] or 'administrador' in session['roles'] %}
+                        <nav>
+                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                data-target="#myModal{{ c.id }}">Mostrar</button>
+
+                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                data-target="#modalActualizar{{ c.id }}">Actualizar Datos</button>
+                                
+                            {% if 'administrador' in session['roles'] %}
+                            <a href="{{url_for('eliminarCicloLectivo', id=c.id)}}" class="btn btn-info"
+                                onclick="return confirm('Esta seguro de que quiere eliminar el ciclo lectivo {{c.fecha_ini}} - {{c.fecha_fin}}?')">Eliminar</a>
+                            {% endif %}
+                        </nav>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info fade show alert-dismissible" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#listado').DataTable();
+        });
+    </script>
+</body>
+{%endblock content%}
