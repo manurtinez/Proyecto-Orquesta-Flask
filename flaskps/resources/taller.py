@@ -5,66 +5,66 @@ from flaskps.models.ciclo_lectivo_taller import Ciclo_lectivo_taller
 from flaskps.models.estudiante import Estudiante
 from flaskps.models.docente import Docente
 from flaskps.models.docente_responsable_taller import Docente_responsable_taller
-import ast
+from flaskps.models.asistencia_estudiante_taller import Asistencia_estudiante_taller
+import json, datetime
 
+
+def asociacionesTalleres():
+    ciclosTalleres = []
+    t = Taller.all()
+    c = Ciclo_lectivo.all()
+    ct = Ciclo_lectivo_taller.all()
+    for ct in ct:
+        dict = {}
+        aux = next((x for x in t if x.id == ct.taller_id))
+        aux2 = next((x for x in c if x.id == ct.ciclo_lectivo_id))
+        dict['tallerid'] = ct.taller_id
+        dict['cicloid'] = ct.ciclo_lectivo_id
+        dict['tallernombre'] = aux.nombre
+        dict['cicloinicio'] = aux2.fecha_ini
+        dict['ciclofin'] = aux2.fecha_fin
+        ciclosTalleres.append(dict)
+    return render_template(
+        "asociacionesTalleres.html",
+        talleres=Taller.all(),
+        ciclos=Ciclo_lectivo.all(),
+        estudiantes=Estudiante.all(),
+        docentes=Docente.all(),
+        ciclosTalleres=ciclosTalleres,
+    )
 
 def asociarTallerCiclo():
-    if request.method == "GET":
-        #ciclosTalleres = []
-        t = Taller.all()
-        c = Ciclo_lectivo.all()
-        ct = Ciclo_lectivo_taller.all()
-        # for ct in ct:
-        #     dict = {}
-        #     aux = next((x for x in t if x.id == ct.taller_id))
-        #     aux2 = next((x for x in c if x.id == ct.ciclo_lectivo_id))
-        #     dict['tallerid'] = ct.taller_id
-        #     dict['cicloid'] = ct.ciclo_lectivo_id
-        #     dict['tallernombre'] = aux.nombre
-        #     dict['cicloinicio'] = aux2.fecha_ini
-        #     dict['ciclofin'] = aux2.fecha_fin
-        #     ciclosTalleres.append(dict)
-        return render_template(
-            "asociarTallerCiclo.html",
-            talleres=Taller.all(),
-            ciclos=Ciclo_lectivo.all(),
-            estudiantes=Estudiante.all(),
-            docentes=Docente.all(),
-            # ciclosTalleres=ciclosTalleres,
-        )
-    elif request.method == "POST":
-        p = request.form
-        if not Ciclo_lectivo_taller.get(p['taller'], p['ciclo']):
-            Ciclo_lectivo_taller.create(p["taller"], p["ciclo"])
-            flash("la asociacion se hizo exitosamente")
-            return redirect(url_for("index"))
-        else:
-            flash('Esta asociacion ya existe!')
-            return redirect(url_for('asociarTallerCiclo'))
+    p = request.form
+    if not Ciclo_lectivo_taller.get(p['taller'], p['ciclo']):
+        Ciclo_lectivo_taller.create(p["taller"], p["ciclo"])
+        flash("la asociacion se hizo exitosamente")
+        return redirect(url_for("asociacionesTalleres"))
+    else:
+        flash('Esta asociacion ya existe!')
+        return redirect(url_for('asociacionesTalleres'))
 
 def asociarTallerDocentes():
     d = request.form.getlist('docentes')
-    f = request.form
-    # c = request.form['taller']
-    # j = ast.literal_eval(c)
+    c = eval(request.form['taller'])
+    repetidos = False
     for d in d:
-        Docente_responsable_taller.create(int(d), f['ciclo'], f['taller'])
-    return redirect(url_for('asociarTallerCiclo'))
+        if not Docente_responsable_taller.get(int(d), c['cicloid'], c['tallerid']):
+            Docente_responsable_taller.create(int(d), c['cicloid'], c['tallerid'])
+        else:
+            repetidos = True
+    if repetidos:
+        flash('Asociacion exitosa! Nota: Algunos de los docentes ya estaban asociados')
+    return redirect(url_for('asociacionesTalleres'))
 
 def asociarTallerEstudiantes():
-    if request.method == "GET":
-        # ct = Ciclo_lectivo_taller.all()
-        # t = Taller.all()
-        # c = Ciclo_lectivo.all()
-        # ciclosTalleres = {}
-        # for ct in ct:
-        #     aux = next((x for x in t if x.id == ct.taller_id))
-        #     aux2 = next((x for x in c if x.id == ct.ciclo_lectivo_id))
-        #     ciclosTalleres[ct.taller_id] = '{} - Inicio: {} - Fin: {}'.format()
-        return render_template(
-            'asociarTallerEstudiantes.html',
-            ciclosTalleres = Ciclo_lectivo_taller.all(),
-            talleres=Taller.all(),
-            ciclos = Ciclo_lectivo.all(),
-            estudiantes = Estudiante.all()
-        )
+    e = request.form.getlist('estudiantes')
+    c = eval(request.form['taller'])
+    repetidos = False
+    for e in e:
+        if not Asistencia_estudiante_taller.get(int(e), c['cicloid'], c['tallerid']):
+            Asistencia_estudiante_taller.create(int(e), c['cicloid'], c['tallerid'])
+        else:
+            repetidos = True
+    if repetidos:
+        flash('Asociacion exitosa! Nota: Algunos de los estudiantes ya estaban asociados')
+    return redirect(url_for('asociacionesTalleres'))

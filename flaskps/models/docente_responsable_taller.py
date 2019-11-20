@@ -18,7 +18,6 @@ class Docente_responsable_taller(db.Model):
     #Alta
     def create(do,ci,ta):
         elemento = Docente_responsable_taller (docente_id=do, ciclo_lectivo_id=ci, taller_id=ta)
-
         db.session.add (elemento)
         db.session.commit()
         return elemento
@@ -26,3 +25,6 @@ class Docente_responsable_taller(db.Model):
     #Read (devuelve todo)
     def all():
         return Docente_responsable_taller.query.all()
+
+    def get(do, ci, ta):
+        return Docente_responsable_taller.query.filter_by(docente_id=do, ciclo_lectivo_id=ci, taller_id=ta).first()

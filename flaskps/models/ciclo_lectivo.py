@@ -2,6 +2,7 @@ from flaskps.db import db
 from sqlalchemy import update
 from datetime import datetime
 from sqlalchemy.orm import relationship
+import sqlalchemy
 
 class Ciclo_lectivo(db.Model):
 
@@ -12,6 +13,12 @@ class Ciclo_lectivo(db.Model):
     semestre = db.Column(db.Integer)
     children = relationship('Ciclo_lectivo_taller', cascade='all, delete',
     backref='ciclo_lectivo')
+
+    def getByYear(an):
+        #act = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
+        return Ciclo_lectivo.query.filter(sqlalchemy.extract('year', Ciclo_lectivo.fecha_ini)== an).all()
+        #fecha_ini.year()
+        #c = Ciclo_lectivo.query.filter_by(semestre=sem, fecha_ini=an).first()
 
     #Añadir un ciclo lectivo
     def create(ini,fin,se):
@@ -41,4 +48,7 @@ class Ciclo_lectivo(db.Model):
     #Read (devuelve todo)
     def all():
         return Ciclo_lectivo.query.all()
+
     
+    def get(fi, fin, sem):
+        return Ciclo_lectivo.query.filter_by(fecha_ini=fi, fecha_fin=fin, semestre=sem).first()

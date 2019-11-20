@@ -70,9 +70,10 @@ app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
 app.add_url_rule('/AgregarCicloLectivo', 'crearciclolectivo', admin.crearciclolectivo,methods=['GET','POST'])
 
 #taller
-app.add_url_rule('/asociarTallerCiclo', 'asociarTallerCiclo', taller.asociarTallerCiclo, methods=['GET','POST'])
-app.add_url_rule('/asociarTallerDocentes', 'asociarTallerDocentes', taller.asociarTallerDocentes, methods=['GET','POST'])
-app.add_url_rule('/asociarTallerEstudiantes', 'asociarTallerEstudiantes', taller.asociarTallerEstudiantes, methods=['GET','POST'])
+app.add_url_rule('/asociarTallerCiclo', 'asociarTallerCiclo', taller.asociarTallerCiclo, methods=['POST'])
+app.add_url_rule('/asociarTallerDocentes', 'asociarTallerDocentes', taller.asociarTallerDocentes, methods=['POST'])
+app.add_url_rule('/asociarTallerEstudiantes', 'asociarTallerEstudiantes', taller.asociarTallerEstudiantes, methods=['POST'])
+app.add_url_rule('/asociacionesTalleres', 'asociacionesTalleres', taller.asociacionesTalleres)
 
 @app.route('/')
 def index():

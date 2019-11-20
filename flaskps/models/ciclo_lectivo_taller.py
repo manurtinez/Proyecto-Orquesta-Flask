@@ -27,5 +27,6 @@ class Ciclo_lectivo_taller(db.Model):
         return Ciclo_lectivo_taller.query.all()
 
     def get(tid, cid):
-        return db.session.query(Ciclo_lectivo_taller).filter(
-            Tuple(Ciclo_lectivo_taller.taller_id, Ciclo_lectivo_taller.ciclo_lectivo_id).in_([(tid, cid)])).all()
+        return Ciclo_lectivo_taller.query.filter_by(taller_id=tid, ciclo_lectivo_id=cid).first()
+        #return db.session.query(Ciclo_lectivo_taller).filter(
+        #    Tuple(Ciclo_lectivo_taller.taller_id, Ciclo_lectivo_taller.ciclo_lectivo_id).in_([(tid, cid)])).all()

@@ -39,21 +39,21 @@
             </div>
         </form>
     </div>
-    <div style="max-width: 500px; margin: 0 auto; padding-top: 40px;">
+    <div style="max-width: 700px; margin: 0 auto; padding-top: 40px;">
         <h3>Asociar Taller - Estudiantes</h3>
-        <form method="POST" action="{{url_for('asociarTallerCiclo')}}">
+        <form method="POST" action="{{url_for('asociarTallerEstudiantes')}}">
             <div class="row">
                 <div class="col">
-                    <select class="form-control" name="taller">
-                        {% for t in talleres %}
-                        <option value="{{t.id}}">{{t.nombre}}</option>
+                    <select class="form-control" id="taller" name="taller">
+                        {% for ct in ciclosTalleres %}
+                        <option value="{{ct}}">{{ct['tallernombre']}} - {{ct['cicloinicio']}} - {{ct['ciclofin']}}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col" style="padding-bottom: 30px;">
-                    <select class="form-control" id="ciclo" name="ciclo">
-                        {% for c in ciclos %}
-                        <option value="{{c.id}}">{{c.fecha_ini.year}} - Semestre {{c.semestre}}</option>
+                    <select class="js-example-basic-multiple" multiple id="estudiantes[]" name="estudiantes">
+                        {% for e in estudiantes %}
+                        <option value="{{e.id}}">{{e.apellido}}, {{e.nombre}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -63,24 +63,17 @@
             </div>
         </form>
     </div>
-    <div style="max-width: 1000px; margin: 0 auto; padding-top: 40px;">
+    <div style="max-width: 700px; margin: 0 auto; padding-top: 40px;">
         <h3>Asociar Taller - Docentes</h3>
         <form method="POST" action="{{url_for('asociarTallerDocentes')}}">
             <div class="row">
                 <div class="col">
                     <select class="form-control" id="taller" name="taller">
-                        {% for t in talleres %}
-                        <option value="{{t.id}}">{{t.nombre}}</option>
+                        {% for ct in ciclosTalleres %}
+                        <option value="{{ct}}">{{ct['tallernombre']}} - {{ct['cicloinicio']}} - {{ct['ciclofin']}}</option>
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col">
-                        <select class="form-control" id="ciclo" name="ciclo">
-                            {% for c in ciclos %}
-                            <option value="{{c.id}}">{{c.fecha_ini}} - {{c.fecha_fin}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
                 <div class="col" style="padding-bottom: 30px;">
                     <select class="js-example-basic-multiple" multiple id="docentes[]" name="docentes">
                         {% for d in docentes %}

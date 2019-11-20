@@ -45,10 +45,7 @@
       <div class="sidebar-heading">Asociaciones</div>
       <div class="list-group list-group-flush">
         {% if session['email'] is defined and 'administrador' in session['roles'] %}
-        <a href="#" class="list-group-item list-group-item-action bg-light">Taller - Docentes</a>
-        <a href="{{url_for('asociarTallerCiclo')}}" class="list-group-item list-group-item-action bg-light">Taller -
-          Ciclo Lectivo</a>
-        <a href="{{url_for('asociarTallerEstudiantes')}}" class="list-group-item list-group-item-action bg-light">Taller - Estudiantes</a>
+        <a href="{{url_for('asociacionesTalleres')}}" class="list-group-item list-group-item-action bg-light">Asociaciones de talleres</a>
         {% endif %}
       </div>
     </div>

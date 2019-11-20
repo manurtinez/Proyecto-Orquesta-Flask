@@ -6,6 +6,7 @@ from flaskps.models.estudiante import Estudiante
 from flaskps.models.docente import Docente
 from flaskps.resources import user
 from flaskps.models.ciclo_lectivo import Ciclo_lectivo
+from datetime import datetime
 
 def administracion():
     if 'email' not in session or 'administrador' not in session['roles']:
@@ -78,12 +79,21 @@ def accesoDenegado():
 def crearciclolectivo():
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
-    param = request.form
-    
-    Ciclo_lectivo.create(param['inicio'], param['fin'],param['semestre'])
-
-    flash('El ciclo lectivo se generó exitosamente')
-    return redirect(url_for('index'))
+    inicio = datetime.strptime(request.form['inicio'], '%Y-%m-%d')
+    fin = datetime.strptime(request.form['fin'], '%Y-%m-%d')
+    sem = int(request.form['semestre'])
+    if not Ciclo_lectivo.get(inicio, fin, sem):
+        aux = Ciclo_lectivo.getByYear(inicio.year)
+        for a in aux:
+            if a.semestre == sem:
+                flash('Ese semestre ya existe para ese ciclo lectivo')
+                return redirect(url_for('index'))
+        Ciclo_lectivo.create(inicio, fin,sem)
+        flash('El ciclo lectivo se generó exitosamente')
+        return redirect(url_for('index'))
+    else:
+        flash('Ese ciclo lectivo ya existe')
+        return redirect(url_for('index'))
 
 def eliminarDocente(dni):
     if 'email' not in session or 'administrador' not in session['roles']:
