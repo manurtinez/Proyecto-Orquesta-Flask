@@ -1,0 +1,43 @@
+{%extends "base.html"%}
+{%block title%}Inicio {%endblock title%}
+{%block head%}
+{{super()}}
+{%endblock head%}
+{% block content %}
+
+<body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info fade show alert-dismissible" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div style="max-width: 500px; margin: 0 auto; padding-top: 40px;">
+        <h3>Asociar Taller - Estudiantes</h3>
+        <form method="POST" action="{{url_for('asociarTallerCiclo')}}">
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" name="taller">
+                        {% for ct in ciclosTalleres %}
+                        <option value="{{ct.taller_id}}">{{ct.taller_id}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col" style="padding-bottom: 30px;">
+                    <select class="js-example-basic-multiple" multiple id="estudiantes" name="estudiantes">
+                        {% for e in estudiantes %}
+                        <option selected value="{{e.id}}">{{e.apellido}}, {{e.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div>
+                <input type="submit" class="btn btn-info" value="Aceptar">
+            </div>
+        </form>
+    </div>
+</body>
+{% endblock content %}

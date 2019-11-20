@@ -63,19 +63,26 @@
             </div>
         </form>
     </div>
-    <div style="max-width: 500px; margin: 0 auto; padding-top: 40px;">
+    <div style="max-width: 1000px; margin: 0 auto; padding-top: 40px;">
         <h3>Asociar Taller - Docentes</h3>
         <form method="POST" action="{{url_for('asociarTallerDocentes')}}">
             <div class="row">
                 <div class="col">
                     <select class="form-control" id="taller" name="taller">
-                        {% for c in ciclosTalleres %}
+                        {% for t in talleres %}
                         <option value="{{t.id}}">{{t.nombre}}</option>
                         {% endfor %}
                     </select>
                 </div>
+                <div class="col">
+                        <select class="form-control" id="ciclo" name="ciclo">
+                            {% for c in ciclos %}
+                            <option value="{{c.id}}">{{c.fecha_ini}} - {{c.fecha_fin}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 <div class="col" style="padding-bottom: 30px;">
-                    <select class="js-example-basic-multiple" multiple id="docentes" name="docentes">
+                    <select class="js-example-basic-multiple" multiple id="docentes[]" name="docentes">
                         {% for d in docentes %}
                         <option value="{{d.id}}">{{d.apellido}}, {{d.nombre}}</option>
                         {% endfor %}
