@@ -1,5 +1,6 @@
 from flaskps.db import db
 from sqlalchemy import update
+from sqlalchemy.orm import relationship
 from datetime import datetime
 
 class Docente(db.Model):
@@ -14,6 +15,8 @@ class Docente(db.Model):
     tipo_doc_id = db.Column(db.Integer)
     numero = db.Column(db.Integer) #DNI
     tel = db.Column(db.String)
+    docente_responsable_taller = relationship('Docente_responsable_taller', cascade='all, delete',
+    backref='docente')
 
     #Read (devuelve todo)
     def all():
@@ -25,7 +28,8 @@ class Docente(db.Model):
         
     #Baja fisica del sistema // SE HACE CON EL DNI
     def eliminar_docente(dn):
-        Docente.query.filter_by(numero=dn).delete()
+        d = Docente.query.filter_by(numero=dn).first()
+        db.session.delete(d)
         db.session.commit()
         return True 
 

@@ -1,15 +1,22 @@
-from flask import redirect, url_for, render_template, request, flash
+from flask import redirect, url_for, render_template, request, flash, session
 from flaskps.models.taller import Taller
 from flaskps.models.ciclo_lectivo import Ciclo_lectivo
 from flaskps.models.ciclo_lectivo_taller import Ciclo_lectivo_taller
+from flaskps.models.estudiante_taller import Estudiante_taller
 from flaskps.models.estudiante import Estudiante
 from flaskps.models.docente import Docente
+from flaskps.models.configuracion import configuracion
 from flaskps.models.docente_responsable_taller import Docente_responsable_taller
 from flaskps.models.asistencia_estudiante_taller import Asistencia_estudiante_taller
 import json, datetime
 
 
 def asociacionesTalleres():
+    tabla = configuracion.get_config()
+    if tabla.sitio_habilitado == 0:
+        return redirect(url_for("mantenimiento"))
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
     ciclosTalleres = []
     t = Taller.all()
     c = Ciclo_lectivo.all()
@@ -34,6 +41,11 @@ def asociacionesTalleres():
     )
 
 def asociarTallerCiclo():
+    tabla = configuracion.get_config()
+    if tabla.sitio_habilitado == 0:
+        return redirect(url_for("mantenimiento"))
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
     p = request.form
     if not Ciclo_lectivo_taller.get(p['taller'], p['ciclo']):
         Ciclo_lectivo_taller.create(p["taller"], p["ciclo"])
@@ -44,6 +56,11 @@ def asociarTallerCiclo():
         return redirect(url_for('asociacionesTalleres'))
 
 def asociarTallerDocentes():
+    tabla = configuracion.get_config()
+    if tabla.sitio_habilitado == 0:
+        return redirect(url_for("mantenimiento"))
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
     d = request.form.getlist('docentes')
     c = eval(request.form['taller'])
     repetidos = False
@@ -57,14 +74,21 @@ def asociarTallerDocentes():
     return redirect(url_for('asociacionesTalleres'))
 
 def asociarTallerEstudiantes():
+    tabla = configuracion.get_config()
+    if tabla.sitio_habilitado == 0:
+        return redirect(url_for("mantenimiento"))
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
     e = request.form.getlist('estudiantes')
     c = eval(request.form['taller'])
     repetidos = False
     for e in e:
-        if not Asistencia_estudiante_taller.get(int(e), c['cicloid'], c['tallerid']):
-            Asistencia_estudiante_taller.create(int(e), c['cicloid'], c['tallerid'])
+        if not Estudiante_taller.get(int(e), c['cicloid'], c['tallerid']):
+            Estudiante_taller.create(int(e), c['cicloid'], c['tallerid'])
         else:
             repetidos = True
     if repetidos:
         flash('Asociacion exitosa! Nota: Algunos de los estudiantes ya estaban asociados')
+    else:
+        flash('Asociacion exitosa!')
     return redirect(url_for('asociacionesTalleres'))

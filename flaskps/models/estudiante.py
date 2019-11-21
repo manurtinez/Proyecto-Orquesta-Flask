@@ -1,5 +1,6 @@
 from flaskps.db import db
 from sqlalchemy import update, ForeignKey
+from sqlalchemy.orm import relationship
 from datetime import datetime
 from flaskps.models import escuela, barrio, nivel, genero
 
@@ -18,6 +19,8 @@ class Estudiante(db.Model):
     numero = db.Column(db.Integer) #DNI
     tel = db.Column(db.String)
     barrio_id = db.Column(db.Integer, ForeignKey(barrio.Barrio.id))
+    estudiante_taller = relationship('Estudiante_taller', cascade='all, delete',
+    backref='estudiante')
 
     #Create (Alta)
     def create(ap,no,fe,lo,ni,do,ge,es,ti,nu,te,ba):
@@ -34,7 +37,8 @@ class Estudiante(db.Model):
         
     #Baja fisica del sistema // SE HACE CON EL DNI
     def eliminar_estudiante(dn):
-        Estudiante.query.filter_by(numero=dn).delete()
+        e = Estudiante.query.filter_by(numero=dn).first()
+        db.session.delete(e)
         db.session.commit()
         return True 
 

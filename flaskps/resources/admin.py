@@ -76,35 +76,9 @@ def accesoDenegado():
     flash('Usted no posee autorizacion para acceder a esta url')
     return redirect(url_for('index'))
 
-def crearciclolectivo():
-    if 'email' not in session or 'administrador' not in session['roles']:
-        return redirect(url_for('accesoDenegado'))
-    inicio = datetime.strptime(request.form['inicio'], '%Y-%m-%d')
-    fin = datetime.strptime(request.form['fin'], '%Y-%m-%d')
-    sem = int(request.form['semestre'])
-    if not Ciclo_lectivo.get(inicio, fin, sem):
-        aux = Ciclo_lectivo.getByYear(inicio.year)
-        for a in aux:
-            if a.semestre == sem:
-                flash('Ese semestre ya existe para ese ciclo lectivo')
-                return redirect(url_for('index'))
-        Ciclo_lectivo.create(inicio, fin,sem)
-        flash('El ciclo lectivo se generó exitosamente')
-        return redirect(url_for('index'))
-    else:
-        flash('Ese ciclo lectivo ya existe')
-        return redirect(url_for('index'))
-
 def eliminarDocente(dni):
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
     Docente.eliminar_docente(dni)
     flash('El docente ha sido eliminado')
     return redirect(url_for('listadoDocentes'))
-
-def eliminarCicloLectivo(id):
-    if 'email' not in session or 'administrador' not in session['roles']:
-        return redirect(url_for('accesoDenegado'))
-    Ciclo_lectivo.eliminar_ciclolectivo(id)
-    flash('El ciclo lectivo ha sido eliminado')
-    return redirect(url_for('listadoCiclosLectivos'))

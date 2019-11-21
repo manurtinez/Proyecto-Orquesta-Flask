@@ -10,6 +10,9 @@ def login():
     return render_template('auth/login.html')
 
 def authenticate():
+    tabla = configuracion.get_config()
+    if tabla.sitio_habilitado == 0:
+        return redirect(url_for("mantenimiento"))
     params = request.form
     usuario = User.get_by_email_and_pass(params['email'], params['password'])
     print(usuario)

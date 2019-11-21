@@ -11,8 +11,13 @@ class Ciclo_lectivo(db.Model):
     fecha_ini = db.Column(db.String)
     fecha_fin = db.Column(db.String)
     semestre = db.Column(db.Integer)
-    children = relationship('Ciclo_lectivo_taller', cascade='all, delete',
+    ciclo_lectivo_taller = relationship('Ciclo_lectivo_taller', cascade='all, delete',
     backref='ciclo_lectivo')
+    docente_responsable_taller = relationship('Docente_responsable_taller', cascade='all, delete',
+    backref='ciclo_lectivo')
+    estudiante_taller = relationship('Estudiante_taller', cascade='all, delete',
+    backref='ciclo_lectivo')
+
 
     def getByYear(an):
         #act = datetime(datetime.today().year, datetime.today().month, datetime.today().day)

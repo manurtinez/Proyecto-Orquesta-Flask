@@ -6,23 +6,21 @@ from datetime import date
 from flaskps.models.configuracion import configuracion
 from flaskps.resources import admin
 
-def registrar():
+def crear():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
-        return redirect(url_for('mantenimiento'))
-    return render_template('user/registro.html')
-
-def crear():
+        return redirect(url_for("mantenimiento"))
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
     p = request.form
     user = User.get_by_email(p['email'])
     if user:
         flash('el mail ya se encuentra registrado!')
-        return redirect(url_for('registro'))
+        return redirect(url_for('listadoUsers'))
     else:
         User.create(p['email'], p['user'], p['password'], 1, p['nombre'], p['apellido'])
-        return redirect(url_for('index'))
+        flash('Usuario registrado con exito!')
+        return redirect(url_for('listadoUsers'))
 
 def listadoUsers():
     if 'email' not in session or 'administrador' not in session['roles']:
@@ -42,6 +40,9 @@ def listadoUsers():
     return render_template('user/listadoUsers.html', lista=lista, cant=tabla.cantListar, roles=roles, rolesUsers=rolesUsers)
 
 def actualizar(m):
+    tabla = configuracion.get_config()
+    if tabla.sitio_habilitado == 0:
+        return redirect(url_for("mantenimiento"))
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for("accesoDenegado"))
     p = request.form
@@ -54,18 +55,25 @@ def actualizar(m):
             User_tiene_rol.asignar_rol(act.id, r.id)
         else:
             User_tiene_rol.desasignar_rol(act.id, r.id)
+    flash('Usuario actualizado con exito!')
     return redirect(url_for('listadoUsers'))
 
 def mostrarActivos():
+    tabla = configuracion.get_config()
+    if tabla.sitio_habilitado == 0:
+        return redirect(url_for("mantenimiento"))
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for("accesoDenegado"))
     lista = User.select_activos()
     tabla = configuracion.get_config()
-    return render_template('user/listado.html', lista=lista, cant=tabla.cantListar)
+    return render_template('user/listadoUsers.html', lista=lista, cant=tabla.cantListar)
 
 def mostrarInactivos():
+    tabla = configuracion.get_config()
+    if tabla.sitio_habilitado == 0:
+        return redirect(url_for("mantenimiento"))
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for("accesoDenegado"))
     lista = User.select_inactivos()
     tabla = configuracion.get_config()
-    return render_template('user/listado.html', lista=lista, cant=tabla.cantListar)
+    return render_template('user/listadoUsers.html', lista=lista, cant=tabla.cantListar)

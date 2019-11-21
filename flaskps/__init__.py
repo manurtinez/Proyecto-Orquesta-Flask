@@ -44,7 +44,6 @@ app.add_url_rule('/docente/altaDocente', 'crearDocente', docente.crearDocente, m
 app.add_url_rule('/docente/actualizarDocente/<dni>', 'actualizarDocente', docente.actualizarDocente, methods=['POST'])
 
 #Usuario
-app.add_url_rule('/user/registro', 'registro', user.registrar)
 app.add_url_rule('/user/crear', 'crearUser', user.crear, methods=['POST'])
 app.add_url_rule('/user/listado', 'listadoUsers', user.listadoUsers)
 app.add_url_rule('/user/actualizar/<m>', 'actualizarUser', user.actualizar, methods=['POST'])
@@ -54,6 +53,8 @@ app.add_url_rule('/user/listado/inactivos', 'mostrarInactivos', user.mostrarInac
 #Ciclo lectivo
 app.add_url_rule('/ciclo_lectivo/listadoCiclosLectivos', 'listadoCiclosLectivos', ciclo_lectivo.listadoCiclosLectivos)
 app.add_url_rule('/ciclo_lectivo/actualizarCiclosLectivos/<id>', 'actualizarCiclosLectivos', ciclo_lectivo.actualizarCiclosLectivos, methods=['POST','GET'])
+app.add_url_rule('/AgregarCicloLectivo', 'crearciclolectivo', ciclo_lectivo.crearciclolectivo,methods=['GET','POST'])
+app.add_url_rule('/eliminarCicloLectivo/<id>', 'eliminarCicloLectivo', ciclo_lectivo.eliminarCicloLectivo)
 
 #ADMINISTRACION
 app.add_url_rule('/administracion', 'administracion', admin.administracion, methods=['GET', 'POST'])
@@ -65,9 +66,8 @@ app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
 app.add_url_rule('/eliminarUser/<email>', 'eliminarUser', admin.eliminarUser)
 app.add_url_rule('/eliminarEstudiante/<dni>', 'eliminarEstudiante', admin.eliminarEstudiante)
 app.add_url_rule('/eliminarDocente/<dni>', 'eliminarDocente', admin.eliminarDocente)
-app.add_url_rule('/eliminarCicloLectivo/<id>', 'eliminarCicloLectivo', admin.eliminarCicloLectivo)
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
-app.add_url_rule('/AgregarCicloLectivo', 'crearciclolectivo', admin.crearciclolectivo,methods=['GET','POST'])
+
 
 #taller
 app.add_url_rule('/asociarTallerCiclo', 'asociarTallerCiclo', taller.asociarTallerCiclo, methods=['POST'])
