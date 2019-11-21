@@ -39,6 +39,8 @@
                             <li>Nombre de usuario: {{user.username}}</li>
                             <li>Email: {{user.email}}</li>
                             <li>Es usuario activo?{% if user.activo %} Si {% else %} No {% endif%}</li>
+                            <li>Creado en: {{user.created_at}}</li>
+                            <li>Actualizado en: {{user.updated_at}}</li>
                         </ul>
                     </div>
                     <div class="modal-footer">

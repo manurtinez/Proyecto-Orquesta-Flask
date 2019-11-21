@@ -38,6 +38,14 @@
                             <li>Apellido: {{e.apellido}}</li>
                             <li>DNI: {{e.numero}}</li>
                             <li>Telefono: {{e.tel}}</li>
+                            <li>Fecha de Nacimiento: {{e.fecha_nac}}</li>
+                            <li>Nivel: {{niveles[e.nivel_id-1].nombre}}</li>
+                            <li>Domicilio: {{e.domicilio}}</li>
+                            <li>Genero: {{generos[e.genero_id-1].nombre}}</li>
+                            <li>Escuela: {{escuelas[e.escuela_id-1].nombre}}</li>
+                            <li>Tipo de Documento: {{dnis[e.tipo_doc_id-1]['nombre']}}</li>
+                            <li>Numero de DNI: {{e.numero}}</li>
+                            <li>Barrio: {{barrios[e.barrio_id-1].nombre}}</li>
                         </ul>
                     </div>
                     <div class="modal-footer">
