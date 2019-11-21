@@ -49,8 +49,10 @@
         </div>
         {%endfor%}
         <div>
+			{% if 'administrador' in session['roles'] %}
                 <button type="button" class="btn btn-info" data-toggle="modal"
                 data-target="#nuevoEstudiante">Crear Estudiante</button>
+			{% endif %}
         </div>
         <table id="listado" data-page-length="{{cant}}" class="table table-stripped">
             <thead class="thead-dark">
