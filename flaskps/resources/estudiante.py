@@ -27,24 +27,32 @@ def listadoEstudiantes():
     if tabla.sitio_habilitado == 0:
         return redirect(url_for("mantenimiento"))
     lista = Estudiante.all()
-    tiposDNI = []
-    listaLoc = []
-    dnis = requests.get(
-        "https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento"
-    )
-    localidades = requests.get(
-        "https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad"
-    )
-    dnis = json.loads(dnis.text)
-    localidades = json.loads(localidades.text)
+    try:
+        dnis = requests.get(
+            "https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento"
+        )
+        localidades = requests.get(
+            "https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad"
+        )
+        tiposDNI = json.loads(dnis.text)
+        listaLoc = json.loads(localidades.text)
+    except requests.exceptions.ConnectionError:
+        flash('hubo un error al traer datos de los dnis y/o localidades :(')
+        return redirect(url_for('index'))
+    user = User.get_by_email(session['email'])
+    roles = Rol.all()
+    aux = []
+    for r in roles:
+        if User_tiene_rol.tiene_rol(user.id, r.id):
+            aux.append(r.nombre)
     return render_template(
         "estudiante/listadoEstudiantes.html", lista=lista, cant=tabla.cantListar,
         escuelas=Escuela.get_all(),
         niveles=Nivel.get_all(),
         barrios=Barrio.get_all(),
         generos=Genero.get_all(),
-        dnis=dnis,
-        localidades=localidades,
+        dnis=tiposDNI,
+        localidades=listaLoc,
     )
 
 
