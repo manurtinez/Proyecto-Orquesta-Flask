@@ -36,8 +36,8 @@ def listadoDocentes():
     return render_template(
         "/docente/listadoDocentes.html", lista=lista, cant=tabla.cantListar,
         generos=Genero.get_all(),
-        dnis=dnis,
-        localidades=localidades,
+        dnis=tiposDNI,
+        localidades=listaLoc,
     )
 def crearDocente():
     if 'email' not in session or not any(i in ['administrador', 'docente'] for i in session['roles']):

@@ -9,7 +9,9 @@ from flask import (
     flash,
 )
 from flaskps.models.configuracion import configuracion
+from flaskps.models.responsable_estudiante import Responsable_Estudiante
 from flaskps.models.rol import Rol
+from flaskps.models.responsable import Responsable
 from flaskps.models.usuario_tiene_rol import User_tiene_rol
 from flaskps.models.escuela import Escuela
 from flaskps.models.nivel import Nivel
@@ -53,6 +55,7 @@ def listadoEstudiantes():
         generos=Genero.get_all(),
         dnis=tiposDNI,
         localidades=listaLoc,
+        responsables=Responsable.all()
     )
 
 
@@ -64,7 +67,7 @@ def crearEstudiante():
         flash('ya existe un estudiante con ese numero de dni!')
         return redirect(url_for('listadoEstudiantes'))
     else:
-        Estudiante.create(
+        e = Estudiante.create(
             p["apellido"],
             p["nombre"],
             p["fechaN"],
@@ -78,6 +81,9 @@ def crearEstudiante():
             p["telefono"],
             p["barrio"],
         )
+        r = Responsable_Estudiante.get(p['responsable'], e.id)
+        if not r:
+            Responsable_Estudiante.create(p['responsable'], e.id)
         flash('estudiante creado con exito!')
         return redirect(url_for("listadoEstudiantes"))
 

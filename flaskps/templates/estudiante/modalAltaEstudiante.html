@@ -89,7 +89,9 @@
                 <div class="col">
                     <label for="responsable">Responsable a Cargo:</label>
                     <select class="form-control form-control-sm" id="responsable" name="responsable" required>
-                        <option value="1">1</option>
+                        {% for r in responsables %}
+                        <option value="{{r.id}}">{{r.apellido}}, {{r.nombre}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="col">
