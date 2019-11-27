@@ -91,7 +91,7 @@ def actualizarEstudiante(dni):
     if 'email' not in session or not any(i in ['administrador', 'docente', 'preceptor'] for i in session['roles']):
         return redirect(url_for("accesoDenegado"))
     p = request.form
-    Estudiante.actualizar(
+    e = Estudiante.actualizar(
         dni,
         p["apellido"],
         p["nombre"],
@@ -105,5 +105,8 @@ def actualizarEstudiante(dni):
         p["telefono"],
         p["barrio"],
     )
+    r = Responsable_Estudiante.get(p['responsable'], e.id)
+    if not r:
+        Responsable_Estudiante.create(p['responsable'], e.id)
     flash('estudiante actualizado con exito!')
     return redirect(url_for('listadoEstudiantes'))
