@@ -106,6 +106,20 @@
         $(document).ready(function () {
             $('#listado').DataTable();
         });
+        $(function () {
+            $('#formAltaDocente').on('submit', function(e){
+                e.preventDefault()
+                $.ajax({
+                url: "{{url_for('crearDocente')}}",
+                type: "POST",
+                data: $('#formAltaDocente').serialize(),
+                success: function(){
+                    alert('docente creado');
+                    location.reload()
+                }
+            })
+            })
+        })
     </script>
 </body>
 {%endblock content%}
