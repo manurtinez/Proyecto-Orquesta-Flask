@@ -66,9 +66,11 @@ app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
 app.add_url_rule('/eliminarUser/<email>', 'eliminarUser', admin.eliminarUser)
 app.add_url_rule('/eliminarEstudianteFisico/<dni>', 'eliminarEstudianteFisico', admin.eliminarEstudianteFisico)
 app.add_url_rule('/eliminarEstudianteLogico/<dni>', 'eliminarEstudianteLogico', admin.eliminarEstudianteLogico)
-app.add_url_rule('/eliminarDocente/<dni>', 'eliminarDocente', admin.eliminarDocente)
+app.add_url_rule('/eliminarDocente/<dni>', 'eliminarDocenteFisico', admin.eliminarDocenteFisico)
+app.add_url_rule('/eliminarDocenteLogico/<dni>', 'eliminarDocenteLogico', admin.eliminarDocenteLogico)
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
 app.add_url_rule('/reactivarEstudiante', 'reactivarEstudiante', admin.reactivarEstudiante, methods=['POST'])
+app.add_url_rule('/reactivarDocente', 'reactivarDocente', admin.reactivarDocente, methods=['POST'])
 
 
 #taller
