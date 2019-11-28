@@ -33,8 +33,6 @@ app.add_url_rule(
     methods=['POST', 'GET']
 )
 
-app.add_url_rule('/prueba', 'prueba', taller.prueba, methods=["POST", "GET"])
-
 #Estudiante
 app.add_url_rule('/estudiante/listadoEstudiantes', 'listadoEstudiantes', estudiante.listadoEstudiantes)
 app.add_url_rule('/estudiante/actualizarEstudiante/<dni>', 'actualizarEstudiante', estudiante.actualizarEstudiante, methods=['POST'])
