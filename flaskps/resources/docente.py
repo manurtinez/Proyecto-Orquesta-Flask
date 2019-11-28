@@ -20,7 +20,8 @@ def listadoDocentes():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return redirect(url_for("mantenimiento"))
-    lista = Docente.all()
+    lista = Docente.notDeletedAll()
+    eliminados = Docente.deletedAll()
     try:
         dnis = requests.get(
             "https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento"
@@ -38,6 +39,7 @@ def listadoDocentes():
         generos=Genero.get_all(),
         dnis=tiposDNI,
         localidades=listaLoc,
+        eliminados=eliminados,
     )
 def crearDocente():
     if 'email' not in session or not any(i in ['administrador', 'docente'] for i in session['roles']):

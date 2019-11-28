@@ -62,8 +62,14 @@ def reactivarEstudiante():
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
     id = request.json['id']
-    print(id)
     Estudiante.restaurar(id)
+    return jsonify({'ok': 'ok'})
+
+def reactivarDocente():
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
+    id = request.json['id']
+    Docente.restaurar(id)
     return jsonify({'ok': 'ok'})
 
 def eliminarEstudianteLogico(dni):
@@ -91,9 +97,15 @@ def accesoDenegado():
     flash('Usted no posee autorizacion para acceder a esta url')
     return redirect(url_for('index'))
 
-def eliminarDocente(dni):
+def eliminarDocenteFisico(dni):
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
     Docente.eliminar_docente(dni)
     flash('El docente ha sido eliminado')
     return redirect(url_for('listadoDocentes'))
+
+def eliminarDocenteLogico(dni):
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
+    Docente.logic_delete(dni)
+    return redirect(url_for('listadoEstudiantes'))

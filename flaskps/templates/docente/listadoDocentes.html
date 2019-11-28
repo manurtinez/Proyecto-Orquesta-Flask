@@ -23,6 +23,13 @@
             </div>
         </div>
         <!-- Modal -->
+        <div class="modal fade" id="modalEliminados" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                {% include 'docente/modalDocentesEliminados.html' %}
+            </div>
+        </div>
+        <!-- Modal -->
         <div class="modal fade" id="myModal{{d.id}}" role="dialog">
             <div class="modal-dialog">
 
@@ -56,6 +63,8 @@
         <div>
                 <button type="button" class="btn btn-info" data-toggle="modal"
                 data-target="#nuevoEstudiante" >Crear Docente</button>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEliminados">Docentes
+                    Eliminados</button>
         </div>
         <table id="listado" data-page-length="{{cant}}" class="table table-stripped">
             <thead class="thead-dark">
@@ -82,7 +91,7 @@
                                 data-target="#modalActualizar{{ d.id }}">Actualizar Datos</button>
                                 
                             {% if 'administrador' in session['roles'] %}
-                            <a href="{{url_for('eliminarDocente', dni=d.numero)}}" class="btn btn-info"
+                            <a href="{{url_for('eliminarDocenteLogico', dni=d.numero)}}" class="btn btn-info"
                                 onclick="return confirm('Esta seguro de que quiere eliminar a {{d.nombre}}?')">Eliminar</a>
                             {% endif %}
                         </nav>
@@ -120,6 +129,22 @@
             })
             })
         })
+        function reactivarDocente(id) {
+            $.ajax({
+                url: "{{url_for('reactivarDocente')}}",
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "id": id
+                }),
+                success: function (response) {
+                    if (response['ok'] == 'ok') {
+                        alert('docente restaurado!');
+                        $("#" + id).hide()
+                    }
+                }
+            })
+        }
     </script>
 </body>
 {%endblock content%}
