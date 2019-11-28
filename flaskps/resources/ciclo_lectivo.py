@@ -51,21 +51,20 @@ def crearciclolectivo():
         return redirect(url_for("mantenimiento"))
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
-    inicio = datetime.strptime(request.form['inicio'], '%Y-%m-%d')
-    fin = datetime.strptime(request.form['fin'], '%Y-%m-%d')
+    p = request.form
+    inicio = datetime.strptime(p['inicio'], '%Y-%m-%d')
+    fin = datetime.strptime(p['fin'], '%Y-%m-%d')
     sem = int(request.form['semestre'])
     if not Ciclo_lectivo.get(inicio, fin, sem):
         aux = Ciclo_lectivo.getByYear(inicio.year)
         for a in aux:
             if a.semestre == sem:
-                flash('Ese semestre ya existe para ese ciclo lectivo')
-                return redirect(url_for('index'))
+                return jsonify({'ok': 'semrep'})
         Ciclo_lectivo.create(inicio, fin,sem)
         flash('El ciclo lectivo se generó exitosamente')
-        return redirect(url_for('index'))
+        return jsonify({'ok': 'ok'})
     else:
-        flash('Ese ciclo lectivo ya existe')
-        return redirect(url_for('index'))
+        return jsonify({'ok': 'existe'})
 
 def eliminarCicloLectivo(id):
     tabla = configuracion.get_config()
