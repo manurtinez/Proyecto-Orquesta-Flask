@@ -57,12 +57,15 @@ def crearciclolectivo():
     sem = int(request.form['semestre'])
     if not Ciclo_lectivo.get(inicio, fin, sem):
         aux = Ciclo_lectivo.getByYear(inicio.year)
-        for a in aux:
-            if a.semestre == sem:
-                return jsonify({'ok': 'semrep'})
-        Ciclo_lectivo.create(inicio, fin,sem)
-        flash('El ciclo lectivo se generó exitosamente')
-        return jsonify({'ok': 'ok'})
+        if (inicio > fin):
+            return jsonify({'ok':'fechainimayor'})
+        else:
+            for a in aux:
+                if a.semestre == sem:
+                    return jsonify({'ok': 'semrep'})
+            Ciclo_lectivo.create(inicio, fin,sem)
+            flash('El ciclo lectivo se generó exitosamente')
+            return jsonify({'ok': 'ok'})
     else:
         return jsonify({'ok': 'existe'})
 

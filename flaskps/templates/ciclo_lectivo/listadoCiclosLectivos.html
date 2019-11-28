@@ -117,6 +117,9 @@
                         else if (response['ok'] == 'existe'){
                             alert('Ese ciclo lectivo ya existe')
                         }
+                        else if (response['ok'] == 'fechainimayor'){
+                            alert('La fecha de inicio del ciclo lectivo debe ser menor que la fecha de fin')
+                        }
                     }
                 })
             })
