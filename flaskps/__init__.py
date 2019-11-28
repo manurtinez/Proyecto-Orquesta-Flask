@@ -33,6 +33,8 @@ app.add_url_rule(
     methods=['POST', 'GET']
 )
 
+app.add_url_rule('/prueba', 'prueba', taller.prueba, methods=["POST", "GET"])
+
 #Estudiante
 app.add_url_rule('/estudiante/listadoEstudiantes', 'listadoEstudiantes', estudiante.listadoEstudiantes)
 app.add_url_rule('/estudiante/actualizarEstudiante/<dni>', 'actualizarEstudiante', estudiante.actualizarEstudiante, methods=['POST'])
@@ -64,9 +66,11 @@ app.add_url_rule('/admin/activarUser/<id>', 'activarUser', admin.activarUser)
 app.add_url_rule('/admin/bloquearUser/<id>', 'bloquearUser', admin.bloquearUser)
 app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
 app.add_url_rule('/eliminarUser/<email>', 'eliminarUser', admin.eliminarUser)
-app.add_url_rule('/eliminarEstudiante/<dni>', 'eliminarEstudiante', admin.eliminarEstudiante)
+app.add_url_rule('/eliminarEstudianteFisico/<dni>', 'eliminarEstudianteFisico', admin.eliminarEstudianteFisico)
+app.add_url_rule('/eliminarEstudianteLogico/<dni>', 'eliminarEstudianteLogico', admin.eliminarEstudianteLogico)
 app.add_url_rule('/eliminarDocente/<dni>', 'eliminarDocente', admin.eliminarDocente)
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
+app.add_url_rule('/reactivarEstudiante', 'reactivarEstudiante', admin.reactivarEstudiante, methods=['POST'])
 
 
 #taller

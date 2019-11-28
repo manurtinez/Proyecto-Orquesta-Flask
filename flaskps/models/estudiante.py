@@ -19,6 +19,7 @@ class Estudiante(db.Model):
     numero = db.Column(db.Integer) #DNI
     tel = db.Column(db.String)
     barrio_id = db.Column(db.Integer, ForeignKey(barrio.Barrio.id))
+    is_deleted = db.Column(db.Boolean)
     estudiante_taller = relationship('Estudiante_taller', cascade='all, delete',
     backref='estudiante')
 
@@ -26,7 +27,7 @@ class Estudiante(db.Model):
     def create(ap,no,fe,lo,ni,do,ge,es,ti,nu,te,ba):
 
         elemento = Estudiante (apellido=ap, nombre=no, fecha_nac=fe, localidad_id=lo, nivel_id=ni, domicilio=do, genero_id=ge, escuela_id=es, tipo_doc_id=ti, numero=nu, tel=te, barrio_id=ba )
-
+        elemento.is_deleted = 0
         db.session.add (elemento)
         db.session.commit()
         return elemento
@@ -63,3 +64,21 @@ class Estudiante(db.Model):
     #Read (devuelve todo)
     def all():
         return Estudiante.query.all()
+
+    def logic_delete(dni):
+        e = Estudiante.query.filter_by(numero=dni).first()
+        e.is_deleted = 1
+        db.session.commit()
+        return e
+
+    def notDeletedAll():
+        return Estudiante.query.filter_by(is_deleted=0).all()
+
+    def deletedAll():
+        return Estudiante.query.filter_by(is_deleted=1).all()
+
+    def restaurar(id):
+        e = Estudiante.query.filter_by(id=id).first()
+        e.is_deleted = 0
+        db.session.commit()
+        return e

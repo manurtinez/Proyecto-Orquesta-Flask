@@ -28,7 +28,8 @@ def listadoEstudiantes():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return redirect(url_for("mantenimiento"))
-    lista = Estudiante.all()
+    lista = Estudiante.notDeletedAll()
+    eliminados = Estudiante.deletedAll()
     try:
         dnis = requests.get(
             "https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento"
@@ -55,7 +56,8 @@ def listadoEstudiantes():
         generos=Genero.get_all(),
         dnis=tiposDNI,
         localidades=listaLoc,
-        responsables=Responsable.all()
+        responsables=Responsable.all(),
+        eliminados=eliminados
     )
 
 
@@ -64,8 +66,7 @@ def crearEstudiante():
         return redirect(url_for("accesoDenegado"))
     p = request.form
     if Estudiante.getByDNI(p['numero']) is not None:
-        flash('ya existe un estudiante con ese numero de dni!')
-        return redirect(url_for('listadoEstudiantes'))
+        return jsonify({'ok': 'no'})
     else:
         e = Estudiante.create(
             p["apellido"],
@@ -84,8 +85,7 @@ def crearEstudiante():
         r = Responsable_Estudiante.get(p['responsable'], e.id)
         if not r:
             Responsable_Estudiante.create(p['responsable'], e.id)
-        flash('estudiante creado con exito!')
-        return redirect(url_for("listadoEstudiantes"))
+        return jsonify({'ok': 'ok'})
 
 def actualizarEstudiante(dni):
     if 'email' not in session or not any(i in ['administrador', 'docente', 'preceptor'] for i in session['roles']):

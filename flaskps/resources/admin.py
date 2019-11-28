@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, session, url_for, flash
+from flask import redirect, render_template, request, session, url_for, flash, jsonify
 from flaskps.db import db
 from flaskps.models.configuracion import configuracion
 from flaskps.models.usuario import User
@@ -51,10 +51,25 @@ def eliminarUser(email):
         flash('no se puede eliminar a usted mismo!')
         return redirect(url_for('listadoUsers'))
 
-def eliminarEstudiante(dni):
+def eliminarEstudianteFisico(dni):
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
     Estudiante.eliminar_estudiante(dni)
+    flash('el estudiante ha sido eliminado')
+    return redirect(url_for('listadoEstudiantes'))
+
+def reactivarEstudiante():
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
+    id = request.json['id']
+    print(id)
+    Estudiante.restaurar(id)
+    return jsonify({'ok': 'ok'})
+
+def eliminarEstudianteLogico(dni):
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
+    Estudiante.logic_delete(dni)
     flash('el estudiante ha sido eliminado')
     return redirect(url_for('listadoEstudiantes'))
 
