@@ -74,7 +74,8 @@
                 </div>
                 <div class="col">
                     <label for="numero">Numero de documento:</label>
-                    <input class="form-control form-control-sm" id="numero" name="numero" type="number" required>
+                    <input class="form-control form-control-sm" id="numero" name="numero" type="number" min="1000000"
+                        max="70000000" required>
                 </div>
             </div>
 
@@ -90,6 +91,7 @@
                     <label for="responsable">Responsable a Cargo:</label>
                     <button class="btn btn-primary btn-sm" onclick="mostrarFormResponsable()">+Agregar</button>
                     <select class="form-control form-control-sm" id="responsable" name="responsable" required>
+                        <option hidden selected value="0"> -- selecciona un responsable -- </option>
                         {% for r in responsables %}
                         <option value="{{r.id}}">{{r.apellido}}, {{r.nombre}}</option>
                         {% endfor %}
@@ -160,8 +162,8 @@
                         </select>
                     </div>
                     <div class="col">
-                        <label for="numero">Documento de Responsable:</label>
-                        <input class="form-control form-control-sm" id="numero" name="numero" type="number">
+                        <label for="numeroR">Documento de Responsable:</label>
+                        <input class="form-control form-control-sm" id="numeroR" name="numeroR" type="number">
                     </div>
                     <div class="col">
                         <label for="generoR">Genero Responsable:</label>
@@ -173,6 +175,7 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" id="nuevoResponsable" name="nuevoResponsable" value="0">
         </form>
     </div>
     <div class="modal-footer">
@@ -184,5 +187,15 @@
         event.preventDefault()
         console.log('hola')
         $('#formResponsable').toggle()
+        if ($('#nuevoResponsable').val() == 0) {
+            $('#nuevoResponsable').val(1);
+            $('#formResponsable :input').attr('required', true);
+            $('#responsable').attr('disabled', true);
+        }
+        else {
+            $('#nuevoResponsable').val(0);
+            $('#formResponsable :input').attr('required', false);
+            $('#responsable').attr('disabled', false);
+        }
     }
 </script>
