@@ -65,9 +65,12 @@ def crearEstudiante():
     if 'email' not in session or not any(i in ['administrador', 'docente', 'preceptor'] for i in session['roles']):
         return redirect(url_for("accesoDenegado"))
     p = request.form
-    if Estudiante.getByDNI(p['numero']) is not None:
+    print(p)
+    if Estudiante.getByDNI(int(p['numero'])) is not None:
         return jsonify({'ok': 'no'})
     else:
+        if p['nuevoResponsable'] == '0' and p['responsable'] == '0':
+            return jsonify({'ok': 'faltaResp'})
         e = Estudiante.create(
             p["apellido"],
             p["nombre"],
@@ -82,8 +85,12 @@ def crearEstudiante():
             p["telefono"],
             p["barrio"],
         )
-        r = Responsable_Estudiante.get(p['responsable'], e.id)
-        if not r:
+        if p['nuevoResponsable'] == '1':
+            respActID = nuevoResponsable(p)
+            r = Responsable_Estudiante.get(respActID, e.id)
+            if not r:
+                Responsable_Estudiante.create(respActID, e.id)
+        else:
             Responsable_Estudiante.create(p['responsable'], e.id)
         return jsonify({'ok': 'ok'})
 
@@ -110,3 +117,17 @@ def actualizarEstudiante(dni):
         Responsable_Estudiante.create(p['responsable'], e.id)
     flash('estudiante actualizado con exito!')
     return redirect(url_for('listadoEstudiantes'))
+
+def nuevoResponsable(p):
+    r = Responsable.create(
+        p["apellidoR"],
+        p["nombreR"],
+        p["fechaR"],
+        p["localidadR"],
+        p["domicilioR"],
+        p["generoR"],
+        p["tipoDR"],
+        p["numeroR"],
+        p["telefonoR"],
+    )
+    return r.id

@@ -115,9 +115,11 @@
     <script>
         $(document).ready(function () {
             $('#listado').DataTable();
+            $('#nuevoResponsable').val(0);
         });
         $(function () {
             $('#formAltaEstudiante').on('submit', function (e) {
+                console.log($('#nuevoResponsable').val())
                 e.preventDefault()
                 $.ajax({
                     url: "{{url_for('crearEstudiante')}}",
@@ -127,6 +129,9 @@
                         if (response['ok'] == 'ok') {
                             alert('estudiante creado con exito!');
                             location.reload()
+                        }
+                        else if (response['ok'] == 'faltaResp'){
+                            alert('debe seleccionar un responsable o, si no aparece, crear uno')
                         }
                         else {
                             alert('ya existe un estudiante con ese DNI!')

@@ -1,11 +1,10 @@
-<meta id="estudiante" data-name="{{e}}">
 <div class="modal-content">
     <div class="modal-header">
         <h4 class="modal-title">Actualizar Estudiante</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">
-        <form id="formActualizarEstudiante">
+        <form id="formActualizarEstudiante" method="POST" action="{{url_for('actualizarEstudiante', dni=e.numero)}}">
             <div class="row">
                 <div class="col">
                     <label for="nombre">Nombre:</label>
