@@ -27,15 +27,17 @@
                         {% endfor %}
                     </select>
                 </div>
-                <!-- <div class="col" style="padding-bottom: 30px;">
-                    <select id="selectCiclo" class="form-control" id="ciclo" name="ciclo">
-                        {% for c in ciclos %}
-                        <option value="{{c}}">{{c}} - Semestre {{c}}</option>
-                        {% endfor %}
-                    </select>
-                </div> -->
             </div>
             <p id="actt"></p>
+            <div id="divSelectCiclo" class="row" style="padding-bottom: 30px;">
+                <select id="selectCiclo" class="form-control" id="ciclo" name="ciclo">
+                    <option hidden selected value="0"> -- Ciclo sin asignar -- </option>
+                    {% for c in ciclos %}
+                    <option value="{{c.id}}">{{c.fecha_ini.year}} - Semestre {{c.semestre}}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" class="btn btn-info" value="Aceptar">
+            </div>
         </form>
     </div>
     <!-- <div style="max-width: 700px; margin: 0 auto; padding-top: 40px;">
@@ -89,8 +91,11 @@
         </form>
     </div> -->
     <script>
-        $('#selectTaller').on('change', function(){
-            var id = $(this).val();
+        $(document).ready(function(){
+            $('#divSelectCiclo').hide()
+        })
+        $('#selectTaller').on('change', function () {
+            var id = parseInt($(this).val());
             console.log(id)
             $.ajax({
                 url: "{{url_for('tallerSeleccionado')}}",
@@ -99,8 +104,21 @@
                 data: JSON.stringify({
                     'id': id,
                 }),
-                success: function(response){
-                    $('#actt').html('el ciclo del taller seleccionado es ' + response['idciclo'])
+                success: function (response) {
+                    var idciclo = response['idciclo']
+                    console.log(idciclo)
+                    var lista = []
+                    $('#actt').html('el ciclo del taller seleccionado es ' + idciclo)
+                    $('#divSelectCiclo').show()
+                    $('#selectCiclo option').each(function(){
+                        lista.push(parseInt($(this).val()))
+                    })
+                    if (lista.includes(idciclo)){
+                        $('#selectCiclo').val(idciclo)
+                    }
+                    else{
+                        $('#selectCiclo').val(0)
+                    }
                 }
             })
         })

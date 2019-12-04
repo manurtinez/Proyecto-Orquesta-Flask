@@ -26,6 +26,11 @@ class Ciclo_lectivo_taller(db.Model):
     def all():
         return Ciclo_lectivo_taller.query.all()
 
+    def delete(tid, cid):
+        elemento = Ciclo_lectivo_taller.query.filter_by(taller_id=tid, ciclo_lectivo_id=cid).first()
+        db.session.delete(elemento)
+        db.session.commit()
+
     def get(tid, cid):
         return Ciclo_lectivo_taller.query.filter_by(taller_id=tid, ciclo_lectivo_id=cid).first()
         #return db.session.query(Ciclo_lectivo_taller).filter(

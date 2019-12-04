@@ -45,8 +45,11 @@ def tallerSeleccionado():
     taller = Taller.get(id)
     ct = Ciclo_lectivo_taller.all()
     act = next((x for x in ct if x.taller_id == id), None)
-    ciclo = Ciclo_lectivo.getByid(act.ciclo_lectivo_id)
-    return jsonify({'idciclo': ciclo.id})
+    if act:
+        ciclo = Ciclo_lectivo.getByid(act.ciclo_lectivo_id)
+        return jsonify({'idciclo': ciclo.id})
+    else:
+        return jsonify({'idciclo': -1})
 
 def asociarTallerCiclo():
     tabla = configuracion.get_config()
@@ -56,6 +59,7 @@ def asociarTallerCiclo():
         return redirect(url_for('accesoDenegado'))
     p = request.form
     if not Ciclo_lectivo_taller.get(p['taller'], p['ciclo']):
+        #Ciclo_lectivo_taller.delete()
         Ciclo_lectivo_taller.create(p["taller"], p["ciclo"])
         flash("la asociacion se hizo exitosamente")
         return redirect(url_for("asociacionesTalleres"))
