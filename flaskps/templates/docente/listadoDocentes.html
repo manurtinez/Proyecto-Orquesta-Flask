@@ -92,10 +92,12 @@
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#myModal{{ d.id }}">Mostrar</button>
                             {%endif%}
+
                             {% if 'docente_update' in session['permisos'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#modalActualizar{{ d.id }}">Actualizar Datos</button>
                             {%endif%}
+                            
                             {% if 'docente_destroy' in session['permisos'] %}
                             <a href="{{url_for('eliminarDocenteLogico', dni=d.numero)}}" class="btn btn-info"
                                 onclick="return confirm('Esta seguro de que quiere eliminar a {{d.nombre}}?')">Eliminar</a>
