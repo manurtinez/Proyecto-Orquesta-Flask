@@ -29,7 +29,7 @@ def asociacionesTalleres():
         dict['cicloid'] = ct.ciclo_lectivo_id
         dict['tallernombre'] = aux.nombre
         dict['cicloinicio'] = aux2.fecha_ini
-        dict['ciclofin'] = aux2.fecha_fin
+        dict['semestre'] = aux2.semestre
         ciclosTalleres.append(dict)
     return render_template(
         "asociacionesTalleres.html",
@@ -40,16 +40,47 @@ def asociacionesTalleres():
         ciclosTalleres=ciclosTalleres,
     )
 
+def devolverEstudiantes():
+    ct = eval(request.json['val'])
+    lista = buscarctEst(ct['cicloid'], ct['tallerid'])
+    return jsonify({'lista': lista})
+
+def buscarctEst(idciclo, idtaller):
+    et = Estudiante_taller.all()
+    lista = []
+    for et in et:
+        if et.ciclo_lectivo_id == idciclo and et.taller_id == idtaller:
+            lista.append(et.estudiante_id)
+    return lista
+
+def devolverDocentes():
+    ct = eval(request.json['val'])
+    lista = buscarctDoc(ct['cicloid'], ct['tallerid'])
+    return jsonify({'lista': lista})
+
+def buscarctDoc(idciclo, idtaller):
+    dt = Docente_responsable_taller.all()
+    lista = []
+    for dt in dt:
+        if dt.ciclo_lectivo_id == idciclo and dt.taller_id == idtaller:
+            lista.append(dt.docente_id)
+    return lista
+
 def tallerSeleccionado():
     id = int(request.json['id'])
-    taller = Taller.get(id)
     ct = Ciclo_lectivo_taller.all()
     act = next((x for x in ct if x.taller_id == id), None)
+    cicloid = buscarCiclo(id)
+    return jsonify({'idciclo': cicloid})
+
+def buscarCiclo(idTaller):
+    ct = Ciclo_lectivo_taller.all()
+    act = next((x for x in ct if x.taller_id == idTaller), None)
     if act:
         ciclo = Ciclo_lectivo.getByid(act.ciclo_lectivo_id)
-        return jsonify({'idciclo': ciclo.id})
+        return ciclo.id
     else:
-        return jsonify({'idciclo': -1})
+        return -1
 
 def asociarTallerCiclo():
     tabla = configuracion.get_config()
