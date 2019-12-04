@@ -16,3 +16,6 @@ class rol_tiene_permiso(db.Model):
     #   (para ello ambas clases poseen un método para averiguarlo)
     def tiene_permiso(idrol,idpermiso):
         return Permiso.query.filter_by(id_rol=idrol, id_permiso=idpermiso).first()
+
+    def all():
+        return rol_tiene_permiso.query.all()

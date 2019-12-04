@@ -83,14 +83,14 @@
                 {% if 'administrador' in session['roles'] %}
                 <a class="dropdown-item" href="{{ url_for('listadoUsers') }}">Usuarios</a>
                 {% endif %}
-                {% if 'administrador' in session['roles'] or 'docente' in session['roles'] or 'preceptor' in session['roles'] %}
+                {% if 'estudiante_index' in session['permisos'] %}
                 <a class="dropdown-item" href="{{ url_for('listadoEstudiantes') }}">Estudiantes</a>
                 {% endif %}
-                {% if 'docente' in session['roles'] or 'administrador' in session['roles'] %}
+                {% if 'docente_index' in session['permisos'] %}
                 <a class="dropdown-item" href="{{ url_for('listadoDocentes') }}">Docentes</a>
                 {% endif %}
                 <!-- Para ciclo lectivo -->
-                {% if 'docente' in session['roles'] or 'administrador' in session['roles'] %}
+                {% if 'ciclolectivo_index' in session['permisos'] %}
                 <a class="dropdown-item" href="{{ url_for('listadoCiclosLectivos') }}">Ciclos lectivos</a>
                 {% endif %}
               </div>

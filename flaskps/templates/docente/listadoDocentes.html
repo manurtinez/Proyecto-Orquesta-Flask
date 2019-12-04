@@ -60,12 +60,16 @@
             </div>
         </div>
         {%endfor%}
+
         <div>
+                {% if 'docente_new' in session['permisos'] %}
                 <button type="button" class="btn btn-info" data-toggle="modal"
                 data-target="#nuevoEstudiante" >Crear Docente</button>
+                {%endif%}
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEliminados">Docentes
                     Eliminados</button>
         </div>
+
         <table id="listado" data-page-length="{{cant}}" class="table table-stripped">
             <thead class="thead-dark">
                 <tr>
@@ -82,20 +86,22 @@
                     <td>{{d.apellido}}</td>
                     <td>{{d.numero}}</td>
                     <td>
-                        {% if 'preceptor' in session['roles'] or 'profesor' in session['roles'] or 'administrador' in session['roles'] %}
+                        
                         <nav>
+                            {% if 'docente_show' in session['permisos'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#myModal{{ d.id }}">Mostrar</button>
-
+                            {%endif%}
+                            {% if 'docente_update' in session['permisos'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#modalActualizar{{ d.id }}">Actualizar Datos</button>
-                                
-                            {% if 'administrador' in session['roles'] %}
+                            {%endif%}
+                            {% if 'docente_destroy' in session['permisos'] %}
                             <a href="{{url_for('eliminarDocenteLogico', dni=d.numero)}}" class="btn btn-info"
                                 onclick="return confirm('Esta seguro de que quiere eliminar a {{d.nombre}}?')">Eliminar</a>
                             {% endif %}
                         </nav>
-                        {% endif %}
+
                     </td>
                 </tr>
                 {% endfor %}

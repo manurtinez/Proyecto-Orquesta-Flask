@@ -64,8 +64,10 @@
         </div>
         {%endfor%}
         <div>
+            {% if 'estudiante_new' in session['permisos'] %}
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#nuevoEstudiante">Crear
                 Estudiante</button>
+            {%endif%}
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEliminados">Estudiantes
                 Eliminados</button>
         </div>
@@ -85,18 +87,22 @@
                     <td>{{e.apellido}}</td>
                     <td>{{e.numero}}</td>
                     <td>
-                        {% if 'preceptor' in session['roles'] or 'profesor' in session['roles'] or 'administrador' in session['roles'] %}
+                        
                         <nav>
+                            {% if 'estudiante_show' in session['permisos'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#myModal{{ e.id }}">Mostrar</button>
+                            {%endif%}
+                            {% if 'estudiante_update' in session['permisos'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#modalActualizar{{ e.id }}">Actualizar Datos</button>
-                            {% if 'administrador' in session['roles'] %}
+                            {%endif%}
+                            {% if 'estudiante_destroy' in session['permisos'] %}
                             <a href="{{url_for('eliminarEstudianteLogico', dni=e.numero)}}" class="btn btn-info"
                                 onclick="return confirm('Esta seguro de que quiere eliminar a {{e.nombre}}?')">Eliminar</a>
                             {% endif %}
                         </nav>
-                        {% endif %}
+                        
                     </td>
                 </tr>
                 {% endfor %}
