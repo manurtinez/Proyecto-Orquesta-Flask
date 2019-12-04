@@ -1,4 +1,4 @@
-from flask import redirect, url_for, render_template, request, flash, session
+from flask import redirect, url_for, render_template, request, flash, session, jsonify
 from flaskps.models.taller import Taller
 from flaskps.models.ciclo_lectivo import Ciclo_lectivo
 from flaskps.models.ciclo_lectivo_taller import Ciclo_lectivo_taller
@@ -39,6 +39,14 @@ def asociacionesTalleres():
         docentes=Docente.all(),
         ciclosTalleres=ciclosTalleres,
     )
+
+def tallerSeleccionado():
+    id = int(request.json['id'])
+    taller = Taller.get(id)
+    ct = Ciclo_lectivo_taller.all()
+    act = next((x for x in ct if x.taller_id == id), None)
+    ciclo = Ciclo_lectivo.getByid(act.ciclo_lectivo_id)
+    return jsonify({'idciclo': ciclo.id})
 
 def asociarTallerCiclo():
     tabla = configuracion.get_config()
