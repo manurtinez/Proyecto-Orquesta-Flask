@@ -18,6 +18,12 @@ class Ciclo_lectivo(db.Model):
     estudiante_taller = relationship('Estudiante_taller', cascade='all, delete',
     backref='ciclo_lectivo')
 
+    def serialize(self):
+        return {
+            'fecha_ini': self.fecha_ini,
+            'fecha_fin': self.fecha_fin,
+            'semestre': self.semestre,
+        }
 
     def getByYear(an):
         #act = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
@@ -57,3 +63,6 @@ class Ciclo_lectivo(db.Model):
     
     def get(fi, fin, sem):
         return Ciclo_lectivo.query.filter_by(fecha_ini=fi, fecha_fin=fin, semestre=sem).first()
+
+    def getByid(cid):
+        return Ciclo_lectivo.query.filter_by(id=cid).first()

@@ -20,22 +20,27 @@
         <form method="POST" action="{{url_for('asociarTallerCiclo')}}">
             <div class="row">
                 <div class="col">
-                    <select class="form-control" id="taller" name="taller">
+                    <label for="selectTaller">Selecciona taller:</label>
+                    <select id="selectTaller" class="form-control" id="taller" name="taller">
                         {% for t in talleres %}
                         <option value="{{t.id}}">{{t.nombre}}</option>
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col" style="padding-bottom: 30px;">
-                    <select class="form-control" id="ciclo" name="ciclo">
+            </div>
+            <p id="actt"></p>
+            <div id="divSelectCiclo" class="row" style="padding-bottom: 30px;">
+                <div class="col">
+                    <select id="selectCiclo" class="form-control" id="ciclo" name="ciclo">
+                        <option hidden selected value="0"> -- Ciclo sin asignar -- </option>
                         {% for c in ciclos %}
                         <option value="{{c.id}}">{{c.fecha_ini.year}} - Semestre {{c.semestre}}</option>
                         {% endfor %}
                     </select>
                 </div>
-            </div>
-            <div>
-                <input type="submit" class="btn btn-info" value="Aceptar">
+                <div class="col">
+                    <input type="submit" class="btn btn-info" value="Aceptar">
+                </div>
             </div>
         </form>
     </div>
@@ -44,14 +49,18 @@
         <form method="POST" action="{{url_for('asociarTallerEstudiantes')}}">
             <div class="row">
                 <div class="col">
-                    <select class="form-control" id="taller" name="taller">
+                    <select id="selectCTestudiantes" class="form-control" id="taller" name="taller">
+                        <option hidden selected value> -- Seleccione Taller / Ciclo Lectivo -- </option>
                         {% for ct in ciclosTalleres %}
-                        <option value="{{ct}}">{{ct['tallernombre']}} - {{ct['cicloinicio']}} - {{ct['ciclofin']}}</option>
+                        <option value="{{ct}}">{{ct['tallernombre']}} - {{ct['cicloinicio'].year}} - Semestre
+                            {{ct['semestre']}}
+                        </option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col" style="padding-bottom: 30px;">
-                    <select class="js-example-basic-multiple" multiple id="estudiantes[]" name="estudiantes">
+                    <select id="selectEstudiantes" class="js-example-basic-multiple" multiple id="estudiantes[]"
+                        name="estudiantes">
                         {% for e in estudiantes %}
                         <option value="{{e.id}}">{{e.apellido}}, {{e.nombre}}</option>
                         {% endfor %}
@@ -68,14 +77,18 @@
         <form method="POST" action="{{url_for('asociarTallerDocentes')}}">
             <div class="row">
                 <div class="col">
-                    <select class="form-control" id="taller" name="taller">
+                    <select id="selectCTdocentes" class="form-control" id="taller" name="taller">
+                        <option hidden selected value> -- Seleccione Taller / Ciclo Lectivo -- </option>
                         {% for ct in ciclosTalleres %}
-                        <option value="{{ct}}">{{ct['tallernombre']}} - {{ct['cicloinicio']}} - {{ct['ciclofin']}}</option>
+                        <option value="{{ct}}">{{ct['tallernombre']}} - {{ct['cicloinicio'].year}} - Semestre
+                            {{ct['semestre']}}
+                        </option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col" style="padding-bottom: 30px;">
-                    <select class="js-example-basic-multiple" multiple id="docentes[]" name="docentes">
+                    <select id="selectDocentes" class="js-example-basic-multiple" multiple id="docentes[]"
+                        name="docentes">
                         {% for d in docentes %}
                         <option value="{{d.id}}">{{d.apellido}}, {{d.nombre}}</option>
                         {% endfor %}
@@ -87,5 +100,65 @@
             </div>
         </form>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#divSelectCiclo').hide()
+        })
+        $('#selectTaller').on('change', function () {
+            var id = parseInt($(this).val());
+            $.ajax({
+                url: "{{url_for('tallerSeleccionado')}}",
+                method: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    'id': id,
+                }),
+                success: function (response) {
+                    var idciclo = response['idciclo']
+                    var lista = []
+                    $('#divSelectCiclo').show()
+                    $('#selectCiclo option').each(function () {
+                        lista.push(parseInt($(this).val()))
+                    })
+                    if (lista.includes(idciclo)) {
+                        $('#selectCiclo').val(idciclo)
+                    }
+                    else {
+                        $('#selectCiclo').val(0)
+                    }
+                }
+            })
+        })
+        $('#selectCTestudiantes').on('change', function () {
+            var val = $(this).val();
+            $.ajax({
+                url: "{{url_for('devolverEstudiantes')}}",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    'val': val,
+                }),
+                success: function (response) {
+                    var lista = response['lista'];
+                    $('#selectEstudiantes').val(lista).trigger('change')
+                }
+            })
+        })
+        $('#selectCTdocentes').on('change', function () {
+            var val = $(this).val();
+            $.ajax({
+                url: "{{url_for('devolverDocentes')}}",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    'val': val,
+                }),
+                success: function (response) {
+                    var lista = response['lista'];
+                    $('#selectDocentes').val(lista).trigger('change')
+                }
+            })
+        })
+    </script>
 </body>
 {% endblock content %}

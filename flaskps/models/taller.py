@@ -20,3 +20,13 @@ class Taller(db.Model):
 
     def all():
         return Taller.query.all()
+
+    def get(id):
+        return Taller.query.filter_by(id=id).first()
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'nombre_corto': self.nombre_corto,
+        }

@@ -108,4 +108,4 @@ def eliminarDocenteLogico(dni):
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
     Docente.logic_delete(dni)
-    return redirect(url_for('listadoEstudiantes'))
+    return redirect(url_for('listadoDocentes'))
