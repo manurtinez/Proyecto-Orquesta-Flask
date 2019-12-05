@@ -1,7 +1,7 @@
 from flaskps.db import db
 
 class Nucleo(db.Model):
-    __tablename__ = 'nivel'
+    __tablename__ = 'nucleo'
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String)
 
