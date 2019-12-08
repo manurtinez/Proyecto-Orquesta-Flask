@@ -109,11 +109,13 @@ def asociarTallerDocentes():
     repetidos = False
     for d in d:
         if not Docente_responsable_taller.get(int(d), c['cicloid'], c['tallerid']):
-            Docente_responsable_taller.create(int(d), c['cicloid'], c['tallerid'])
+            e = Docente_responsable_taller.create(int(d), c['cicloid'], c['tallerid'])
         else:
             repetidos = True
     if repetidos:
         flash('Asociacion exitosa! Nota: Algunos de los docentes ya estaban asociados')
+    #aca habria que setear el nucleo que corresponsa, 1 era de prueba
+    Docente_responsable_taller.setNucleo(int(d), c['cicloid'], c['tallerid'], 1)
     return redirect(url_for('asociacionesTalleres'))
 
 def asociarTallerEstudiantes():

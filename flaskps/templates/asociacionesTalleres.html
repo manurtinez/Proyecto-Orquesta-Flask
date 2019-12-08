@@ -22,6 +22,7 @@
                 <div class="col">
                     <label for="selectTaller">Selecciona taller:</label>
                     <select id="selectTaller" class="form-control" id="taller" name="taller">
+                        <option hidden selected value> -- Seleccione Taller -- </option>
                         {% for t in talleres %}
                         <option value="{{t.id}}">{{t.nombre}}</option>
                         {% endfor %}
