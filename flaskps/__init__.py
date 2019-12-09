@@ -81,6 +81,7 @@ app.add_url_rule('/asociacionesTalleres', 'asociacionesTalleres', taller.asociac
 app.add_url_rule('/tallerSeleccionado', 'tallerSeleccionado', taller.tallerSeleccionado, methods=['POST'])
 app.add_url_rule('/devolverEstudiantes', 'devolverEstudiantes', taller.devolverEstudiantes, methods=['POST'])
 app.add_url_rule('/devolverDocentes', 'devolverDocentes', taller.devolverDocentes, methods=['POST'])
+app.add_url_rule('/asignarHorarios', 'asignarHorarios', taller.asignarHorarios, methods=['GET', 'POST'])
 
 @app.route('/')
 def index():

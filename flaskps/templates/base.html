@@ -98,10 +98,7 @@
             {% endif %}
             {% if 'administrador' in session['roles'] and not desactivado %}
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Agregar
-              </a>
+              <a class="nav-link" href="{{ url_for('asignarHorarios') }}">Asignar Horarios</a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <div class="dropdown-divider"></div>
               </div>

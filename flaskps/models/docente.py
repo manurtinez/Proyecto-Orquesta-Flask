@@ -23,6 +23,9 @@ class Docente(db.Model):
     def all():
         return Docente.query.all()
 
+    def get(id):
+        return Docente.query.filter_by(id=id).first()
+
     #Verifica si un DNI existe en el sistema (si no existe retorna nulo)
     def getByDNI(num):
         return Docente.query.filter_by(numero=num).first()
