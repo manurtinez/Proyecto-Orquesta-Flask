@@ -4,7 +4,7 @@ from flaskps.models.usuario import User
 from flaskps.models.configuracion import configuracion
 from flaskps.models.escuela import Escuela
 from flaskps.db import db
-from flaskps.resources import admin, auth, user, estudiante, docente, taller, ciclo_lectivo
+from flaskps.resources import admin, auth, user, estudiante, docente, taller, ciclo_lectivo, instrumento
 from flaskps.config import Config
 from flask_session import Session
 
@@ -56,6 +56,12 @@ app.add_url_rule('/ciclo_lectivo/actualizarCiclosLectivos/<id>', 'actualizarCicl
 app.add_url_rule('/AgregarCicloLectivo', 'crearciclolectivo', ciclo_lectivo.crearciclolectivo,methods=['GET','POST'])
 app.add_url_rule('/eliminarCicloLectivo/<id>', 'eliminarCicloLectivo', ciclo_lectivo.eliminarCicloLectivo)
 
+#Instrumentos
+app.add_url_rule('/instrumento/listadoInstrumentos', 'listadoInstrumentos', instrumento.listadoInstrumentos)
+app.add_url_rule('/instrumento/actualizarInstrumentos/<id>', 'actualizarInstrumentos', instrumento.actualizarInstrumentos, methods=['POST','GET'])
+app.add_url_rule('/AgregarInstrumento', 'crearInstrumento', instrumento.crearInstrumento,methods=['GET','POST'])
+app.add_url_rule('/eliminarInstrumento/<id>', 'eliminarInstrumento', instrumento.eliminarInstrumento)
+
 #ADMINISTRACION
 app.add_url_rule('/administracion', 'administracion', admin.administracion, methods=['GET', 'POST'])
 app.add_url_rule('/admin/desactivar', 'desactivar', admin.desactivar)
@@ -71,6 +77,7 @@ app.add_url_rule('/eliminarDocenteLogico/<dni>', 'eliminarDocenteLogico', admin.
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
 app.add_url_rule('/reactivarEstudiante', 'reactivarEstudiante', admin.reactivarEstudiante, methods=['POST'])
 app.add_url_rule('/reactivarDocente', 'reactivarDocente', admin.reactivarDocente, methods=['POST'])
+app.add_url_rule('/reactivarInstrumento', 'reactivarInstrumento', admin.reactivarInstrumento, methods=['POST'])
 
 
 #taller

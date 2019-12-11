@@ -1,0 +1,42 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Alta Instrumentos</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+        <form id="formAltaInstrumento">
+            <div class="row">
+                <div class="col">
+                    <label for="nombre">Nombre:</label>
+                    <input class="form-control form-control-sm" id="nombre" name="nombre" type="text" required>
+                </div>
+  
+            <div class="row">
+                  <div class="col">
+                      <label for="tipo_instrumentos">Tipo de instrumento:</label>
+                      <select class="form-control form-control-sm" id="genero" name="genero" required>
+                          {% for g in tiposins %}
+                          <option value="{{g.id}}">{{g.nombre}}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+              </div>
+              <div class="col">
+                <label for="numero">Numero de inventario:</label>
+                <input class="form-control form-control-sm" id="numero" name="numero" type="number" required>
+            </div>
+            <div class="col">
+                <label for="domicilio">Foto:</label>
+                <input class="form-control form-control-sm" id="domicilio" name="domicilio" type="text" required>
+            </div>
+
+  
+            <div>
+                <input type="submit" class="btn btn-info" value="Aceptar">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    </div>
+  </div>

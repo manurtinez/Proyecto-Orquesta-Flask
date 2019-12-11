@@ -72,6 +72,13 @@ def reactivarDocente():
     Docente.restaurar(id)
     return jsonify({'ok': 'ok'})
 
+def reactivarInstrumento():
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
+    id = request.json['id']
+    Instrumento.restaurar(id)
+    return jsonify({'ok': 'ok'})
+
 def eliminarEstudianteLogico(dni):
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))

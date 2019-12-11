@@ -99,6 +99,10 @@
                 {% if 'ciclolectivo_index' in session['permisos'] %}
                 <a class="dropdown-item" href="{{ url_for('listadoCiclosLectivos') }}">Ciclos lectivos</a>
                 {% endif %}
+                <!-- Para instrumentos -->
+                {% if 'instrumentos_index' in session['permisos'] %}
+                <a class="dropdown-item" href="{{ url_for('listadoInstrumentos') }}">Instrumentos</a>
+                {% endif %}
               </div>
             </li>
             {% endif %}
