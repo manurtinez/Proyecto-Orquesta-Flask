@@ -1,5 +1,5 @@
 {%extends "base.html"%}
-{%block title%}Inicio {%endblock title%}
+{%block title%}Asignar Horarios {%endblock title%}
 {%block head%}
 {{super()}}
 {%endblock head%}
@@ -15,6 +15,7 @@
 {% endwith %}
 <div style="max-width: 500px; margin: 0 auto; padding-top: 40px; ">
     <h3>Asignar Horario</h3>
+    <a class="btn btn-info" href="{{url_for('verHorarios')}}">Ver Horarios asignados</a>
     <form method="POST" action="{{url_for('asignarHorarios')}}">
         <div class="row">
             <div class="col">
@@ -43,7 +44,7 @@
         </div>
         <div id="divSelectNucleo" class="row">
             <div class="col">
-                    <label for="selectNucleo">Selecciona nucleo:</label>
+                <label for="selectNucleo">Selecciona nucleo:</label>
                 <select id="selectNucleo" class="form-control" id="nucleo" name="nucleo">
                     <option hidden selected value="0"> -- Nucleo sin asignar -- </option>
                     {% for n in nucleos %}
@@ -54,12 +55,12 @@
         </div>
         <div id="divSelectDia" class="row">
             <div class="col">
-                    <label for="selectDia">Selecciona dia:</label>
+                <label for="selectDia">Selecciona dia:</label>
                 <select id="selectDia" class="form-control" id="dia" name="dia">
                     <option hidden selected value="0"> -- Dia sin asignar -- </option>
                     {% for d in ['lunes', 'martes', 'miercoles',
                      'jueves', 'viernes', 'sabado', 'domingo'] %}
-                    <option value="{{loop.index}}">{{d}}</option>
+                    <option value="{{d}}">{{d}}</option>
                     {% endfor %}
                 </select>
             </div>

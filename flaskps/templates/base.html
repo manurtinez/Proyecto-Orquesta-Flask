@@ -73,6 +73,12 @@
             <a class="nav-link" href="{{ url_for('administracion') }}">Administracion</a>
             {% endif %}
             {%endif%}
+            {% if session['email'] is defined and 'administrador' in session['roles'] %}
+            <li>
+            <a href="{{url_for('asociacionesTalleres')}}"
+              class="nav-link">Asociaciones de talleres</a>
+            {% endif %}
+          </li>
             {% if session['email'] is defined %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"

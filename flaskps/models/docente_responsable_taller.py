@@ -15,7 +15,6 @@ class Docente_responsable_taller(db.Model):
     docente_id = db.Column(db.Integer, ForeignKey(Docente.id))
     ciclo_lectivo_id = db.Column(db.Integer, ForeignKey(Ciclo_lectivo.id))
     taller_id = db.Column(db.Integer, ForeignKey(Taller.id))
-    nucleo_id = db.Column(db.Integer, ForeignKey(Nucleo.id))
 
     #Alta
     def create(do,ci,ta):

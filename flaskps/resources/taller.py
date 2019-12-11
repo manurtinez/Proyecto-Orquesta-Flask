@@ -9,6 +9,7 @@ from flaskps.models.docente import Docente
 from flaskps.models.configuracion import configuracion
 from flaskps.models.docente_responsable_taller import Docente_responsable_taller
 from flaskps.models.asistencia_estudiante_taller import Asistencia_estudiante_taller
+from flaskps.models.horarios_nucleos_docentes import Horarios_Nucleos_Docentes
 import json
 import datetime
 
@@ -160,21 +161,21 @@ def asignarHorarios():
         "administrador" not in session["roles"] and "docente" not in session["roles"]
     ):
         return redirect(url_for("accesoDenegado"))
+    ciclosTalleres = []
+    t = Taller.all()
+    c = Ciclo_lectivo.all()
+    ct = Ciclo_lectivo_taller.all()
+    for ct in ct:
+        dict = {}
+        aux = next((x for x in t if x.id == ct.taller_id))
+        aux2 = next((x for x in c if x.id == ct.ciclo_lectivo_id))
+        dict["tallerid"] = ct.taller_id
+        dict["cicloid"] = ct.ciclo_lectivo_id
+        dict["tallernombre"] = aux.nombre
+        dict["cicloinicio"] = aux2.fecha_ini
+        dict["semestre"] = aux2.semestre
+        ciclosTalleres.append(dict)
     if request.method == "GET":
-        ciclosTalleres = []
-        t = Taller.all()
-        c = Ciclo_lectivo.all()
-        ct = Ciclo_lectivo_taller.all()
-        for ct in ct:
-            dict = {}
-            aux = next((x for x in t if x.id == ct.taller_id))
-            aux2 = next((x for x in c if x.id == ct.ciclo_lectivo_id))
-            dict["tallerid"] = ct.taller_id
-            dict["cicloid"] = ct.ciclo_lectivo_id
-            dict["tallernombre"] = aux.nombre
-            dict["cicloinicio"] = aux2.fecha_ini
-            dict["semestre"] = aux2.semestre
-            ciclosTalleres.append(dict)
         return render_template(
             "asignarHorarios.html",
             docentes=Docente.all(),
@@ -185,22 +186,16 @@ def asignarHorarios():
         p = request.form
         ct = eval(p["tallerciclo"])
         dt = Docente_responsable_taller.get(p["docente"], ct["cicloid"], ct["tallerid"])
-        if dt:
-            if dt.nucleo_id:
-                flash("el nucleo ya estaba asignado")
-            else:
-                Docente_responsable_taller.setNucleo(
-                    dt.docente_id, dt.ciclo_id, dt.taller_id, p["nucleo"]
-                )
-                flash("nucleo asociado con exito!")
-        else:
+        if not dt:
             dt = Docente_responsable_taller.create(
                 p["docente"], ct["cicloid"], ct["tallerid"]
             )
-            Docente_responsable_taller.setNucleo(
-                dt.docente_id, dt.ciclo_id, dt.taller_id, p["nucleo"]
-            )
-            flash("nucleo asociado con exito!")
+        hnd = Horarios_Nucleos_Docentes.getByInfo(dt.docente_id, dt.ciclo_lectivo_id, dt.taller_id, p["nucleo"], p["dia"])
+        if hnd:
+            flash('la asociacion ya existe!')
+        else:
+            Horarios_Nucleos_Docentes.create(dt.docente_id, dt.ciclo_lectivo_id, dt.taller_id, p["nucleo"], p["dia"])
+            flash("nucleo y dia asociados con exito!")
         return render_template(
             "asignarHorarios.html",
             docentes=Docente.all(),
@@ -208,3 +203,35 @@ def asignarHorarios():
             nucleos=Nucleo.get_all(),
         )
 
+def verHorarios():
+    tabla = configuracion.get_config()
+    if tabla.sitio_habilitado == 0:
+        return redirect(url_for("mantenimiento"))
+    if "email" not in session or (
+        "administrador" not in session["roles"] and "docente" not in session["roles"]
+    ):
+        return redirect(url_for("accesoDenegado"))
+    hnd = Horarios_Nucleos_Docentes.all()
+    print(hnd)
+    info = []
+    for hnd in hnd:
+        dict = {}
+        dict['id'] = hnd.id
+        dict['docente'] = Docente.get(hnd.docente_id)
+        dict['taller'] = Taller.get(hnd.taller_id)
+        dict['ciclo'] = Ciclo_lectivo.getByid(hnd.ciclo_lectivo_id)
+        dict['nucleo'] = Nucleo.get_by_id(hnd.nucleo_id)
+        dict['dia'] = hnd.dia
+        info.append(dict)
+    print(info)
+    return render_template(
+        "listadoHorarios.html",
+        info=info,
+        cant=tabla.cantListar,
+    )
+
+def desasociarHorario():
+    id = request.json['id']
+    print(id)
+    Horarios_Nucleos_Docentes.delete(id)
+    return jsonify({'ok': 'ok'})
