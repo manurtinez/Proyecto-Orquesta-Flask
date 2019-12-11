@@ -8,7 +8,7 @@
 <body>
     <div>
         <!-- Modal -->
-        <div class="modal fade" id="nuevoEstudiante" role="dialog">
+        <div class="modal fade" id="nuevoInstrumento" role="dialog">
                 <div class="modal-dialog modal-lg">
                     <!-- Modal content-->
                     {% include 'instrumento/ModalAltaInstrumentos.html' %}
@@ -16,10 +16,10 @@
             </div>
         {%for i in lista %}
         <!-- Modal -->
-        <div class="modal fade" id="modalActualizar{{d.id}}" role="dialog">
+        <div class="modal fade" id="modalActualizar{{i.id}}" role="dialog">
             <div class="modal-dialog modal-lg">
                 <!-- Modal content-->
-                {% include 'instrumento/ModalActualizarInstrumento.html' %}
+                {% include 'instrumento/ModalActualizarInstrumentos.html' %}
             </div>
         </div>
         <!-- Modal -->
@@ -85,16 +85,16 @@
                         <nav>
                             {% if 'instrumento_show' in session['permisos'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
-                                data-target="#myModal{{ d.id }}">Mostrar</button>
+                                data-target="#myModal{{ i.id }}">Mostrar</button>
                             {%endif%}
 
                             {% if 'instrumento_update' in session['permisos'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
-                                data-target="#modalActualizar{{ d.id }}">Actualizar Datos</button>
+                                data-target="#modalActualizar{{ i.id }}">Actualizar Datos</button>
                             {%endif%}
                             
                             {% if 'instrumento_destroy' in session['permisos'] %}
-                            <a href="{{url_for('eliminarInstrumentoLogico', id=i.id)}}" class="btn btn-info"
+                            <a href="{{url_for('eliminarInstrumento', id=i.id)}}" class="btn btn-info"
                                 onclick="return confirm('Esta seguro de que quiere eliminar a {{i.nombre}}?')">Eliminar</a>
                             {% endif %}
                         </nav>

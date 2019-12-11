@@ -70,6 +70,6 @@ def eliminarInstrumento(id):
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
 
-    Instrumento.eliminar_instrumento(id)
+    Instrumento.logic_delete(id)
     flash('El instrumento ha sido eliminado')
     return redirect(url_for('listadoInstrumentos'))
