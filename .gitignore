@@ -1,9 +1,10 @@
 virtual/
+myvenv/
 flaskps/grupo36.sql
 *.pyc
 *.bat
 env/
 sqlite3/
 .vscode/
-flaskps/config/development.py
+flaskps/config/
 flask_session/
