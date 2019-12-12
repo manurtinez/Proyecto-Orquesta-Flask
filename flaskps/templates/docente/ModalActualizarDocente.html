@@ -39,9 +39,8 @@
                 <div class="col">
                     <label for="localidad">Localidad:</label>
                     <select class="form-control form-control-sm" value="{{d.nombre}}" id="localidad" name="localidad" required>
-                            <option hidden disabled selected value> -- selecciona una localidad -- </option>
                         {% for l in localidades %}
-                        <option value="{{l['id']}}">{{l['nombre']}}</option>
+                        <option value="{{l.id}}" {% if l.id|int == d.localidad_id %} selected {% endif %}>{{l.nombre}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -56,9 +55,8 @@
                 <div class="col">
                     <label for="tipoD">Tipo de Documento:</label>
                     <select class="form-control form-control-sm" value="{{d.nombre}}" id="tipoD" name="tipoD" required>
-                            <option hidden disabled selected value> -- selecciona un tipo -- </option>
                         {% for t in dnis %}
-                        <option value="{{t['id']}}">{{t['nombre']}}</option>
+                        <option value="{{t.id}}" {% if t.id|int == d.tipo_doc_id %} selected {% endif %}>{{t.nombre}}</option>
                         {% endfor %}
                     </select>
                 </div>

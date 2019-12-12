@@ -4,7 +4,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">
-        <form method="POST" action="{{url_for('crearEstudiante')}}">
+        <form id="formAltaEstudiante">
             <div class="row">
                 <div class="col">
                     <label for="nombre">Nombre:</label>
@@ -33,7 +33,7 @@
                     <select class="form-control form-control-sm" id="localidad" name="localidad" required>
                         <option hidden disabled selected value> -- selecciona un tipo -- </option>
                         {% for l in localidades %}
-                        <option value="{{l['id']}}">{{l['nombre']}}</option>
+                        <option value="{{l.id}}">{{l.nombre}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -74,7 +74,8 @@
                 </div>
                 <div class="col">
                     <label for="numero">Numero de documento:</label>
-                    <input class="form-control form-control-sm" id="numero" name="numero" type="number" required>
+                    <input class="form-control form-control-sm" id="numero" name="numero" type="number" min="1000000"
+                        max="70000000" required>
                 </div>
             </div>
 
@@ -88,8 +89,12 @@
             <div class="row" style="padding-bottom: 20px;">
                 <div class="col">
                     <label for="responsable">Responsable a Cargo:</label>
+                    <button class="btn btn-primary btn-sm" onclick="mostrarFormResponsable()">+Agregar</button>
                     <select class="form-control form-control-sm" id="responsable" name="responsable" required>
-                        <option value="1">1</option>
+                        <option hidden selected value="0"> -- selecciona un responsable -- </option>
+                        {% for r in responsables %}
+                        <option value="{{r.id}}">{{r.apellido}}, {{r.nombre}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="col">
@@ -109,13 +114,88 @@
                     </select>
                 </div>
             </div>
-
             <div>
-                <input type="submit" class="btn btn-info" value="Aceptar">
+                <input class="btn btn-info" type="submit" name="submit" value="Aceptar">
             </div>
+            <div id="formResponsable" style="height: 200px; display: none;">
+                <div class="row">
+                    <div class="col">
+                        <label for="apellidoR">Apellido Responsable:</label>
+                        <input type="text" class="form-control form-control-sm" name="apellidoR" id="apellidoR">
+                    </div>
+                    <div class="col">
+                        <label for="nombreR">Nombre Responsable:</label>
+                        <input type="text" class="form-control form-control-sm" name="nombreR" id="nombreR">
+                    </div>
+                    <div class="col">
+                        <label for="fechaR">Fecha Nacimiento Responsable:</label>
+                        <input class="form-control form-control-sm" id="fechaR" name="fechaR" type="date">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="localidadR">Localidad Responsable:</label>
+                        <select class="form-control form-control-sm" id="localidadR" name="localidadR">
+                            <option hidden disabled selected value> -- selecciona un tipo -- </option>
+                            {% for l in localidades %}
+                            <option value="{{l.id}}">{{l.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="domicilioR">Domicilio Responsable:</label>
+                        <input class="form-control form-control-sm" id="domicilioR" name="domicilioR" type="text">
+                    </div>
+                    <div class="col">
+                        <label for="telefonoR">Telefono Responsable:</label>
+                        <input class="form-control form-control-sm" id="telefonoR" name="telefonoR" type="text">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="tipoDR">Tipo Documento Responsable:</label>
+                        <select class="form-control form-control-sm" id="tipoDR" name="tipoDR">
+                            <option hidden disabled selected value> -- selecciona un tipo -- </option>
+                            {% for t in dnis %}
+                            <option value="{{t['id']}}">{{t['nombre']}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="numeroR">Documento de Responsable:</label>
+                        <input class="form-control form-control-sm" id="numeroR" name="numeroR" type="number">
+                    </div>
+                    <div class="col">
+                        <label for="generoR">Genero Responsable:</label>
+                        <select class="form-control form-control-sm" id="generoR" name="generoR">
+                            {% for g in generos %}
+                            <option value="{{g.id}}">{{g.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="nuevoResponsable" name="nuevoResponsable" value="0">
         </form>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
     </div>
 </div>
+<script>
+    function mostrarFormResponsable() {
+        event.preventDefault()
+        console.log('hola')
+        $('#formResponsable').toggle()
+        if ($('#nuevoResponsable').val() == 0) {
+            $('#nuevoResponsable').val(1);
+            $('#formResponsable :input').attr('required', true);
+            $('#responsable').attr('disabled', true);
+        }
+        else {
+            $('#nuevoResponsable').val(0);
+            $('#formResponsable :input').attr('required', false);
+            $('#responsable').attr('disabled', false);
+        }
+    }
+</script>

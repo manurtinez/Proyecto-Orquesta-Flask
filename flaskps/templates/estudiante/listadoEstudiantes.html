@@ -1,5 +1,5 @@
 {%extends "base.html"%}
-{%block title%}Listado{%endblock title%}
+{%block title%}Listado de Estudiantes{%endblock title%}
 {%block head%}
 {{super()}}
 {%endblock head%}
@@ -9,17 +9,24 @@
     <div>
         <!-- Modal -->
         <div class="modal fade" id="nuevoEstudiante" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <!-- Modal content-->
-                    {% include 'estudiante/modalAltaEstudiante.html' %}
-                </div>
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                {% include 'estudiante/modalAltaEstudiante.html' %}
             </div>
+        </div>
         {%for e in lista %}
         <!-- Modal -->
         <div class="modal fade" id="modalActualizar{{e.id}}" role="dialog">
             <div class="modal-dialog modal-lg">
                 <!-- Modal content-->
                 {% include 'estudiante/modalActualizarEstudiante.html' %}
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modalEliminados" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                {% include 'estudiante/modalEstudiantesEliminados.html' %}
             </div>
         </div>
         <!-- Modal -->
@@ -57,8 +64,12 @@
         </div>
         {%endfor%}
         <div>
-                <button type="button" class="btn btn-info" data-toggle="modal"
-                data-target="#nuevoEstudiante">Crear Estudiante</button>
+            {% if 'estudiante_new' in session['permisos'] %}
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#nuevoEstudiante">Crear
+                Estudiante</button>
+            {%endif%}
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEliminados">Estudiantes
+                Eliminados</button>
         </div>
         <table id="listado" data-page-length="{{cant}}" class="table table-stripped">
             <thead class="thead-dark">
@@ -76,18 +87,26 @@
                     <td>{{e.apellido}}</td>
                     <td>{{e.numero}}</td>
                     <td>
+<<<<<<< HEAD
                         {% if 'preceptor' in session['roles'] or 'docente' in session['roles'] or 'administrador' in session['roles'] %}
+=======
+                        
+>>>>>>> b383854c91585cdad2bff8bb924ec911f8371dbf
                         <nav>
+                            {% if 'estudiante_show' in session['permisos'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#myModal{{ e.id }}">Mostrar</button>
+                            {%endif%}
+                            {% if 'estudiante_update' in session['permisos'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#modalActualizar{{ e.id }}">Actualizar Datos</button>
-                            {% if 'administrador' in session['roles'] %}
-                            <a href="{{url_for('eliminarEstudiante', dni=e.numero)}}" class="btn btn-info"
+                            {%endif%}
+                            {% if 'estudiante_destroy' in session['permisos'] %}
+                            <a href="{{url_for('eliminarEstudianteLogico', dni=e.numero)}}" class="btn btn-info"
                                 onclick="return confirm('Esta seguro de que quiere eliminar a {{e.nombre}}?')">Eliminar</a>
                             {% endif %}
                         </nav>
-                        {% endif %}
+                        
                     </td>
                 </tr>
                 {% endfor %}
@@ -106,7 +125,47 @@
     <script>
         $(document).ready(function () {
             $('#listado').DataTable();
+            $('#nuevoResponsable').val(0);
         });
+        $(function () {
+            $('#formAltaEstudiante').on('submit', function (e) {
+                console.log($('#nuevoResponsable').val())
+                e.preventDefault()
+                $.ajax({
+                    url: "{{url_for('crearEstudiante')}}",
+                    type: "POST",
+                    data: $('#formAltaEstudiante').serialize(),
+                    success: function (response) {
+                        if (response['ok'] == 'ok') {
+                            alert('estudiante creado con exito!');
+                            location.reload()
+                        }
+                        else if (response['ok'] == 'faltaResp'){
+                            alert('debe seleccionar un responsable o, si no aparece, crear uno')
+                        }
+                        else {
+                            alert('ya existe un estudiante con ese DNI!')
+                        }
+                    }
+                })
+            })
+        })
+        function reactivarEstudiante(id) {
+            $.ajax({
+                url: "{{url_for('reactivarEstudiante')}}",
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "id": id
+                }),
+                success: function (response) {
+                    if (response['ok'] == 'ok') {
+                        alert('estudiante restaurado!');
+                        $("#" + id).hide()
+                    }
+                }
+            })
+        }
     </script>
 </body>
 {%endblock content%}

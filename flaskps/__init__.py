@@ -4,7 +4,7 @@ from flaskps.models.usuario import User
 from flaskps.models.configuracion import configuracion
 from flaskps.models.escuela import Escuela
 from flaskps.db import db
-from flaskps.resources import admin, auth, user, estudiante, docente, taller, ciclo_lectivo
+from flaskps.resources import admin, auth, user, estudiante, docente, taller, ciclo_lectivo, instrumento, mapa
 from flaskps.config import Config
 from flask_session import Session
 
@@ -56,6 +56,12 @@ app.add_url_rule('/ciclo_lectivo/actualizarCiclosLectivos/<id>', 'actualizarCicl
 app.add_url_rule('/AgregarCicloLectivo', 'crearciclolectivo', ciclo_lectivo.crearciclolectivo,methods=['GET','POST'])
 app.add_url_rule('/eliminarCicloLectivo/<id>', 'eliminarCicloLectivo', ciclo_lectivo.eliminarCicloLectivo)
 
+#Instrumentos
+app.add_url_rule('/instrumento/listadoInstrumentos', 'listadoInstrumentos', instrumento.listadoInstrumentos)
+app.add_url_rule('/instrumento/actualizarInstrumento/<id>', 'actualizarInstrumento', instrumento.actualizarInstrumentos, methods=['POST','GET'])
+app.add_url_rule('/AgregarInstrumento', 'crearInstrumento', instrumento.crearInstrumento,methods=['GET','POST'])
+app.add_url_rule('/eliminarInstrumento/<id>', 'eliminarInstrumento', instrumento.eliminarInstrumento)
+
 #ADMINISTRACION
 app.add_url_rule('/administracion', 'administracion', admin.administracion, methods=['GET', 'POST'])
 app.add_url_rule('/admin/desactivar', 'desactivar', admin.desactivar)
@@ -64,15 +70,29 @@ app.add_url_rule('/admin/activarUser/<id>', 'activarUser', admin.activarUser)
 app.add_url_rule('/admin/bloquearUser/<id>', 'bloquearUser', admin.bloquearUser)
 app.add_url_rule('/mantenimiento', 'mantenimiento', admin.mantenimiento)
 app.add_url_rule('/eliminarUser/<email>', 'eliminarUser', admin.eliminarUser)
-app.add_url_rule('/eliminarEstudiante/<dni>', 'eliminarEstudiante', admin.eliminarEstudiante)
-app.add_url_rule('/eliminarDocente/<dni>', 'eliminarDocente', admin.eliminarDocente)
+app.add_url_rule('/eliminarEstudianteFisico/<dni>', 'eliminarEstudianteFisico', admin.eliminarEstudianteFisico)
+app.add_url_rule('/eliminarEstudianteLogico/<dni>', 'eliminarEstudianteLogico', admin.eliminarEstudianteLogico)
+app.add_url_rule('/eliminarDocente/<dni>', 'eliminarDocenteFisico', admin.eliminarDocenteFisico)
+app.add_url_rule('/eliminarDocenteLogico/<dni>', 'eliminarDocenteLogico', admin.eliminarDocenteLogico)
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
+app.add_url_rule('/reactivarEstudiante', 'reactivarEstudiante', admin.reactivarEstudiante, methods=['POST'])
+app.add_url_rule('/reactivarDocente', 'reactivarDocente', admin.reactivarDocente, methods=['POST'])
+app.add_url_rule('/reactivarInstrumento', 'reactivarInstrumento', admin.reactivarInstrumento, methods=['POST'])
+
+#Mapa
+app.add_url_rule('/verMapa', 'verMapa', mapa.showMapa)
 
 #taller
 app.add_url_rule('/asociarTallerCiclo', 'asociarTallerCiclo', taller.asociarTallerCiclo, methods=['POST'])
 app.add_url_rule('/asociarTallerDocentes', 'asociarTallerDocentes', taller.asociarTallerDocentes, methods=['POST'])
 app.add_url_rule('/asociarTallerEstudiantes', 'asociarTallerEstudiantes', taller.asociarTallerEstudiantes, methods=['POST'])
 app.add_url_rule('/asociacionesTalleres', 'asociacionesTalleres', taller.asociacionesTalleres)
+app.add_url_rule('/tallerSeleccionado', 'tallerSeleccionado', taller.tallerSeleccionado, methods=['POST'])
+app.add_url_rule('/devolverEstudiantes', 'devolverEstudiantes', taller.devolverEstudiantes, methods=['POST'])
+app.add_url_rule('/devolverDocentes', 'devolverDocentes', taller.devolverDocentes, methods=['POST'])
+app.add_url_rule('/asignarHorarios', 'asignarHorarios', taller.asignarHorarios, methods=['GET', 'POST'])
+app.add_url_rule('/verHorarios', 'verHorarios', taller.verHorarios)
+app.add_url_rule('/desasociarHorario', 'desasociarHorario', taller.desasociarHorario, methods=['POST'])
 
 @app.route('/')
 def index():

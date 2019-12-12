@@ -15,12 +15,16 @@ class Docente(db.Model):
     tipo_doc_id = db.Column(db.Integer)
     numero = db.Column(db.Integer) #DNI
     tel = db.Column(db.String)
+    is_deleted = db.Column(db.Boolean)
     docente_responsable_taller = relationship('Docente_responsable_taller', cascade='all, delete',
     backref='docente')
 
     #Read (devuelve todo)
     def all():
         return Docente.query.all()
+
+    def get(id):
+        return Docente.query.filter_by(id=id).first()
 
     #Verifica si un DNI existe en el sistema (si no existe retorna nulo)
     def getByDNI(num):
@@ -36,7 +40,7 @@ class Docente(db.Model):
     #Alta
     def create(ap,no,fe,lo,do,ge,ti,nu,te):
         elemento = Docente (apellido=ap, nombre=no, fecha_nac=fe, localidad_id=lo, domicilio=do, genero_id=ge, tipo_doc_id=ti, numero=nu, tel=te)
-
+        elemento.is_deleted = 0
         db.session.add (elemento)
         db.session.commit()
         return elemento
@@ -55,3 +59,21 @@ class Docente(db.Model):
 
         db.session.commit()
         return obj
+
+    def logic_delete(dni):
+        d = Docente.query.filter_by(numero=dni).first()
+        d.is_deleted = 1
+        db.session.commit()
+        return d
+
+    def notDeletedAll():
+        return Docente.query.filter_by(is_deleted=0).all()
+
+    def deletedAll():
+        return Docente.query.filter_by(is_deleted=1).all()
+
+    def restaurar(id):
+        d = Docente.query.filter_by(id=id).first()
+        d.is_deleted = 0
+        db.session.commit()
+        return d

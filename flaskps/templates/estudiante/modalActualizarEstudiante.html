@@ -4,7 +4,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">
-        <form method="POST" action="{{url_for('actualizarEstudiante', dni=e.numero)}}">
+        <form id="formActualizarEstudiante" method="POST" action="{{url_for('actualizarEstudiante', dni=e.numero)}}">
             <div class="row">
                 <div class="col">
                     <label for="nombre">Nombre:</label>
@@ -30,9 +30,8 @@
                 <div class="col">
                     <label for="localidad">Localidad:</label>
                     <select class="form-control form-control-sm" id="localidad" name="localidad" required>
-                        <option hidden disabled selected value> -- selecciona una localidad -- </option>
                         {% for l in localidades %}
-                        <option value="{{l['id']}}">{{l['nombre']}}</option>
+                        <option value="{{l.id}}" {% if l.id|int == e.localidad_id %} selected {% endif %}>{{l.nombre}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -66,9 +65,8 @@
                 <div class="col">
                     <label for="tipoD">Tipo de Documento:</label>
                     <select class="form-control form-control-sm" id="tipoD" name="tipoD" required>
-                        <option hidden disabled selected value> -- selecciona un tipo -- </option>
                         {% for t in dnis %}
-                        <option value="{{t['id']}}">{{t['nombre']}}</option>
+                        <option value="{{t.id}}" {% if t.id|int == e.tipo_doc_id %} selected {% endif %}>{{t.nombre}}</option>
                         {% endfor %}
                     </select>
                 </div>

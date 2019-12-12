@@ -23,6 +23,13 @@
             </div>
         </div>
         <!-- Modal -->
+        <div class="modal fade" id="modalEliminados" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                {% include 'docente/modalDocentesEliminados.html' %}
+            </div>
+        </div>
+        <!-- Modal -->
         <div class="modal fade" id="myModal{{d.id}}" role="dialog">
             <div class="modal-dialog">
 
@@ -53,10 +60,16 @@
             </div>
         </div>
         {%endfor%}
+
         <div>
+                {% if 'docente_new' in session['permisos'] %}
                 <button type="button" class="btn btn-info" data-toggle="modal"
                 data-target="#nuevoEstudiante" >Crear Docente</button>
+                {%endif%}
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEliminados">Docentes
+                    Eliminados</button>
         </div>
+
         <table id="listado" data-page-length="{{cant}}" class="table table-stripped">
             <thead class="thead-dark">
                 <tr>
@@ -73,20 +86,28 @@
                     <td>{{d.apellido}}</td>
                     <td>{{d.numero}}</td>
                     <td>
+<<<<<<< HEAD
                         {% if 'preceptor' in session['roles'] or 'docente' in session['roles'] or 'administrador' in session['roles'] %}
+=======
+                        
+>>>>>>> b383854c91585cdad2bff8bb924ec911f8371dbf
                         <nav>
+                            {% if 'docente_show' in session['permisos'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#myModal{{ d.id }}">Mostrar</button>
+                            {%endif%}
 
+                            {% if 'docente_update' in session['permisos'] %}
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#modalActualizar{{ d.id }}">Actualizar Datos</button>
-                                
-                            {% if 'administrador' in session['roles'] %}
-                            <a href="{{url_for('eliminarDocente', dni=d.numero)}}" class="btn btn-info"
+                            {%endif%}
+                            
+                            {% if 'docente_destroy' in session['permisos'] %}
+                            <a href="{{url_for('eliminarDocenteLogico', dni=d.numero)}}" class="btn btn-info"
                                 onclick="return confirm('Esta seguro de que quiere eliminar a {{d.nombre}}?')">Eliminar</a>
                             {% endif %}
                         </nav>
-                        {% endif %}
+
                     </td>
                 </tr>
                 {% endfor %}
@@ -106,6 +127,36 @@
         $(document).ready(function () {
             $('#listado').DataTable();
         });
+        $(function () {
+            $('#formAltaDocente').on('submit', function(e){
+                e.preventDefault()
+                $.ajax({
+                url: "{{url_for('crearDocente')}}",
+                type: "POST",
+                data: $('#formAltaDocente').serialize(),
+                success: function(){
+                    alert('docente creado');
+                    location.reload()
+                }
+            })
+            })
+        })
+        function reactivarDocente(id) {
+            $.ajax({
+                url: "{{url_for('reactivarDocente')}}",
+                type: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "id": id
+                }),
+                success: function (response) {
+                    if (response['ok'] == 'ok') {
+                        alert('docente restaurado!');
+                        $("#" + id).hide()
+                    }
+                }
+            })
+        }
     </script>
 </body>
 {%endblock content%}

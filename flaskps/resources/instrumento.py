@@ -10,11 +10,12 @@ from flask import (
 )
 from flaskps.models.configuracion import configuracion
 from flaskps.models.usuario import User
-from flaskps.models.ciclo_lectivo import Ciclo_lectivo
+from flaskps.models.instrumento import Instrumento
 import json, requests
 from datetime import datetime
+from flaskps.models.tipo_instrumento import Tipo_instrumento
 
-def listadoCiclosLectivos():
+def listadoInstrumentos():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return redirect(url_for("mantenimiento"))
@@ -23,58 +24,50 @@ def listadoCiclosLectivos():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return redirect(url_for("mantenimiento"))
-    lista = Ciclo_lectivo.all()
-
+    lista = Instrumento.notDeletedAll()
+    eliminados = Instrumento.deletedAll()
     return render_template(
-        "/ciclo_lectivo/listadoCiclosLectivos.html", lista=lista, cant=tabla.cantListar,
+        "/instrumento/listadoInstrumentos.html", lista=lista, eliminados=eliminados, cant=tabla.cantListar, tiposins=Tipo_instrumento.all()
     )
 
-def actualizarCiclosLectivos(id):
+def actualizarInstrumentos(id):
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return redirect(url_for("mantenimiento"))
     if 'email' not in session or not any(i in ['administrador', 'docente', 'preceptor'] for i in session['roles']):
         return redirect(url_for("accesoDenegado"))
     p = request.form
-    Ciclo_lectivo.actualizar(
+    Instrumento.actualizar(
         id,
-        p["fecha_ini"],
-        p["fecha_fin"],
-        p["semestre"],
+        p["nombre"],
+        p["tipoins"],
+        p["numero_inventario"],
+        p["foto"]
     )
-    flash('Ciclo lectivo actualizado con exito!')
-    return redirect(url_for('listadoCiclosLectivos'))
+    flash('Instrumento actualizado con exito!')
+    return redirect(url_for('listadoInstrumentos'))
 
-def crearciclolectivo():
+def crearInstrumento():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return redirect(url_for("mantenimiento"))
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
     p = request.form
-    inicio = datetime.strptime(p['inicio'], '%Y-%m-%d')
-    fin = datetime.strptime(p['fin'], '%Y-%m-%d')
-    sem = int(request.form['semestre'])
-    if not Ciclo_lectivo.get(inicio, fin, sem):
-        aux = Ciclo_lectivo.getByYear(inicio.year)
-        if (inicio > fin):
-            return jsonify({'ok':'fechainimayor'})
-        else:
-            for a in aux:
-                if a.semestre == sem:
-                    return jsonify({'ok': 'semrep'})
-            Ciclo_lectivo.create(inicio, fin,sem)
-            flash('El ciclo lectivo se generó exitosamente')
-            return jsonify({'ok': 'ok'})
-    else:
-        return jsonify({'ok': 'existe'})
+    nombre = p["nombre"]
+    tipo_id = int(p['tipo_id'])
+    numero_inventario = int(p["numero_inventario"])
+    foto = p["foto"]
+    Instrumento.create(nombre, tipo_id, numero_inventario, foto)
+    flash('El instrumento generó exitosamente')
+    return redirect(url_for('listadoInstrumentos'))
 
-def eliminarCicloLectivo(id):
+def eliminarInstrumento(id):
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return redirect(url_for("mantenimiento"))
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
-    Ciclo_lectivo.eliminar_ciclolectivo(id)
-    flash('El ciclo lectivo ha sido eliminado')
-    return redirect(url_for('listadoCiclosLectivos'))
+    Instrumento.logic_delete(id)
+    flash('El instrumento ha sido eliminado')
+    return redirect(url_for('listadoInstrumentos'))

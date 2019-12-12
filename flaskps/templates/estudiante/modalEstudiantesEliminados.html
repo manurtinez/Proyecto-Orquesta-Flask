@@ -1,0 +1,18 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Estudiantes Eliminados</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+        {% for el in eliminados %}
+        <div id="{{el.id}}">
+            {{el.apellido}}, {{el.nombre}}, DNI: {{el.numero}}
+            <button type="button" class="btn btn-info" onclick="reactivarEstudiante('{{el.id}}');">Reactivar
+                Estudiante</button>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    </div>
+</div>

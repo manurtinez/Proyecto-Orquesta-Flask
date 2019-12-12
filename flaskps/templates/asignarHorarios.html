@@ -1,0 +1,73 @@
+{%extends "base.html"%}
+{%block title%}Asignar Horarios {%endblock title%}
+{%block head%}
+{{super()}}
+{%endblock head%}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info fade show alert-dismissible" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div style="max-width: 500px; margin: 0 auto; padding-top: 40px; ">
+    <h3>Asignar Horario</h3>
+    <a class="btn btn-info" href="{{url_for('verHorarios')}}">Ver Horarios asignados</a>
+    <form method="POST" action="{{url_for('asignarHorarios')}}">
+        <div class="row">
+            <div class="col">
+                <label for="selectDocente">Selecciona docente:</label>
+                <select id="selectDocente" class="form-control" id="docente" name="docente">
+                    <option hidden selected value> -- Seleccione Docente -- </option>
+                    {% for d in docentes %}
+                    <option value="{{d.id}}">{{d.nombre}}, {{d.apellido}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="selectCT">Selecciona taller / Ciclo:</label>
+                <select id="selectCT" class="form-control" id="tallerciclo" name="tallerciclo">
+                    <option hidden selected value> -- Seleccione Taller / Ciclo Lectivo -- </option>
+                    {% for ct in ciclosTalleres %}
+                    <option value="{{ct}}">{{ct['tallernombre']}} - {{ct['cicloinicio'].year}} - Semestre
+                        {{ct['semestre']}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div id="divSelectNucleo" class="row">
+            <div class="col">
+                <label for="selectNucleo">Selecciona nucleo:</label>
+                <select id="selectNucleo" class="form-control" id="nucleo" name="nucleo">
+                    <option hidden selected value="0"> -- Nucleo sin asignar -- </option>
+                    {% for n in nucleos %}
+                    <option value="{{n.id}}">{{n.nombre}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div id="divSelectDia" class="row">
+            <div class="col">
+                <label for="selectDia">Selecciona dia:</label>
+                <select id="selectDia" class="form-control" id="dia" name="dia">
+                    <option hidden selected value="0"> -- Dia sin asignar -- </option>
+                    {% for d in ['lunes', 'martes', 'miercoles',
+                     'jueves', 'viernes', 'sabado', 'domingo'] %}
+                    <option value="{{d}}">{{d}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <input type="submit" class="btn btn-info" value="Aceptar">
+        </div>
+    </form>
+</div>
+{% endblock content %}

@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, session, url_for, flash
+from flask import redirect, render_template, request, session, url_for, flash, jsonify
 from flaskps.db import db
 from flaskps.models.configuracion import configuracion
 from flaskps.models.usuario import User
@@ -6,6 +6,7 @@ from flaskps.models.estudiante import Estudiante
 from flaskps.models.docente import Docente
 from flaskps.resources import user
 from flaskps.models.ciclo_lectivo import Ciclo_lectivo
+from flaskps.models.instrumento import Instrumento
 from datetime import datetime
 
 def administracion():
@@ -51,10 +52,38 @@ def eliminarUser(email):
         flash('no se puede eliminar a usted mismo!')
         return redirect(url_for('listadoUsers'))
 
-def eliminarEstudiante(dni):
+def eliminarEstudianteFisico(dni):
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
     Estudiante.eliminar_estudiante(dni)
+    flash('el estudiante ha sido eliminado')
+    return redirect(url_for('listadoEstudiantes'))
+
+def reactivarEstudiante():
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
+    id = request.json['id']
+    Estudiante.restaurar(id)
+    return jsonify({'ok': 'ok'})
+
+def reactivarDocente():
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
+    id = request.json['id']
+    Docente.restaurar(id)
+    return jsonify({'ok': 'ok'})
+
+def reactivarInstrumento():
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
+    id = request.json['id']
+    Instrumento.restaurar(id)
+    return jsonify({'ok': 'ok'})
+
+def eliminarEstudianteLogico(dni):
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
+    Estudiante.logic_delete(dni)
     flash('el estudiante ha sido eliminado')
     return redirect(url_for('listadoEstudiantes'))
 
@@ -76,9 +105,15 @@ def accesoDenegado():
     flash('Usted no posee autorizacion para acceder a esta url')
     return redirect(url_for('index'))
 
-def eliminarDocente(dni):
+def eliminarDocenteFisico(dni):
     if 'email' not in session or 'administrador' not in session['roles']:
         return redirect(url_for('accesoDenegado'))
     Docente.eliminar_docente(dni)
     flash('El docente ha sido eliminado')
+    return redirect(url_for('listadoDocentes'))
+
+def eliminarDocenteLogico(dni):
+    if 'email' not in session or 'administrador' not in session['roles']:
+        return redirect(url_for('accesoDenegado'))
+    Docente.logic_delete(dni)
     return redirect(url_for('listadoDocentes'))

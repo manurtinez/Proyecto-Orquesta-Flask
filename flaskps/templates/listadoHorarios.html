@@ -1,0 +1,71 @@
+{%extends "base.html"%}
+{%block title%}Ver Horarios {%endblock title%}
+{%block head%}
+{{super()}}
+{%endblock head%}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info fade show alert-dismissible" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<table id="listado" data-page-length="{{cant}}" class="table table-stripped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Taller</th>
+            <th>Ciclo</th>
+            <th>Nucleo</th>
+            <th>Dia que le corresponde</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in info %}
+        <tr id="{{i.id}}">
+            <td>{{i.docente.nombre}}</td>
+            <td>{{i.docente.apellido}}</td>
+            <td>{{i.taller.nombre}}</td>
+            <td>
+                {{i.ciclo.fecha_ini.year}} - Semestre {{i.ciclo.semestre}}
+            </td>
+            <td>
+                {{i.nucleo.nombre}}
+            </td>
+            <td>
+                {{i.dia}}
+            </td>
+            <td>
+                <nav>
+                    <button type="button" onclick="desasociar('{{i.id}}')" class="btn btn-info">Desasociar</button>
+                </nav>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    function desasociar(id) {
+        id = parseInt(id);
+        $.ajax({
+            url: "{{url_for('desasociarHorario')}}",
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "id": id,
+            }),
+            success: function (response) {
+                if (response['ok'] == 'ok') {
+                    alert('se desasocio con exito!');
+                    $("#" + id).remove()
+                }
+            }
+        })
+    }
+</script>
+{% endblock content %}

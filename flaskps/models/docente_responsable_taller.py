@@ -2,6 +2,7 @@ from flaskps.db import db
 from sqlalchemy import update, PrimaryKeyConstraint, ForeignKey
 from flaskps.models.docente import Docente
 from flaskps.models.ciclo_lectivo import Ciclo_lectivo
+from flaskps.models.nucleo import Nucleo
 from flaskps.models.taller import Taller
 from datetime import datetime
 
@@ -25,6 +26,12 @@ class Docente_responsable_taller(db.Model):
     #Read (devuelve todo)
     def all():
         return Docente_responsable_taller.query.all()
+
+    def setNucleo(do, ci, ta, nid):
+        e = Docente_responsable_taller.query.filter_by(docente_id=do, ciclo_lectivo_id=ci, taller_id=ta).first()
+        e.nucleo_id = nid
+        db.session.commit()
+        return e
 
     def get(do, ci, ta):
         return Docente_responsable_taller.query.filter_by(docente_id=do, ciclo_lectivo_id=ci, taller_id=ta).first()

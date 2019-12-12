@@ -20,22 +20,26 @@ def listadoDocentes():
     tabla = configuracion.get_config()
     if tabla.sitio_habilitado == 0:
         return redirect(url_for("mantenimiento"))
-    lista = Docente.all()
-    tiposDNI = []
-    listaLoc = []
-    dnis = requests.get(
-        "https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento"
-    )
-    localidades = requests.get(
-        "https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad"
-    )
-    dnis = json.loads(dnis.text)
-    localidades = json.loads(localidades.text)
+    lista = Docente.notDeletedAll()
+    eliminados = Docente.deletedAll()
+    try:
+        dnis = requests.get(
+            "https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento"
+        )
+        localidades = requests.get(
+            "https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad"
+        )
+        tiposDNI = json.loads(dnis.text)
+        listaLoc = json.loads(localidades.text)
+    except requests.exceptions.ConnectionError:
+        flash('hubo un error al traer datos de los dnis y/o localidades :(')
+        return redirect(url_for('index'))
     return render_template(
         "/docente/listadoDocentes.html", lista=lista, cant=tabla.cantListar,
         generos=Genero.get_all(),
-        dnis=dnis,
-        localidades=localidades,
+        dnis=tiposDNI,
+        localidades=listaLoc,
+        eliminados=eliminados,
     )
 def crearDocente():
     if 'email' not in session or not any(i in ['administrador', 'docente'] for i in session['roles']):

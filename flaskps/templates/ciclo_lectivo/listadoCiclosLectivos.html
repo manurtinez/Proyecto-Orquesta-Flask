@@ -15,6 +15,13 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
+    <!-- Modal -->
+    <div class="modal fade" id="modalCicloLectivo" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            {% include 'ciclo_lectivo/modalCicloLectivo.html' %}
+        </div>
+    </div>
     <div>
 
         {%for c in lista %}
@@ -57,7 +64,8 @@
             </div>
         </div>
         {%endfor%}
-
+        <button class="btn btn-info" data-toggle="modal" data-target="#modalCicloLectivo">Agregar ciclo
+            Lectivo</button>
         <table id="listado" data-page-length="{{cant}}" class="table table-stripped">
             <thead class="thead-dark">
                 <tr>
@@ -101,6 +109,31 @@
         $(document).ready(function () {
             $('#listado').DataTable();
         });
+        $(function () {
+            $('#formNuevoCiclo').on('submit', function (e) {
+                e.preventDefault()
+                $.ajax({
+                    url: "{{url_for('crearciclolectivo')}}",
+                    type: "POST",
+                    data: $("#formNuevoCiclo").serialize(),
+                    success: function (response) {
+                        if (response['ok'] == 'ok') {
+                            alert('el ciclo lectivo se creo correctamente!')
+                            location.reload()
+                        }
+                        else if (response['ok'] == 'semrep'){
+                            alert('Ese semestre ya existe para ese ciclo lectivo')
+                        }
+                        else if (response['ok'] == 'existe'){
+                            alert('Ese ciclo lectivo ya existe')
+                        }
+                        else if (response['ok'] == 'fechainimayor'){
+                            alert('La fecha de inicio del ciclo lectivo debe ser menor que la fecha de fin')
+                        }
+                    }
+                })
+            })
+        })
     </script>
 </body>
 {%endblock content%}
