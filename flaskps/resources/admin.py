@@ -6,6 +6,7 @@ from flaskps.models.estudiante import Estudiante
 from flaskps.models.docente import Docente
 from flaskps.resources import user
 from flaskps.models.ciclo_lectivo import Ciclo_lectivo
+from flaskps.models.instrumento import Instrumento
 from datetime import datetime
 
 def administracion():

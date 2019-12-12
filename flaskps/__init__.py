@@ -58,7 +58,7 @@ app.add_url_rule('/eliminarCicloLectivo/<id>', 'eliminarCicloLectivo', ciclo_lec
 
 #Instrumentos
 app.add_url_rule('/instrumento/listadoInstrumentos', 'listadoInstrumentos', instrumento.listadoInstrumentos)
-app.add_url_rule('/instrumento/actualizarInstrumentos/<id>', 'actualizarInstrumentos', instrumento.actualizarInstrumentos, methods=['POST','GET'])
+app.add_url_rule('/instrumento/actualizarInstrumento/<id>', 'actualizarInstrumento', instrumento.actualizarInstrumentos, methods=['POST','GET'])
 app.add_url_rule('/AgregarInstrumento', 'crearInstrumento', instrumento.crearInstrumento,methods=['GET','POST'])
 app.add_url_rule('/eliminarInstrumento/<id>', 'eliminarInstrumento', instrumento.eliminarInstrumento)
 

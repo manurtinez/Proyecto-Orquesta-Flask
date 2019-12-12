@@ -10,27 +10,28 @@
                     <label for="nombre">Nombre:</label>
                     <input class="form-control form-control-sm" id="nombre" name="nombre" type="text" required>
                 </div>
-  
-            <div class="row">
-                  <div class="col">
-                      <label for="tipo_instrumentos">Tipo de instrumento:</label>
-                      <select class="form-control form-control-sm" id="genero" name="genero" required>
-                          {% for g in tiposins %}
-                          <option value="{{g.id}}">{{g.nombre}}</option>
-                          {% endfor %}
-                      </select>
-                  </div>
-              </div>
-              <div class="col">
-                <label for="numero">Numero de inventario:</label>
-                <input class="form-control form-control-sm" id="numero" name="numero" type="number" required>
-            </div>
-            <div class="col">
-                <label for="domicilio">Foto:</label>
-                <input class="form-control form-control-sm" id="domicilio" name="domicilio" type="text" required>
             </div>
 
-  
+            <div class="row">
+                <div class="col">
+                    <label for="tipo_instrumentos">Tipo de instrumento:</label>
+                    <select class="form-control form-control-sm" id="tipo_id" name="tipo_id" required>
+                        {% for g in tiposins %}
+                        <option value="{{g.id}}">{{g.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="numero">Numero de inventario:</label>
+                    <input class="form-control form-control-sm" id="numero_inventario" name="numero_inventario" type="number" required>
+                </div>
+                <div class="col">
+                    <label for="domicilio">Link a Foto:</label>
+                    <input class="form-control form-control-sm" id="foto" name="foto" type="text" required>
+                </div>
+            </div>
+
+
             <div>
                 <input type="submit" class="btn btn-info" value="Aceptar">
             </div>
@@ -39,4 +40,4 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
     </div>
-  </div>
+</div>

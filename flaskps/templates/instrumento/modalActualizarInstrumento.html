@@ -8,35 +8,39 @@
             <div class="row">
                 <div class="col">
                     <label for="nombre">Nombre:</label>
-                    <input class="form-control form-control-sm" id="nombre" value="{{i.nombre}}" name="nombre" type="text" required>
+                    <input class="form-control form-control-sm" id="nombre" value="{{i.nombre}}" name="nombre"
+                        type="text" required>
                 </div>
+            </div>
 
             <div class="row" style="padding-bottom: 20px;">
                 <div class="col">
                     <label for="responsable">Tipo de instrumento:</label>
-                    <button class="btn btn-primary btn-sm" onclick="mostrarFormTipo_Ins()">+Agregar</button>
-                    <select class="form-control form-control-sm" id="responsable" name="tipoins" required>
-                        <option hidden selected value="0"> -- selecciona un tipo de instrumento -- </option>
+                    <!-- <button class="btn btn-primary btn-sm" onclick="mostrarFormTipo_Ins()">+Agregar</button> -->
+                    <select class="form-control form-control-sm" id="tipoins" name="tipoins" required>
                         {% for r in tiposins %}
-                        <option value="{{r.id}}">{{r.apellido}}, {{r.nombre}}</option>
+                        <option value="{{r.id}}" {% if r.id == i.tipo_id %} selected {% endif %}>{{r.nombre}}</option>
                         {% endfor %}
                     </select>
                 </div>
+            </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <label for="telefono">Numero de inventario:</label>
-                            <input class="form-control form-control-sm" value="{{i.numero_inventario}}" id="numero_inventario" name="numero_inventario" type="text" required>
-                         </div>
-                     </div>
-                     
-                     <div class="row">
-                        <div class="col">
-                            <label for="telefono">Foto:</label>
-                            <input class="form-control form-control-sm" value="{{i.foto}}" id="foto" name="foto" type="text" required>
-                         </div>
-                     </div>
-  
+            <div class="row">
+                <div class="col">
+                    <label for="telefono">Numero de inventario:</label>
+                    <input class="form-control form-control-sm" value="{{i.numero_inventario}}" id="numero_inventario"
+                        name="numero_inventario" type="text" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label for="telefono">Link a Foto:</label>
+                    <input class="form-control form-control-sm" value="{{i.foto}}" id="foto" name="foto" type="text"
+                        required>
+                </div>
+            </div>
+
             <div>
                 <input type="submit" class="btn btn-info" value="Aceptar">
             </div>
@@ -45,4 +49,4 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
     </div>
-  </div>
+</div>
