@@ -76,7 +76,7 @@
                     <td>{{e.apellido}}</td>
                     <td>{{e.numero}}</td>
                     <td>
-                        {% if 'preceptor' in session['roles'] or 'profesor' in session['roles'] or 'administrador' in session['roles'] %}
+                        {% if 'preceptor' in session['roles'] or 'docente' in session['roles'] or 'administrador' in session['roles'] %}
                         <nav>
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#myModal{{ e.id }}">Mostrar</button>

@@ -68,7 +68,6 @@ app.add_url_rule('/eliminarEstudiante/<dni>', 'eliminarEstudiante', admin.elimin
 app.add_url_rule('/eliminarDocente/<dni>', 'eliminarDocente', admin.eliminarDocente)
 app.add_url_rule('/accesoDenegado', 'accesoDenegado', admin.accesoDenegado)
 
-
 #taller
 app.add_url_rule('/asociarTallerCiclo', 'asociarTallerCiclo', taller.asociarTallerCiclo, methods=['POST'])
 app.add_url_rule('/asociarTallerDocentes', 'asociarTallerDocentes', taller.asociarTallerDocentes, methods=['POST'])

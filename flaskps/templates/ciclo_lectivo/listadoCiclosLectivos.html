@@ -26,6 +26,13 @@
             </div>
         </div>
         <!-- Modal -->
+        <div class="modal fade" id="modalTalleres{{c.id}}" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                {% include 'ciclo_lectivo/ModalActualizarCiclosLectivos.html' %}
+            </div>
+        </div>
+        <!-- Modal -->
         <div class="modal fade" id="myModal{{c.id}}" role="dialog">
             <div class="modal-dialog">
 
@@ -67,13 +74,16 @@
                     <td>{{c.fecha_fin}}</td>
                     <td>{{c.semestre}}</td>
                     <td>
-                        {% if 'preceptor' in session['roles'] or 'profesor' in session['roles'] or 'administrador' in session['roles'] %}
+                        {% if 'preceptor' in session['roles'] or 'docente' in session['roles'] or 'administrador' in session['roles'] %}
                         <nav>
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#myModal{{ c.id }}">Mostrar</button>
 
                             <button type="button" class="btn btn-info" data-toggle="modal"
                                 data-target="#modalActualizar{{ c.id }}">Actualizar Datos</button>
+
+                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                data-target="#modalTalleres{{ c.id }}">Asignar Talleres</button>
 
                             {% if 'administrador' in session['roles'] %}
                             <a href="{{url_for('eliminarCicloLectivo', id=c.id)}}" class="btn btn-info"
